@@ -28,4 +28,10 @@
 #       enabled: "ON"
 
 en:
-  hello: "Hello world"
+  activerecord:
+    errors:
+      models:
+        offer:
+          attributes:
+            base:
+              date_must_be_present: 'Offer date must be present'
