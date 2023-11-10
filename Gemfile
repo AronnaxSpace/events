@@ -54,7 +54,6 @@ group :development, :test do
   gem "rspec-rails", "~> 6.0"
   gem "faker", "~> 3.2"
   gem "factory_bot_rails", "~> 6.2"
-  gem "shoulda-matchers", "~> 5.3"
 end
 
 group :development do
@@ -67,6 +66,11 @@ group :development do
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem "spring"
 
+end
+
+group :test do
+  gem "database_cleaner", "~> 2.0"
+  gem "shoulda-matchers", "~> 5.3"
 end
 
 gem "devise", "~> 4.9"
