@@ -1,0 +1,21 @@
+<div class="fixed bottom-0 right-0 left-0">
+  <div class="container px-3 m-auto">
+    <div class="px-4 py-2 flex justify-between items-center bg-gray-50 border-t border-r border-l border-gray-300 rounded-tr-2xl rounded-tl-2xl">
+      <% if user_signed_in? %>
+        <%= button_to destroy_user_session_path,
+                      method: :delete,
+                      class: "btn text-red-600 hover:text-red-700" do %>
+          <%= t(".sign_out") %>
+        <% end %>
+      <% end %>
+      <% unless controller_name == "offers" && action_name == "new" %>
+        <%= link_to t(".new_offer"),
+                    new_offer_path,
+                    class: "btn btn-success" %>
+      <% end %>
+      <%= link_to t(".home"),
+                  root_path,
+                  class: "btn btn-transparent" %>
+    </div>
+  </div>
+</div>

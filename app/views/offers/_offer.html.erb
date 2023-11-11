@@ -1,0 +1,52 @@
+<div class="card">
+  <div class="space-y-3">
+    <p class="text-xl font-light">
+      <%= offer.what %>
+    </p>
+    <div class="flex w-full">
+      <div class="flex-1">
+        <small class="form-label">
+          <%= Offer.human_attribute_name(:where) %>
+        </small>
+        <p class="">
+          <%= offer.where %>
+        </p>
+      </div>
+      <div class="flex-1 text-right">
+        <small class="form-label">
+          <%= Offer.human_attribute_name(:when) %>
+        </small>
+        <p class="">
+          <%= offer.offer_time %>
+        </p>
+      </div>
+    </div>
+
+    <% if action_name == "index" %>
+      <div class="text-center">
+        <%= link_to t(".go_to_offer"),
+                    offer_path(offer) %>
+      </div>
+    <% end %>
+
+    <% if action_name == "show" %>
+      <div class="">
+        <small class="form-label">
+          <%= Offer.human_attribute_name(:conditions) %>
+        </small>
+        <%= offer.conditions %>
+      </div>
+
+      <div class="flex gap-x-3">
+        <%= link_to t(".edit"),
+                    edit_offer_path(offer),
+                    class: "btn btn-secondary" %>
+        <%= button_to t(".delete"),
+                      offer_path(offer),
+                      method: :delete,
+                      class: "btn btn-danger",
+                      data: { turbo_confirm: "Are you sure?" } %>
+      </div>
+    <% end %>
+  </div>
+</div>
