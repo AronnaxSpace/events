@@ -18,7 +18,10 @@ class Offer < ApplicationRecord
   }
 
   def offer_time
-    when_text || "#{when_start} - #{when_end}" || when_start
+    return when_text if when_text.present?
+    return "#{when_start} - #{when_end}" if when_start.present? && when_end.present?
+
+    when_start
   end
 
   private

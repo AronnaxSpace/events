@@ -33,6 +33,8 @@ class OffersController < ApplicationController
 
   def destroy
     offer.destroy
+
+    redirect_to offers_url, notice: t('.success')
   end
 
   private
