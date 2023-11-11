@@ -57,7 +57,7 @@ en:
       success: "Offer was successfully deleted"
   profiles:
     new:
-      title: "Please, finish your regestration by creating a profile"
+      title: "Please, finish your registration by creating a profile"
     edit:
       title: "Edit profile"
     create:
