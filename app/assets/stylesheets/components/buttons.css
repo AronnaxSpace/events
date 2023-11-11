@@ -1,0 +1,11 @@
+.btn {
+  @apply inline-block px-4 py-2 rounded-full cursor-pointer;
+}
+
+.btn.btn-primary {
+  @apply text-white bg-indigo-600 hover:bg-indigo-700;
+}
+
+.btn.btn-success {
+  @apply text-white bg-green-600 hover:bg-green-700;
+}

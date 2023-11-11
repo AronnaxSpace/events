@@ -3,7 +3,7 @@ FactoryBot.define do
     association :owner, factory: :user
 
     what { Faker::Hipster.sentence }
+    where { Faker::Address.full_address }
     when_start { Faker::Date.forward(days: 23) }
-    conditions { Faker::Hipster.paragraph }
   end
 end

@@ -9,6 +9,7 @@ RSpec.describe Offer, type: :model do
 
   describe 'validations' do
     it { should validate_presence_of(:what) }
+    it { should validate_presence_of(:where) }
 
     describe 'when_start or when_text cannot both be nil' do
       let(:offer) { build(:offer, when_start: nil, when_text: nil) }

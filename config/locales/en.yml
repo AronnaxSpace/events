@@ -28,10 +28,35 @@
 #       enabled: "ON"
 
 en:
+  offers:
+    index:
+      title: "My offers"
+    create:
+      success: "Offer created"
+    update:
+      success: "Offer updated"
+
+  helpers:
+    label:
+      offer:
+        what: "What?"
+        where: "Where?"
+        when_start: "When start?"
+        when_end: "When end?"
+        when_text: "When?"
+
   activerecord:
+    models:
+      attributes:
+        offer:
+          what: "What?"
+          where: "Where?"
+          when_start: "When start?"
+          when_end: "When end?"
+          when_text: "When?"
     errors:
       models:
         offer:
           attributes:
-            base:
-              date_must_be_present: 'Offer date must be present'
+            offer_time:
+              must_be_specified: 'must be specified'

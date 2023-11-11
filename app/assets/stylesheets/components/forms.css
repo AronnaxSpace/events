@@ -1,0 +1,21 @@
+.form-group {
+  @apply mb-3;
+}
+
+.form-group.form-group-with-border {
+  @apply px-4 py-2 border border-gray-300 rounded-2xl;
+}
+
+.form-label {
+  @apply text-gray-700 font-semibold;
+}
+
+.form-control,
+trix-editor {
+  @apply block w-full px-4 py-2 border border-gray-300 rounded-full shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm;
+}
+
+textarea.form-control,
+trix-editor {
+  @apply rounded-2xl;
+}

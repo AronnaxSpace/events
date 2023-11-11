@@ -1,5 +1,8 @@
 @import "actiontext";
 
+@import "components/buttons";
+@import "components/forms";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
