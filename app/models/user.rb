@@ -12,4 +12,5 @@ class User < ApplicationRecord
            dependent: :destroy
   has_many :offer_invitations, dependent: :destroy
   has_many :offers, through: :offer_invitations
+  has_one :profile, dependent: :destroy
 end

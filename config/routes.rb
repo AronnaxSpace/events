@@ -9,5 +9,6 @@ Rails.application.routes.draw do
 
   root to: 'offers#index'
 
+  resource :profile, except: %i[index show destroy]
   resources :offers
 end
