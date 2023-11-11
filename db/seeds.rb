@@ -4,10 +4,12 @@
   email = "user_#{i}@aronnax.space"
   next if User.exists?(email: email)
 
-  User.create(
+  user = User.create(
     email: email,
     password: 'aRo44@X'
   )
+
+  FactoryBot.create(:profile, user: user)
 end
 
 User.find_each do |user|

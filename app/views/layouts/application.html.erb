@@ -14,8 +14,8 @@
     <div class="container px-3 m-auto pt-3 pb-[70px]">
       <%= yield %>
     </div>
-    <% if user_signed_in? %>
-      <%= render "layouts/partials/bottom_nav" %>
+    <% if show_bottom_navbar? %>
+      <%= render "layouts/partials/bottom_navbar" %>
     <% end %>
   </body>
 </html>

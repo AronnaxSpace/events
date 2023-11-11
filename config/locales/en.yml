@@ -30,7 +30,7 @@
 en:
   layouts:
     partials:
-      bottom_nav:
+      bottom_navbar:
         home: "Home"
         new_offer: "New offer"
         sign_out: "Sign out"
@@ -55,6 +55,15 @@ en:
       success: "Offer was successfully updated"
     destroy:
       success: "Offer was successfully deleted"
+  profiles:
+    new:
+      title: "Please, finish your regestration by creating a profile"
+    edit:
+      title: "Edit profile"
+    create:
+      success: "Profile was successfully created."
+    update:
+      success: "Profile was successfully updated"
 
   helpers:
     label:
