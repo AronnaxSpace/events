@@ -23,6 +23,6 @@ class OfferInvitationsController < ApplicationController
   end
 
   def offer
-    @offer ||= current_user.owned_offers.find(params[:offer_id])
+    @offer ||= current_user.owned_offers.find_by!(uuid: params[:offer_id])
   end
 end

@@ -44,7 +44,7 @@ class OffersController < ApplicationController
   private
 
   def offer
-    @offer ||= Offer.for(current_user).find(params[:id])
+    @offer ||= Offer.for(current_user).find_by!(uuid: params[:id])
   end
 
   def offer_params

@@ -10,9 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_11_17_185348) do
+ActiveRecord::Schema[7.1].define(version: 2023_11_17_192117) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "uuid-ossp"
 
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
@@ -75,7 +76,9 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_17_185348) do
     t.bigint "offerer_id", null: false
     t.string "where"
     t.boolean "users_invited", default: false
+    t.uuid "uuid", default: -> { "uuid_generate_v4()" }, null: false
     t.index ["offerer_id"], name: "index_offers_on_offerer_id"
+    t.index ["uuid"], name: "index_offers_on_uuid", unique: true
   end
 
   create_table "profiles", force: :cascade do |t|

@@ -17,6 +17,10 @@ class Offer < ApplicationRecord
       .or(where(offerer: user))
   }
 
+  def to_param
+    uuid
+  end
+
   def offer_time
     return when_text if when_text.present?
     return "#{when_start} - #{when_end}" if when_start.present? && when_end.present?
