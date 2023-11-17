@@ -50,4 +50,26 @@ RSpec.describe 'OfferInvitations', type: :request do
       end
     end
   end
+
+  describe 'POST /accept' do
+    let(:offer) { create(:offer) }
+    let!(:offer_invitation) { create(:offer_invitation, offer: offer, user: user) }
+
+    before { post accept_offer_invitation_path(offer) }
+
+    it 'accepts the invitation' do
+      expect(offer_invitation.reload.accepted?).to be true
+    end
+  end
+
+  describe 'POST /decline' do
+    let(:offer) { create(:offer) }
+    let!(:offer_invitation) { create(:offer_invitation, offer: offer, user: user) }
+
+    before { post decline_offer_invitation_path(offer) }
+
+    it 'declines the invitation' do
+      expect(offer_invitation.reload.declined?).to be true
+    end
+  end
 end

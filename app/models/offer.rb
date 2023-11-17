@@ -13,7 +13,12 @@ class Offer < ApplicationRecord
 
   # scopes
   scope :for, lambda { |user|
-    where(id: user.offers.ids)
+    active_offer_ids = user.offers
+                           .joins(:offer_invitations)
+                           .where(offer_invitations: { aasm_state: %i[pending accepted] })
+                           .ids
+
+    where(id: active_offer_ids)
       .or(where(offerer: user))
   }
 

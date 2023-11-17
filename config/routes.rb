@@ -13,5 +13,11 @@ Rails.application.routes.draw do
   resources :offers do
     get :bulk_add_invitations, to: 'offer_invitations#bulk_add'
     post :bulk_create_invitations, to: 'offer_invitations#bulk_create'
+    resource :offer_invitation, as: :invitation, only: [] do
+      member do
+        post :accept
+        post :decline
+      end
+    end
   end
 end
