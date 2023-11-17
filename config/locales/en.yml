@@ -107,5 +107,5 @@ en:
         user:
           attributes:
             user:
-              cannot_be_owner: "can't be the same as offer owner"
+              cannot_be_offerer: "can't be the same as offer offerer"
               already_invited: "has already been invited"

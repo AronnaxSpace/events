@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :offer do
-    association :owner, factory: :user
+    association :offerer, factory: :user
 
     what { Faker::Hipster.sentence }
     where { Faker::Address.full_address }

@@ -17,7 +17,7 @@ User.find_each do |user|
     FactoryBot.create(
       :offer,
       :with_conditions,
-      owner: user
+      offerer: user
     )
   end
 end
