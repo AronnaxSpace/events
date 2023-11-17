@@ -27,14 +27,21 @@ RSpec.describe Offer, type: :model do
 
       let(:user) { create(:user) }
       let!(:offer_created_by_user) { create(:offer, offerer: user) }
-      let!(:offer_with_invitation) { create(:offer) }
+      let(:offer_with_pending_invitation) { create(:offer) }
+      let(:offer_with_accepted_invitation) { create(:offer) }
+      let(:offer_with_declined_invitation) { create(:offer) }
       let!(:offer_without_invitation) { create(:offer) }
 
-      before { create(:offer_invitation, offer: offer_with_invitation, user: user) }
+      before do
+        create(:offer_invitation, :pending, offer: offer_with_pending_invitation, user: user)
+        create(:offer_invitation, :accepted, offer: offer_with_accepted_invitation, user: user)
+        create(:offer_invitation, :declined, offer: offer_with_declined_invitation, user: user)
+      end
 
       it 'returns offers for a given user' do
-        expect(subject).to include(offer_created_by_user, offer_with_invitation)
+        expect(subject).to include(offer_created_by_user, offer_with_pending_invitation, offer_with_accepted_invitation)
         expect(subject).not_to include(offer_without_invitation)
+        expect(subject).not_to include(offer_with_declined_invitation)
       end
     end
   end

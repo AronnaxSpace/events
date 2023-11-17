@@ -8,6 +8,6 @@ module OfferScoped
   private
 
   def offer
-    @offer ||= Offer.find_by!(uuid: params[:offer_id])
+    @offer ||= Offer.for(current_user).find_by!(uuid: params[:offer_id])
   end
 end
