@@ -11,6 +11,7 @@ class OfferInvitation < ApplicationRecord
 
   # scopes
   scope :for, ->(user) { where(user: user) }
+  scope :pending_or_accepted, -> { where(aasm_state: %i[pending accepted]) }
 
   aasm timestamps: true do
     state :pending, initial: true

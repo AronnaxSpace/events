@@ -48,6 +48,8 @@ en:
       go_to_offer: "Go to offer"
       edit: "Edit"
       delete: "Delete"
+      accept: "Accept"
+      decline: "Decline"
     index:
       title: "My offers"
       no_offers_yet: "You have no offers yet. Go ahead and <a href='%{url}'>create one</a>!"
@@ -66,6 +68,10 @@ en:
     bulk_create:
       success: "Invitations were successfully sent"
       no_users_selected: "No users selected"
+    accept:
+      success: "Invitation was successfully accepted"
+    decline:
+      success: "Invitation was successfully declined"
 
   profiles:
     new:

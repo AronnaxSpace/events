@@ -38,17 +38,26 @@
       </div>
 
       <div class="flex gap-x-3">
-        <% if policy(offer).edit? %>
-          <%= link_to t(".edit"),
-                      edit_offer_path(offer),
-                      class: "btn btn-secondary" %>
-        <% end %>
         <% if policy(offer).destroy? %>
           <%= button_to t(".delete"),
                         offer_path(offer),
                         method: :delete,
                         class: "btn btn-danger",
                         data: { turbo_confirm: "Are you sure?" } %>
+        <% end %>
+        <% if policy(offer).edit? %>
+          <%= link_to t(".edit"),
+                      edit_offer_path(offer),
+                      class: "btn btn-secondary" %>
+        <% end %>
+        <% if offer_invitation&.pending? %>
+          <%= button_to t(".decline"),
+                        decline_offer_invitation_path(offer),
+                        class: "btn btn-danger",
+                        data: { turbo_confirm: "Are you sure?" } %>
+          <%= button_to t(".accept"),
+                        accept_offer_invitation_path(offer),
+                        class: "btn btn-primary" %>
         <% end %>
       </div>
     <% end %>

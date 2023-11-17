@@ -1,7 +1,7 @@
 class OffersController < ApplicationController
   before_action :authorize_offer, only: %i[edit update destroy]
 
-  helper_method :offer
+  helper_method :offer, :offer_invitation
 
   def index
     @offers = Offer.for(current_user)
@@ -56,6 +56,10 @@ class OffersController < ApplicationController
   end
 
   def authorize_offer
-    authorize offer
+    authorize offer, :manage?
+  end
+
+  def offer_invitation
+    @offer_invitation ||= offer.offer_invitations.find_by(user: current_user)
   end
 end
