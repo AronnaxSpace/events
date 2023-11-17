@@ -1,4 +1,6 @@
 class OffersController < ApplicationController
+  before_action :authorize_offer, only: %i[edit update destroy]
+
   helper_method :offer
 
   def index
@@ -51,5 +53,9 @@ class OffersController < ApplicationController
     params.require(:offer).permit(
       :what, :where, :when_start, :when_end, :when_text, :conditions
     )
+  end
+
+  def authorize_offer
+    authorize offer
   end
 end

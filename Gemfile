@@ -75,3 +75,4 @@ end
 
 gem "devise", "~> 4.9"
 gem "aasm", "~> 5.5"
+gem "pundit", "~> 2.3"
