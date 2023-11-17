@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_11_14_222735) do
+ActiveRecord::Schema[7.1].define(version: 2023_11_17_185348) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -72,10 +72,10 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_14_222735) do
     t.string "when_text"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "owner_id", null: false
+    t.bigint "offerer_id", null: false
     t.string "where"
     t.boolean "users_invited", default: false
-    t.index ["owner_id"], name: "index_offers_on_owner_id"
+    t.index ["offerer_id"], name: "index_offers_on_offerer_id"
   end
 
   create_table "profiles", force: :cascade do |t|
@@ -100,6 +100,6 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_14_222735) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "offer_invitations", "offers"
   add_foreign_key "offer_invitations", "users"
-  add_foreign_key "offers", "users", column: "owner_id"
+  add_foreign_key "offers", "users", column: "offerer_id"
   add_foreign_key "profiles", "users"
 end

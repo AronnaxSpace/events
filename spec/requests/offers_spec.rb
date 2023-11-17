@@ -12,7 +12,7 @@ RSpec.describe 'Offers', type: :request do
   end
 
   describe 'GET /show' do
-    let!(:offer) { create(:offer, owner: user) }
+    let!(:offer) { create(:offer, offerer: user) }
 
     before { get offer_path(offer) }
 
@@ -30,7 +30,7 @@ RSpec.describe 'Offers', type: :request do
   end
 
   describe 'GET /edit' do
-    let!(:offer) { create(:offer, owner: user) }
+    let!(:offer) { create(:offer, offerer: user) }
 
     before { get edit_offer_path(offer) }
 
@@ -48,7 +48,7 @@ RSpec.describe 'Offers', type: :request do
   end
 
   describe 'PATCH /update' do
-    let!(:offer) { create(:offer, owner: user) }
+    let!(:offer) { create(:offer, offerer: user) }
     let(:params) { { offer: attributes_for(:offer) } }
 
     before { patch offer_path(offer), params: params }
@@ -59,7 +59,7 @@ RSpec.describe 'Offers', type: :request do
   end
 
   describe 'DELETE /destroy' do
-    let!(:offer) { create(:offer, owner: user) }
+    let!(:offer) { create(:offer, offerer: user) }
 
     subject { delete offer_path(offer) }
 

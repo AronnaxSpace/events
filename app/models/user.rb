@@ -7,8 +7,8 @@ class User < ApplicationRecord
   # associations
   has_many :owned_offers,
            class_name: 'Offer',
-           foreign_key: :owner_id,
-           inverse_of: :owner,
+           foreign_key: :offerer_id,
+           inverse_of: :offerer,
            dependent: :destroy
   has_many :offer_invitations, dependent: :destroy
   has_many :offers, through: :offer_invitations

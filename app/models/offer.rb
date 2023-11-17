@@ -2,7 +2,7 @@ class Offer < ApplicationRecord
   has_rich_text :conditions
 
   # associations
-  belongs_to :owner, class_name: 'User'
+  belongs_to :offerer, class_name: 'User'
   has_many :offer_invitations, dependent: :destroy
   has_many :users, through: :offer_invitations
 
@@ -14,7 +14,7 @@ class Offer < ApplicationRecord
   # scopes
   scope :for, lambda { |user|
     where(id: user.offers.ids)
-      .or(where(owner: user))
+      .or(where(offerer: user))
   }
 
   def offer_time

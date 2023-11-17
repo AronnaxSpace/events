@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Offer, type: :model do
   describe 'associations' do
-    it { should belong_to(:owner) }
+    it { should belong_to(:offerer) }
     it { should have_many(:offer_invitations) }
     it { should have_many(:users).through(:offer_invitations) }
   end
@@ -26,7 +26,7 @@ RSpec.describe Offer, type: :model do
       subject { described_class.for(user) }
 
       let(:user) { create(:user) }
-      let!(:offer_created_by_user) { create(:offer, owner: user) }
+      let!(:offer_created_by_user) { create(:offer, offerer: user) }
       let!(:offer_with_invitation) { create(:offer) }
       let!(:offer_without_invitation) { create(:offer) }
 

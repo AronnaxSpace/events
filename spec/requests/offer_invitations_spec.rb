@@ -7,7 +7,7 @@ RSpec.describe 'OfferInvitations', type: :request do
     before { get offer_bulk_add_invitations_path(offer) }
 
     context 'when offer has no invited users' do
-      let(:offer) { create(:offer, owner: user, users_invited: false) }
+      let(:offer) { create(:offer, offerer: user, users_invited: false) }
 
       it 'gets successful response' do
         expect(response.status).to eq 200
@@ -15,7 +15,7 @@ RSpec.describe 'OfferInvitations', type: :request do
     end
 
     context 'when offer has invited users' do
-      let(:offer) { create(:offer, owner: user, users_invited: true) }
+      let(:offer) { create(:offer, offerer: user, users_invited: true) }
 
       it 'redirects to offer path' do
         expect(response).to redirect_to(offer_path(offer))
@@ -24,7 +24,7 @@ RSpec.describe 'OfferInvitations', type: :request do
   end
 
   describe 'POST /bulk_create' do
-    let(:offer) { create(:offer, owner: user) }
+    let(:offer) { create(:offer, offerer: user) }
     let(:result) { double(:result, success?: success, error: double(:error, message: 'error message')) }
 
     before do
