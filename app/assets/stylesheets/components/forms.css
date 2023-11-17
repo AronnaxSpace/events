@@ -19,3 +19,21 @@ textarea.form-control,
 trix-editor {
   @apply rounded-2xl;
 }
+
+/* checkbox */
+
+.checkbox-label {
+  @apply card block px-2 py-1 relative cursor-pointer;
+}
+
+.checkbox-label input {
+  @apply absolute top-0 left-0 invisible;
+}
+
+.checkbox-label:has(input:checked) {
+  @apply border-green-700 bg-green-300 text-green-700;
+
+  .avatar {
+    @apply bg-green-700 text-gray-100;
+  }
+}

@@ -8,7 +8,7 @@
           <%= t(".sign_out") %>
         <% end %>
       <% end %>
-      <% unless controller_name == "offers" && action_name == "new" %>
+      <% if show_new_offer_button_in_bottom_navbar? %>
         <%= link_to t(".new_offer"),
                     new_offer_path,
                     class: "btn btn-success" %>
