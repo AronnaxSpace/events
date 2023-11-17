@@ -1,10 +1,9 @@
 shared_context 'logged in user' do
   before do
-    create(:profile, user: user)
     sign_in user
   end
 
-  let(:user) { create(:user) }
+  let(:user) { create(:user, :with_profile) }
 end
 
 shared_context 'logged in user withot profile' do

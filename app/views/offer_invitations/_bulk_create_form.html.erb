@@ -1,0 +1,19 @@
+<%= form_with url: offer_bulk_create_invitations_path(offer) do |form| %>
+  <%= form.collection_check_boxes(:user_ids, users.map{|user|[user, user.id]}, :last, :first) do |b| %>
+    <div class="form-group">
+      <%= b.label class: "checkbox-label" do %>
+        <%= b.check_box %>
+        <%= render "shared/profile",
+                   profile: b.object.first.profile %>
+      <% end %>
+    </div>
+  <% end %>
+
+  <% if @error.present? %>
+    <div class="text-sm text-red-500 mb-3">
+      <%= @error %>
+    </div>
+  <% end %>
+
+  <%= form.submit nil, class: "btn btn-primary" %>
+<% end %>

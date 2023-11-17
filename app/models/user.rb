@@ -13,4 +13,7 @@ class User < ApplicationRecord
   has_many :offer_invitations, dependent: :destroy
   has_many :offers, through: :offer_invitations
   has_one :profile, dependent: :destroy
+
+  # scopes
+  scope :with_profile, -> { joins(:profile).where.not(profile: { id: nil }) }
 end

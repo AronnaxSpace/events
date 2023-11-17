@@ -5,7 +5,11 @@ class OffersController < ApplicationController
     @offers = Offer.for(current_user)
   end
 
-  def show; end
+  def show
+    redirect_to offer_bulk_add_invitations_path(offer) unless offer.users_invited
+
+    @offer_invitations = offer.offer_invitations
+  end
 
   def new
     @offer = Offer.new
@@ -17,7 +21,7 @@ class OffersController < ApplicationController
     @offer = current_user.owned_offers.new(offer_params)
 
     if @offer.save
-      redirect_to @offer, notice: t('.success')
+      redirect_to offer_bulk_add_invitations_path(offer)
     else
       render :new, status: :unprocessable_entity
     end

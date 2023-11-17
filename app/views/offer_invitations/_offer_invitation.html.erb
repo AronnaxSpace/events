@@ -1,0 +1,7 @@
+<div class="card flex justify-between items-center">
+  <%= render "shared/profile",
+             profile: offer_invitation.user.profile %>
+  <span class="shrink-0 text-sm italic">
+    <%= offer_invitation.aasm_state %>
+  </span>
+</div>

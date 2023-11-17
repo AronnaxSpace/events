@@ -35,6 +35,12 @@ en:
         new_offer: "New offer"
         sign_out: "Sign out"
 
+  shared:
+    create_offer_stepper:
+      create_offer: "Create offer"
+      edit_offer: "Edit offer"
+      invite_friends: "Invite friends"
+
   offers:
     offer:
       go_to_offer: "Go to offer"
@@ -45,8 +51,6 @@ en:
       no_offers_yet: "You have no offers yet. Go ahead and <a href='%{url}'>create one</a>!"
     show:
       back_to_offers: "Back to offers"
-    new:
-      title: "New offer"
     edit:
       title: "Edit offer"
     create:
@@ -55,6 +59,12 @@ en:
       success: "Offer was successfully updated"
     destroy:
       success: "Offer was successfully deleted"
+
+  offer_invitations:
+    bulk_create:
+      success: "Invitations were successfully sent"
+      no_users_selected: "No users selected"
+
   profiles:
     new:
       title: "Please, finish your registration by creating a profile"
@@ -93,4 +103,9 @@ en:
         offer:
           attributes:
             offer_time:
-              must_be_specified: 'must be specified'
+              must_be_specified: "must be specified"
+        user:
+          attributes:
+            user:
+              cannot_be_owner: "can't be the same as offer owner"
+              already_invited: "has already been invited"

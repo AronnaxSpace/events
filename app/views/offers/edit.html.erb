@@ -1,3 +1,7 @@
-<h1><%= t(".title") %></h1>
+<% if offer.users_invited? %>
+  <h1><%= t(".title") %></h1>
+<% else %>
+  <%= render "shared/create_offer_stepper", offer: offer %>
+<% end %>
 
 <%= render "form" %>
