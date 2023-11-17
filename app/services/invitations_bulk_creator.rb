@@ -5,7 +5,7 @@ class InvitationsBulkCreator
   end
 
   def call
-    raise(StandardError.new, I18n.t('offer_invitations.bulk_create.no_users_selected')) if users.blank?
+    raise(StandardError.new, I18n.t('offer_invitations.bulk_create.no_users_selected')) if users.empty?
 
     users.each do |user|
       OfferInvitation.create(offer: @offer, user: user)
