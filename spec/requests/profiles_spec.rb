@@ -1,6 +1,4 @@
-require 'rails_helper'
-
-RSpec.describe 'Profiles', type: :request do
+describe 'Profiles', type: :request do
   include_context 'logged in user withot profile'
 
   let(:profile) { user.profile }
@@ -39,7 +37,7 @@ RSpec.describe 'Profiles', type: :request do
 
     before { patch profile_path(profile), params: params }
 
-    it 'updates the user\'s profile' do
+    it "updates the user's profile" do
       expect(profile.reload).to have_attributes(params[:profile])
     end
   end

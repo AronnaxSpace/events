@@ -1,6 +1,4 @@
-require 'rails_helper'
-
-RSpec.describe 'OfferInvitations', type: :request do
+describe 'OfferInvitations', type: :request do
   include_context 'logged in user'
 
   describe 'GET /bulk_add' do
@@ -9,7 +7,7 @@ RSpec.describe 'OfferInvitations', type: :request do
     context 'when offer has no invited users' do
       let(:offer) { create(:offer, offerer: user, users_invited: false) }
 
-      it 'gets successful response' do
+      it 'gets HTTP status 200' do
         expect(response.status).to eq 200
       end
     end
@@ -17,7 +15,7 @@ RSpec.describe 'OfferInvitations', type: :request do
     context 'when offer has invited users' do
       let(:offer) { create(:offer, offerer: user, users_invited: true) }
 
-      it 'redirects to offer path' do
+      it 'redirects to the offer' do
         expect(response).to redirect_to(offer_path(offer))
       end
     end
@@ -36,7 +34,7 @@ RSpec.describe 'OfferInvitations', type: :request do
     context 'when bulk create is successful' do
       let(:success) { true }
 
-      it 'redirects to offer path' do
+      it 'redirects to the offer' do
         expect(response).to redirect_to(offer_path(offer))
       end
     end
@@ -44,7 +42,7 @@ RSpec.describe 'OfferInvitations', type: :request do
     context 'when bulk create is not successful' do
       let(:success) { false }
 
-      it 'displays the error' do
+      it 'receives the error' do
         expect(response.status).to eq 422
         expect(response.body).to include('error message')
       end
@@ -60,6 +58,10 @@ RSpec.describe 'OfferInvitations', type: :request do
     it 'accepts the invitation' do
       expect(offer_invitation.reload.accepted?).to be true
     end
+
+    it 'redirects to the offer' do
+      expect(response).to redirect_to(offer_path(offer))
+    end
   end
 
   describe 'POST /decline' do
@@ -70,6 +72,10 @@ RSpec.describe 'OfferInvitations', type: :request do
 
     it 'declines the invitation' do
       expect(offer_invitation.reload.declined?).to be true
+    end
+
+    it 'redirects to offers list' do
+      expect(response).to redirect_to(offers_path)
     end
   end
 end

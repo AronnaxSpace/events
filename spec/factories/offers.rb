@@ -10,5 +10,9 @@ FactoryBot.define do
     trait :with_conditions do
       conditions { Faker::Hipster.paragraph }
     end
+
+    trait :users_not_invited do
+      users_invited { false }
+    end
   end
 end
