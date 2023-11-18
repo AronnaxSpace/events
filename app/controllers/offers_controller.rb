@@ -20,7 +20,7 @@ class OffersController < ApplicationController
   def edit; end
 
   def create
-    @offer = current_user.owned_offers.new(offer_params)
+    @offer = current_user.offered_offers.new(offer_params)
 
     if @offer.save
       redirect_to offer_bulk_add_invitations_path(offer)
