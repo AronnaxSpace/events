@@ -115,6 +115,10 @@ en:
           attributes:
             offer_time:
               must_be_specified: "must be specified"
+        profile:
+          attributes:
+            nickname:
+              cannot_contain_spaces: "cannot contain spaces"
         user:
           attributes:
             user:
