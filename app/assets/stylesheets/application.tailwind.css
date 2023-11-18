@@ -3,6 +3,7 @@
 @import "components/buttons";
 @import "components/cards";
 @import "components/forms";
+@import "components/tags";
 
 @tailwind base;
 @tailwind components;

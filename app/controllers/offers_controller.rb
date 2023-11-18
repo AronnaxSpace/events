@@ -4,7 +4,7 @@ class OffersController < ApplicationController
   helper_method :offer, :offer_invitation
 
   def index
-    @offers = Offer.for(current_user)
+    @offers = Offer.for(current_user).order(created_at: :desc)
   end
 
   def show

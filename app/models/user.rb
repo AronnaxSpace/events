@@ -16,4 +16,6 @@ class User < ApplicationRecord
 
   # scopes
   scope :with_profile, -> { joins(:profile).where.not(profile: { id: nil }) }
+
+  delegate :name, :nickname, to: :profile
 end

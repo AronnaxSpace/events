@@ -1,64 +1,79 @@
 <div class="card">
-  <div class="space-y-3">
-    <p class="text-xl font-light">
-      <%= offer.what %>
-    </p>
-    <div class="flex w-full">
-      <div class="flex-1">
-        <small class="form-label">
-          <%= Offer.human_attribute_name(:where) %>
-        </small>
-        <p class="">
-          <%= offer.where %>
-        </p>
+  <div class="h-full flex flex-col justify-between gap-y-3">
+    <div class="space-y-3">
+      <div class="flex justify-between gap-x-2">
+        <h4 class="text-xl font-light line-clamp-2">
+          <%= offer.what %>
+        </h4>
+        <% unless offer.users_invited %>
+          <span class="shrink-0">
+            <i class="fa-solid fa-gear text-gray-400" title="<%= t(".not_complete") %>"></i>
+          </span>
+        <% end %>
       </div>
-      <div class="flex-1 text-right">
-        <small class="form-label">
-          <%= Offer.human_attribute_name(:when) %>
-        </small>
-        <p class="">
-          <%= offer.offer_time %>
-        </p>
+      <div class="text-center">
+        <span class="tag">
+          <% if offer.offerer == current_user %>
+            <%= t(".you_are_offering").html_safe %>
+          <% else %>
+            <%= t(".is_offering", nickname: offer.offerer.nickname).html_safe %>
+          <% end %>
+        </span>
       </div>
+      <div class="flex gap-x-2">
+        <div class="flex-1">
+          <small class="form-label">
+            <%= Offer.human_attribute_name(:where) %>
+          </small>
+          <p class="text-sm font-light line-clamp-2">
+            <%= offer.where %>
+          </p>
+        </div>
+        <div class="flex-1 text-right">
+          <small class="form-label">
+            <%= Offer.human_attribute_name(:when) %>
+          </small>
+          <p class="text-sm font-light">
+            <%= offer.offer_time %>
+          </p>
+        </div>
+      </div>
+      <% if action_name == "show" %>
+        <div class="">
+          <small class="form-label">
+            <%= Offer.human_attribute_name(:conditions) %>
+          </small>
+          <%= offer.conditions %>
+        </div>
+        <div class="flex gap-x-3">
+          <% if policy(offer).destroy? %>
+            <%= button_to t(".delete"),
+                          offer_path(offer),
+                          method: :delete,
+                          class: "btn btn-danger",
+                          data: { turbo_confirm: "Are you sure?" } %>
+          <% end %>
+          <% if policy(offer).edit? %>
+            <%= link_to t(".edit"),
+                        edit_offer_path(offer),
+                        class: "btn btn-secondary" %>
+          <% end %>
+          <% if offer_invitation&.pending? %>
+            <%= button_to t(".decline"),
+                          decline_offer_invitation_path(offer),
+                          class: "btn btn-danger",
+                          data: { turbo_confirm: "Are you sure?" } %>
+            <%= button_to t(".accept"),
+                          accept_offer_invitation_path(offer),
+                          class: "btn btn-primary" %>
+          <% end %>
+        </div>
+      <% end %>
     </div>
-
     <% if action_name == "index" %>
       <div class="text-center">
         <%= link_to t(".go_to_offer"),
                     offer_path(offer) %>
-      </div>
-    <% end %>
-
-    <% if action_name == "show" %>
-      <div class="">
-        <small class="form-label">
-          <%= Offer.human_attribute_name(:conditions) %>
-        </small>
-        <%= offer.conditions %>
-      </div>
-
-      <div class="flex gap-x-3">
-        <% if policy(offer).destroy? %>
-          <%= button_to t(".delete"),
-                        offer_path(offer),
-                        method: :delete,
-                        class: "btn btn-danger",
-                        data: { turbo_confirm: "Are you sure?" } %>
-        <% end %>
-        <% if policy(offer).edit? %>
-          <%= link_to t(".edit"),
-                      edit_offer_path(offer),
-                      class: "btn btn-secondary" %>
-        <% end %>
-        <% if offer_invitation&.pending? %>
-          <%= button_to t(".decline"),
-                        decline_offer_invitation_path(offer),
-                        class: "btn btn-danger",
-                        data: { turbo_confirm: "Are you sure?" } %>
-          <%= button_to t(".accept"),
-                        accept_offer_invitation_path(offer),
-                        class: "btn btn-primary" %>
-        <% end %>
       </div>
     <% end %>
   </div>
