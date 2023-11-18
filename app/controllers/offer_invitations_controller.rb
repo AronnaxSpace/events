@@ -2,18 +2,17 @@ class OfferInvitationsController < ApplicationController
   include OfferScoped
 
   before_action :authorize_offer, only: %i[bulk_add bulk_create]
+  before_action :check_offer_state, only: %i[bulk_add bulk_create]
 
   helper_method :users
 
-  def bulk_add
-    redirect_to offer_path(offer) if offer.users_invited?
-  end
+  def bulk_add; end
 
   def bulk_create
-    result = InvitationsBulkCreator.new(offer, params[:user_ids]).call
+    result = OfferInvitationsManager.new(offer, params[:user_ids]).call
 
     if result.success?
-      redirect_to offer_path(offer), notice: t('.success')
+      redirect_to offer_path(offer)
     else
       @error = result.error.message
       render :bulk_add, status: :unprocessable_entity
@@ -36,6 +35,10 @@ class OfferInvitationsController < ApplicationController
 
   def authorize_offer
     authorize offer, :manage?
+  end
+
+  def check_offer_state
+    redirect_to offer_path(offer) if offer.published?
   end
 
   def users

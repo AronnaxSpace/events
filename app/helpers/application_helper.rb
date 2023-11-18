@@ -1,4 +1,12 @@
 module ApplicationHelper
+  def offer_page?
+    controller_name == 'offers' && action_name == 'show'
+  end
+
+  def offers_page?
+    controller_name == 'offers' && action_name == 'index'
+  end
+
   def new_offer_page?
     controller_name == 'offers' && %i[new create].include?(action_name.to_sym)
   end

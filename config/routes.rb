@@ -11,6 +11,9 @@ Rails.application.routes.draw do
 
   resource :profile, except: %i[index show destroy]
   resources :offers do
+    member do
+      post :publish
+    end
     get :bulk_add_invitations, to: 'offer_invitations#bulk_add'
     post :bulk_create_invitations, to: 'offer_invitations#bulk_create'
     resource :offer_invitation, as: :invitation, only: [] do

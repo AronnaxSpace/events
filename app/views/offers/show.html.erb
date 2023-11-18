@@ -1,12 +1,26 @@
-<div class="lg:w-1/2">
+<% if offer.published? %>
+  <h1><%= offer.what %></h1>
+<% else %>
+  <%= render "shared/create_offer_stepper", offer: offer %>
+<% end %>
+
+<div class="lg:w-1/2 space-y-4">
   <%= render "offer" %>
 
-  <div class="my-3">
-    <%= link_to t(".back_to_offers"),
-                root_path %>
-  </div>
+  <% if offer.published? %>
+    <div class="">
+      <%= link_to t(".back_to_offers"),
+                  root_path %>
+    </div>
+  <% end %>
 
   <div class="space-y-4">
     <%= render @offer_invitations %>
   </div>
+
+  <% if !offer.published? && policy(offer).manage? %>
+    <%= button_to t(".publish"),
+                  publish_offer_path,
+                  class: "btn btn-primary" %>
+  <% end %>
 </div>
