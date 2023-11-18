@@ -1,6 +1,4 @@
-require 'rails_helper'
-
-RSpec.describe OfferPolicy do
+describe OfferPolicy do
   subject { described_class }
 
   let(:offerer) { create(:user) }

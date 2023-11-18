@@ -6,8 +6,8 @@ class OfferInvitation < ApplicationRecord
   belongs_to :user
 
   # validations
-  validates :user_id, uniqueness: { scope: :offer_id, message: :already_invited }
-  validate :cannot_invite_offerer, on: :create
+  validates :user, uniqueness: { scope: :offer_id, message: :already_invited }
+  validate :user_cannot_be_offerer, on: :create
 
   # scopes
   scope :for, ->(user) { where(user: user) }
@@ -34,7 +34,7 @@ class OfferInvitation < ApplicationRecord
 
   private
 
-  def cannot_invite_offerer
+  def user_cannot_be_offerer
     return unless offer && user
     return unless offer.offerer == user
 

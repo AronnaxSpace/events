@@ -5,7 +5,7 @@ class User < ApplicationRecord
          :rememberable, :validatable
 
   # associations
-  has_many :owned_offers,
+  has_many :offered_offers,
            class_name: 'Offer',
            foreign_key: :offerer_id,
            inverse_of: :offerer,

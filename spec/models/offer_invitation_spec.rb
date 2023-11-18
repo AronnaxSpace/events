@@ -1,9 +1,24 @@
-require 'rails_helper'
-
-RSpec.describe OfferInvitation, type: :model do
+describe OfferInvitation, type: :model do
   describe 'associations' do
     it { should belong_to(:offer) }
     it { should belong_to(:user) }
+  end
+
+  describe 'validations' do
+    subject { build(:offer_invitation) }
+
+    it { should validate_uniqueness_of(:user).scoped_to(:offer_id).with_message(:already_invited) }
+
+    describe 'cannot_invite_offerer' do
+      let(:offer) { create(:offer) }
+      let(:user) { offer.offerer }
+      let(:offer_invitation) { build(:offer_invitation, offer: offer, user: user) }
+
+      it 'is not valid' do
+        expect(offer_invitation).not_to be_valid
+        expect(offer_invitation.errors[:user]).to include("can't be the same as offerer")
+      end
+    end
   end
 
   describe 'scopes' do

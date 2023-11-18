@@ -115,6 +115,15 @@ en:
           attributes:
             offer_time:
               must_be_specified: "must be specified"
+        offer_invitation:
+          attributes:
+            user:
+              already_invited: "has already been invited"
+              cannot_be_offerer: "can't be the same as offerer"
+        profile:
+          attributes:
+            nickname:
+              cannot_contain_spaces: "cannot contain spaces"
         user:
           attributes:
             user:
