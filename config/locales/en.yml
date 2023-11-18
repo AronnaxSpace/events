@@ -39,9 +39,10 @@ en:
 
   shared:
     create_offer_stepper:
-      create_offer: "Create offer"
-      edit_offer: "Edit offer"
-      invite_friends: "Invite friends"
+      create_offer: "Create"
+      edit_offer: "Edit"
+      invite: "Invite"
+      publish: "Publish"
 
   offers:
     offer:
@@ -52,12 +53,13 @@ en:
       decline: "Decline"
       you_are_offering: "<b>You</b> are offering"
       is_offering: "<b>%{nickname}</b> is offering"
-      not_complete: "Offer is not complete"
+      not_completed: "Offer is not completed"
     index:
       title: "My offers"
       no_offers_yet: "You have no offers yet. Go ahead and <a href='%{url}'>create one</a>!"
     show:
       back_to_offers: "Back to offers"
+      publish: "Publish"
     edit:
       title: "Edit offer"
     create:
@@ -66,6 +68,8 @@ en:
       success: "Offer was successfully updated"
     destroy:
       success: "Offer was successfully deleted"
+    publish:
+      success: "Offer was successfully published"
 
   offer_invitations:
     bulk_create:
@@ -91,9 +95,8 @@ en:
       offer:
         what: "What?"
         where: "Where?"
-        when_start: "When start?"
-        when_end: "When end?"
-        when_text: "When?"
+        start_at: "When start?"
+        end_at: "When end?"
     submit:
       offer:
         create: "Create"
@@ -105,16 +108,16 @@ en:
         what: "What?"
         where: "Where?"
         when: "When?"
-        when_start: "When start?"
-        when_end: "When end?"
-        when_text: "When?"
+        start_at: "When start?"
+        end_at: "When end?"
         conditions: "Conditions"
     errors:
       models:
         offer:
           attributes:
-            offer_time:
-              must_be_specified: "must be specified"
+            end_at:
+              must_be_in_the_future: "must be in the future"
+              must_be_after_start_at: "must be after start"
         offer_invitation:
           attributes:
             user:

@@ -1,16 +1,18 @@
 <div class="card">
   <div class="h-full flex flex-col justify-between gap-y-3">
     <div class="space-y-3">
-      <div class="flex justify-between gap-x-2">
-        <h4 class="text-xl font-light line-clamp-2">
-          <%= offer.what %>
-        </h4>
-        <% unless offer.users_invited %>
-          <span class="shrink-0">
-            <i class="fa-solid fa-gear text-gray-400" title="<%= t(".not_complete") %>"></i>
-          </span>
-        <% end %>
-      </div>
+      <% if offers_page? || (offer_page? && !offer.published?) %>
+        <div class="flex justify-between gap-x-2">
+          <h4 class="text-xl font-light line-clamp-2">
+            <%= offer.what %>
+          </h4>
+          <% unless offer.published? %>
+            <span class="shrink-0">
+              <i class="fa-solid fa-gear text-gray-400" title="<%= t(".not_completed") %>"></i>
+            </span>
+          <% end %>
+        </div>
+      <% end %>
       <div class="text-center">
         <span class="tag">
           <% if offer.offerer == current_user %>
@@ -34,11 +36,11 @@
             <%= Offer.human_attribute_name(:when) %>
           </small>
           <p class="text-sm font-light">
-            <%= offer.offer_time %>
+            <%= offer_time_for(offer) %>
           </p>
         </div>
       </div>
-      <% if action_name == "show" %>
+      <% if offer_page? %>
         <div class="">
           <small class="form-label">
             <%= Offer.human_attribute_name(:conditions) %>
@@ -46,14 +48,12 @@
           <%= offer.conditions %>
         </div>
         <div class="flex gap-x-3">
-          <% if policy(offer).destroy? %>
+          <% if offer.published? && policy(offer).manage? %>
             <%= button_to t(".delete"),
                           offer_path(offer),
                           method: :delete,
                           class: "btn btn-danger",
                           data: { turbo_confirm: "Are you sure?" } %>
-          <% end %>
-          <% if policy(offer).edit? %>
             <%= link_to t(".edit"),
                         edit_offer_path(offer),
                         class: "btn btn-secondary" %>
@@ -70,7 +70,7 @@
         </div>
       <% end %>
     </div>
-    <% if action_name == "index" %>
+    <% if offers_page? %>
       <div class="text-center">
         <%= link_to t(".go_to_offer"),
                     offer_path(offer) %>

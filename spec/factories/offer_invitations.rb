@@ -3,6 +3,12 @@ FactoryBot.define do
     offer
     user
 
+    aasm_state { :pending }
+
+    trait :draft do
+      aasm_state { :draft }
+    end
+
     trait :pending do
       aasm_state { :pending }
     end

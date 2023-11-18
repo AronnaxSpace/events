@@ -1,4 +1,4 @@
-describe InvitationsBulkCreator do
+describe OfferInvitationsManager do
   describe '#call' do
     subject { described_class.new(offer, user_ids).call }
 

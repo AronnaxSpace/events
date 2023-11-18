@@ -1,4 +1,6 @@
 class Offer < ApplicationRecord
+  include AASM
+
   has_rich_text :conditions
 
   # associations
@@ -9,7 +11,10 @@ class Offer < ApplicationRecord
   # validations
   validates :what, presence: true
   validates :where, presence: true
-  validate :when_start_or_when_text_must_be_present
+  validates :start_at, presence: true
+  validates :end_at, presence: true
+  validate :end_at_must_be_in_the_future
+  validate :end_at_must_be_after_start_at
 
   # scopes
   scope :for, lambda { |user|
@@ -22,22 +27,42 @@ class Offer < ApplicationRecord
       .or(where(offerer: user))
   }
 
+  # state machine
+  aasm do
+    state :details_specified, initial: true
+    state :users_invited
+    state :published
+
+    event :invite_users do
+      transitions from: :details_specified, to: :users_invited
+    end
+
+    event :publish, after: :send_invitations do
+      transitions from: :users_invited, to: :published
+    end
+  end
+
   def to_param
     uuid
   end
 
-  def offer_time
-    return when_text if when_text.present?
-    return "#{when_start} - #{when_end}" if when_start.present? && when_end.present?
-
-    when_start
-  end
-
   private
 
-  def when_start_or_when_text_must_be_present
-    return if when_start.present? || when_text.present?
+  def end_at_must_be_in_the_future
+    return unless end_at.present?
+    return if end_at > Time.current
 
-    errors.add(:offer_time, :must_be_specified)
+    errors.add(:end_at, :must_be_in_the_future)
+  end
+
+  def end_at_must_be_after_start_at
+    return unless end_at.present? && start_at.present?
+    return if end_at > start_at
+
+    errors.add(:end_at, :must_be_after_start_at)
+  end
+
+  def send_invitations
+    offer_invitations.each(&:send_invitation!)
   end
 end

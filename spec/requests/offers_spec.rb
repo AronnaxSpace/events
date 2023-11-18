@@ -66,7 +66,7 @@ describe 'Offers', type: :request do
   end
 
   describe 'POST /create' do
-    subject { post offers_path, params: { offer: attributes_for(:offer, :users_not_invited) } }
+    subject { post offers_path, params: { offer: attributes_for(:offer, :details_specified) } }
 
     it 'creates a new offer' do
       expect { subject }.to change(Offer, :count).by(1)
@@ -79,12 +79,17 @@ describe 'Offers', type: :request do
   end
 
   describe 'PATCH /update' do
-    let(:params) { { offer: attributes_for(:offer) } }
+    let(:params) { { offer: attributes_for(:offer, :with_conditions) } }
 
     before { patch offer_path(offer), params: params }
 
     it 'updates the offer' do
-      expect(offer.reload).to have_attributes(params[:offer])
+      offer.reload
+
+      %i[what where start_at end_at].each do |attribute|
+        expect(offer.public_send(attribute)).to eq params[:offer][attribute]
+      end
+      expect(offer.conditions.to_plain_text).to eq params[:offer][:conditions]
     end
 
     it 'redirects to the offer' do
@@ -102,6 +107,21 @@ describe 'Offers', type: :request do
     it 'redirects to the offers list' do
       subject
       expect(response).to redirect_to(offers_path)
+    end
+  end
+
+  describe 'POST /publish' do
+    subject { post publish_offer_path(offer) }
+
+    let!(:offer) { create(:offer, :users_invited, offerer: user) }
+
+    it 'publishes the offer' do
+      expect { subject }.to change { offer.reload.published? }.from(false).to(true)
+    end
+
+    it 'redirects to the offer' do
+      subject
+      expect(response).to redirect_to(offer_path(offer))
     end
   end
 end

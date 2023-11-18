@@ -14,10 +14,15 @@ class OfferInvitation < ApplicationRecord
   scope :pending_or_accepted, -> { where(aasm_state: %i[pending accepted]) }
 
   aasm timestamps: true do
-    state :pending, initial: true
+    state :draft, initial: true
+    state :pending
     state :accepted
     state :declined
     state :expired
+
+    event :send_invitation do
+      transitions from: :draft, to: :pending
+    end
 
     event :accept do
       transitions from: :pending, to: :accepted

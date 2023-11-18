@@ -8,7 +8,7 @@ class OffersController < ApplicationController
   end
 
   def show
-    redirect_to offer_bulk_add_invitations_path(offer) unless offer.users_invited
+    redirect_to offer_bulk_add_invitations_path(offer) if offer.details_specified?
 
     @offer_invitations = offer.offer_invitations
   end
@@ -43,6 +43,12 @@ class OffersController < ApplicationController
     redirect_to offers_url, notice: t('.success')
   end
 
+  def publish
+    offer.publish!
+
+    redirect_to offer, notice: t('.success')
+  end
+
   private
 
   def offer
@@ -51,7 +57,7 @@ class OffersController < ApplicationController
 
   def offer_params
     params.require(:offer).permit(
-      :what, :where, :when_start, :when_end, :when_text, :conditions
+      :what, :where, :start_at, :end_at, :conditions
     )
   end
 

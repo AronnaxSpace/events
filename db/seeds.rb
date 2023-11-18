@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-(1..3).each do |i|
+(1..5).each do |i|
   email = "user_#{i}@aronnax.space"
   next if User.exists?(email: email)
 
@@ -14,10 +14,21 @@ end
 
 User.find_each do |user|
   5.times do
-    FactoryBot.create(
+    offer = FactoryBot.create(
       :offer,
       :with_conditions,
       offerer: user
     )
+
+    User.without(user).find_each do |invitee|
+      invitation_state = %i[pending accepted declined].sample
+
+      FactoryBot.create(
+        :offer_invitation,
+        invitation_state,
+        offer: offer,
+        user: invitee
+      )
+    end
   end
 end

@@ -1,4 +1,4 @@
-class InvitationsBulkCreator
+class OfferInvitationsManager
   def initialize(offer, user_ids)
     @offer = offer
     @user_ids = user_ids
@@ -11,7 +11,7 @@ class InvitationsBulkCreator
       OfferInvitation.create(offer: @offer, user: user)
     end
 
-    @offer.update(users_invited: true) unless @offer.users_invited?
+    @offer.invite_users! if @offer.details_specified?
 
     OpenStruct.new(success?: true)
   rescue StandardError => e

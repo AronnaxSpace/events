@@ -4,16 +4,16 @@ describe 'OfferInvitations', type: :request do
   describe 'GET /bulk_add' do
     before { get offer_bulk_add_invitations_path(offer) }
 
-    context 'when offer has no invited users' do
-      let(:offer) { create(:offer, offerer: user, users_invited: false) }
+    context 'when offer is not published yet' do
+      let(:offer) { create(:offer, :details_specified, offerer: user) }
 
       it 'gets HTTP status 200' do
         expect(response.status).to eq 200
       end
     end
 
-    context 'when offer has invited users' do
-      let(:offer) { create(:offer, offerer: user, users_invited: true) }
+    context 'when offer is already published' do
+      let(:offer) { create(:offer, :published, offerer: user) }
 
       it 'redirects to the offer' do
         expect(response).to redirect_to(offer_path(offer))
@@ -22,11 +22,11 @@ describe 'OfferInvitations', type: :request do
   end
 
   describe 'POST /bulk_create' do
-    let(:offer) { create(:offer, offerer: user) }
+    let(:offer) { create(:offer, :details_specified, offerer: user) }
     let(:result) { double(:result, success?: success, error: double(:error, message: 'error message')) }
 
     before do
-      allow_any_instance_of(InvitationsBulkCreator).to receive(:call).and_return(result)
+      allow_any_instance_of(OfferInvitationsManager).to receive(:call).and_return(result)
 
       post offer_bulk_create_invitations_path(offer)
     end
