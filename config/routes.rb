@@ -6,6 +6,14 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
   mount LetterOpenerWeb::Engine, at: "/letter_opener" if Rails.env.development?
 
+  authenticate :user do
+    if defined?(Sidekiq)
+      require 'sidekiq/web'
+      require 'sidekiq-scheduler/web'
+      mount Sidekiq::Web => '/sidekiq'
+    end
+  end
+
   devise_for :users
 
   root to: 'offers#index'

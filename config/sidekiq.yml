@@ -1,0 +1,16 @@
+:verbose: false
+:concurrency: 10
+:timeout: 25
+
+:queues:
+  - default
+
+staging:
+  :concurrency: 15
+production:
+  :concurrency: 25
+
+:schedule:
+  end_expired_offers:
+    cron: "0 */1 * * *" # every hour
+    class: EndExpiredOffersCronJob
