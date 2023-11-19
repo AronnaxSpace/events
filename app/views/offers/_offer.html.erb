@@ -48,12 +48,14 @@
           <%= offer.conditions %>
         </div>
         <div class="flex gap-x-3">
-          <% if offer.published? && policy(offer).manage? %>
+          <% if offer.published? && policy(offer).destroy? %>
             <%= button_to t(".delete"),
                           offer_path(offer),
                           method: :delete,
                           class: "btn btn-danger",
                           data: { turbo_confirm: "Are you sure?" } %>
+          <% end %>
+          <% if offer.published? && policy(offer).edit? %>
             <%= link_to t(".edit"),
                         edit_offer_path(offer),
                         class: "btn btn-secondary" %>

@@ -115,13 +115,34 @@ describe 'Offers', type: :request do
 
     let!(:offer) { create(:offer, :users_invited, offerer: user) }
 
-    it 'publishes the offer' do
-      expect { subject }.to change { offer.reload.published? }.from(false).to(true)
+    context 'when the offer is valid' do
+      it 'publishes the offer' do
+        expect { subject }.to change { offer.reload.published? }.from(false).to(true)
+      end
+
+      it 'redirects to the offer' do
+        subject
+        expect(response).to redirect_to(offer_path(offer))
+      end
     end
 
-    it 'redirects to the offer' do
-      subject
-      expect(response).to redirect_to(offer_path(offer))
+    context 'when the offer is not valid' do
+      before { offer.update_attribute(:what, nil) }
+
+      it 'does not publish the offer' do
+        expect { subject }.not_to(change { offer.reload.published? })
+      end
+
+      it 'redirects to the edit offer page' do
+        subject
+        expect(response).to redirect_to(edit_offer_path(offer))
+      end
+
+      it 'shows an alert' do
+        subject
+        offer.save
+        expect(flash[:alert]).to eq offer.errors.full_messages.join(', ')
+      end
     end
   end
 end

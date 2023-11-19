@@ -12,16 +12,29 @@ describe Offer, type: :model do
     it { should validate_presence_of(:end_at) }
 
     describe 'end_at_must_be_in_the_future' do
-      subject { build(:offer, start_at: 1.hour.from_now, end_at: end_at) }
+      subject { build(:offer, start_at: 2.days.ago, end_at: end_at) }
 
-      context 'when end_at is in the past' do
-        let(:end_at) { 1.hour.ago }
+      context 'when changes contain end_at' do
+        context 'when end_at is in the past' do
+          let(:end_at) { 1.day.ago }
 
-        it { should_not be_valid }
+          it { should_not be_valid }
+        end
+
+        context 'when end_at is in the future' do
+          let(:end_at) { 1.day.from_now }
+
+          it { should be_valid }
+        end
       end
 
-      context 'when end_at is in the future' do
-        let(:end_at) { 1.day.from_now }
+      context 'when changes does not contain end_at' do
+        let(:end_at) { 1.day.ago }
+
+        before do
+          subject.save(validate: false)
+          subject.what = 'new what'
+        end
 
         it { should be_valid }
       end
@@ -64,9 +77,27 @@ describe Offer, type: :model do
       end
 
       it 'returns offers for a given user' do
-        expect(subject).to include(offer_created_by_user, offer_with_pending_invitation, offer_with_accepted_invitation)
+        expect(subject).to include(
+          offer_created_by_user,
+          offer_with_pending_invitation,
+          offer_with_accepted_invitation
+        )
         expect(subject).not_to include(offer_without_invitation)
         expect(subject).not_to include(offer_with_declined_invitation)
+      end
+    end
+
+    describe '.expired' do
+      subject { described_class.expired }
+
+      let(:expired_offer) { build(:offer, start_at: 2.days.ago, end_at: 1.day.ago) }
+      let!(:active_offer) { build(:offer, start_at: 1.day.from_now, end_at: 2.days.from_now) }
+
+      before { expired_offer.save(validate: false) }
+
+      it 'returns expired offers' do
+        expect(subject).to include(expired_offer)
+        expect(subject).not_to include(active_offer)
       end
     end
   end
@@ -90,12 +121,31 @@ describe Offer, type: :model do
       before { create_list(:offer_invitation, 3, :draft, offer: offer) }
 
       it 'transitions to publish' do
-        expect { subject }.to change { offer.aasm_state }.from('users_invited').to('published')
+        expect { subject }.to change { offer.reload.aasm_state }
+                          .from('users_invited').to('published')
       end
 
       it 'sends invitations' do
-        expect { subject }.to change { offer.offer_invitations.pluck(:aasm_state).uniq }
+        expect { subject }.to change { offer.reload.offer_invitations.pluck(:aasm_state).uniq }
                           .from(%w[draft]).to(%w[pending])
+      end
+    end
+
+    describe '#end' do
+      subject { offer.end! }
+
+      let(:offer) { create(:offer, :published) }
+
+      before { create_list(:offer_invitation, 3, :pending, offer: offer) }
+
+      it 'transitions to ended' do
+        expect { subject }.to change { offer.reload.aasm_state }
+                          .from('published').to('ended')
+      end
+
+      it 'expires pending invitations' do
+        expect { subject }.to change { offer.reload.offer_invitations.pluck(:aasm_state).uniq }
+                          .from(%w[pending]).to(%w[expired])
       end
     end
   end
