@@ -21,6 +21,30 @@ describe OfferInvitation, type: :model do
     end
   end
 
+  describe 'callbacks' do
+    describe 'send_invitation' do
+      let(:offer_invitation) { build(:offer_invitation, :draft, offer: offer) }
+
+      context 'when offer is not published' do
+        let(:offer) { create(:offer, :users_invited) }
+
+        it 'does not send invitation' do
+          expect(offer_invitation).not_to receive(:send_invitation)
+          offer_invitation.save
+        end
+      end
+
+      context 'when offer is published' do
+        let(:offer) { create(:offer, :published) }
+
+        it 'sends invitation' do
+          expect(offer_invitation).to receive(:send_invitation)
+          offer_invitation.save
+        end
+      end
+    end
+  end
+
   describe 'scopes' do
     describe '.for' do
       let(:user) { create(:user) }

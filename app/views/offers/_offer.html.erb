@@ -47,7 +47,7 @@
           </small>
           <%= offer.conditions %>
         </div>
-        <div class="flex gap-x-3">
+        <div class="flex flex-wrap gap-3">
           <% if policy(offer).destroy? %>
             <%= button_to t(".delete"),
                           offer_path(offer),
@@ -59,6 +59,16 @@
             <%= link_to t(".edit"),
                         edit_offer_path(offer),
                         class: "btn btn-secondary" %>
+          <% end %>
+          <% if !offer.published_or_ended? && policy(offer).manage? %>
+            <%= button_to t(".publish"),
+                          publish_offer_path,
+                          class: "btn btn-primary" %>
+          <% end %>
+          <% if offer.published? && policy(offer).manage? %>
+            <%= link_to t(".manage_invitations"),
+                        offer_bulk_add_invitations_path(offer),
+                        class: "btn btn-primary" %>
           <% end %>
           <% if offer_invitation&.pending? %>
             <%= button_to t(".decline"),

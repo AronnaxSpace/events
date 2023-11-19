@@ -17,10 +17,4 @@
   <div class="space-y-4">
     <%= render @offer_invitations %>
   </div>
-
-  <% if !offer.published_or_ended? && policy(offer).manage? %>
-    <%= button_to t(".publish"),
-                  publish_offer_path,
-                  class: "btn btn-primary" %>
-  <% end %>
 </div>
