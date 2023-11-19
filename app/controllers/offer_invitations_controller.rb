@@ -38,7 +38,7 @@ class OfferInvitationsController < ApplicationController
   end
 
   def check_offer_state
-    redirect_to offer_path(offer) if offer.published?
+    redirect_to offer_path(offer) if offer.published_or_ended?
   end
 
   def users
