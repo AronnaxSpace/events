@@ -59,8 +59,9 @@ class Offer < ApplicationRecord
   private
 
   def end_at_must_be_in_the_future
-    return unless changes[:end_at].present? && end_at.present?
+    return if end_at.blank?
     return if end_at > Time.current
+    return if ended?
 
     errors.add(:end_at, :must_be_in_the_future)
   end
