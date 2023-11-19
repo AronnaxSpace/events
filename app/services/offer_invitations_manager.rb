@@ -1,7 +1,7 @@
 class OfferInvitationsManager
   def initialize(offer, user_ids = [])
     @offer = offer
-    @user_ids = user_ids
+    @user_ids = user_ids.reject(&:blank?)
   end
 
   def call

@@ -11,5 +11,5 @@
     </div>
   <% end %>
 
-  <%= form.submit t(".save_and_continue"), class: "btn btn-primary" %>
+  <%= form.submit offer.published? ? t(".save") : t(".save_and_continue"), class: "btn btn-primary" %>
 <% end %>

@@ -1,4 +1,13 @@
-<%= render "shared/create_offer_stepper", offer: offer %>
+<% if offer.published? %>
+  <h1><%= offer.what %></h1>
+
+  <div class="mb-4">
+    <%= link_to t(".back_to_offer"),
+                offer_path(offer) %>
+  </div>
+<% else %>
+  <%= render "shared/create_offer_stepper", offer: offer %>
+<% end %>
 
 <div class="lg:w-1/2">
   <%= render "bulk_create_form" %>

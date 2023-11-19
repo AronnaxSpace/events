@@ -2,21 +2,38 @@ describe 'OfferInvitations', type: :request do
   include_context 'logged in user'
 
   describe 'GET /bulk_add' do
-    before { get offer_bulk_add_invitations_path(offer) }
+    context 'when user is authorized to manage the offer' do
+      before { get offer_bulk_add_invitations_path(offer) }
 
-    context 'when offer is not published yet' do
-      let(:offer) { create(:offer, :details_specified, offerer: user) }
+      context 'when offer is not ended' do
+        let(:offer) { create(:offer, :details_specified, offerer: user) }
 
-      it 'gets HTTP status 200' do
-        expect(response.status).to eq 200
+        it 'gets HTTP status 200' do
+          expect(response.status).to eq 200
+        end
+      end
+
+      context 'when offer is ended' do
+        let(:offer) { create(:offer, :ended, offerer: user) }
+
+        it 'redirects to the offer' do
+          expect(response).to redirect_to(offer_path(offer))
+        end
       end
     end
 
-    context 'when offer is already published' do
-      let(:offer) { create(:offer, :published, offerer: user) }
+    context 'when user is not authorized to manage the offer' do
+      let(:offer) { create(:offer, :details_specified) }
 
-      it 'redirects to the offer' do
-        expect(response).to redirect_to(offer_path(offer))
+      before do
+        create(:offer_invitation, :accepted, offer: offer, user: user)
+
+        get offer_bulk_add_invitations_path(offer)
+      end
+
+      it 'gets HTTP status 302' do
+        expect(response.status).to eq 302
+        expect(flash[:alert]).to eq('You are not authorized to perform this action.')
       end
     end
   end

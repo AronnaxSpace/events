@@ -50,6 +50,7 @@ en:
       edit: "Edit"
       delete: "Delete"
       publish: "Publish"
+      manage_invitations: "Manage invitations"
       accept: "Accept"
       decline: "Decline"
       you_are_offering: "<b>You</b> are offering"
@@ -72,10 +73,13 @@ en:
       success: "Offer was successfully published"
 
   offer_invitations:
+    bulk_add:
+      back_to_offer: "Back to offer"
     bulk_create:
       success: "Invitations were successfully sent"
       no_users_selected: "No users selected"
     bulk_create_form:
+      save: "Save"
       save_and_continue: "Save and continue"
     accept:
       success: "Invitation was successfully accepted"

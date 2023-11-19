@@ -9,6 +9,9 @@ class OfferInvitation < ApplicationRecord
   validates :user, uniqueness: { scope: :offer_id, message: :already_invited }
   validate :user_cannot_be_offerer, on: :create
 
+  # callbacks
+  before_create :send_invitation, if: -> { draft? && offer.published? }
+
   # scopes
   scope :for, ->(user) { where(user: user) }
   scope :pending_or_accepted, -> { where(aasm_state: %i[pending accepted]) }
