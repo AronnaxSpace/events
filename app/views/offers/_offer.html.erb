@@ -1,12 +1,12 @@
 <div class="card">
   <div class="h-full flex flex-col justify-between gap-y-3">
     <div class="space-y-3">
-      <% if offers_page? || (offer_page? && !offer.published?) %>
+      <% if offers_page? || (offer_page? && !offer.published_or_ended?) %>
         <div class="flex justify-between gap-x-2">
           <h4 class="text-xl font-light line-clamp-2">
             <%= offer.what %>
           </h4>
-          <% unless offer.published? %>
+          <% unless offer.published_or_ended? %>
             <span class="shrink-0">
               <i class="fa-solid fa-gear text-gray-400" title="<%= t(".not_completed") %>"></i>
             </span>
@@ -48,14 +48,14 @@
           <%= offer.conditions %>
         </div>
         <div class="flex gap-x-3">
-          <% if offer.published? && policy(offer).destroy? %>
+          <% if policy(offer).destroy? %>
             <%= button_to t(".delete"),
                           offer_path(offer),
                           method: :delete,
                           class: "btn btn-danger",
                           data: { turbo_confirm: "Are you sure?" } %>
           <% end %>
-          <% if offer.published? && policy(offer).edit? %>
+          <% if offer.published_or_ended? && policy(offer).edit? %>
             <%= link_to t(".edit"),
                         edit_offer_path(offer),
                         class: "btn btn-secondary" %>

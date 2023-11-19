@@ -90,14 +90,20 @@ describe Offer, type: :model do
     describe '.expired' do
       subject { described_class.expired }
 
-      let(:expired_offer) { build(:offer, start_at: 2.days.ago, end_at: 1.day.ago) }
+      let(:expired_offer) { build(:offer, :published, start_at: 2.days.ago, end_at: 1.day.ago) }
+      let(:ended_offer) { build(:offer, :ended, start_at: 2.days.ago, end_at: 1.day.ago) }
+      let(:users_invited_offer) { build(:offer, :users_invited, start_at: 2.days.ago, end_at: 1.day.ago) }
       let!(:active_offer) { build(:offer, start_at: 1.day.from_now, end_at: 2.days.from_now) }
 
-      before { expired_offer.save(validate: false) }
+      before do
+        expired_offer.save(validate: false)
+        expired_offer.save(validate: false)
+        users_invited_offer.save(validate: false)
+      end
 
-      it 'returns expired offers' do
+      it 'returns published offers with end_at in the past' do
         expect(subject).to include(expired_offer)
-        expect(subject).not_to include(active_offer)
+        expect(subject).not_to include(ended_offer, users_invited_offer, active_offer)
       end
     end
   end
@@ -147,6 +153,28 @@ describe Offer, type: :model do
         expect { subject }.to change { offer.reload.offer_invitations.pluck(:aasm_state).uniq }
                           .from(%w[pending]).to(%w[expired])
       end
+    end
+  end
+
+  describe '#publised_or_ended?' do
+    subject { offer.published_or_ended? }
+
+    context 'when offer is published' do
+      let(:offer) { build(:offer, :published) }
+
+      it { should be_truthy }
+    end
+
+    context 'when offer is ended' do
+      let(:offer) { build(:offer, :ended) }
+
+      it { should be_truthy }
+    end
+
+    context 'when offer is not published nor ended' do
+      let(:offer) { build(:offer, :details_specified) }
+
+      it { should be_falsey }
     end
   end
 end

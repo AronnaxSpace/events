@@ -26,7 +26,7 @@ class Offer < ApplicationRecord
     where(id: active_offer_ids)
       .or(where(offerer: user))
   }
-  scope :expired, -> { where('end_at <= ?', Time.current) }
+  scope :expired, -> { published.where('end_at <= ?', Time.current) }
 
   # state machine
   aasm do
@@ -50,6 +50,10 @@ class Offer < ApplicationRecord
 
   def to_param
     uuid
+  end
+
+  def published_or_ended?
+    published? || ended?
   end
 
   private

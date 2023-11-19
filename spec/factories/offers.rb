@@ -30,6 +30,7 @@ FactoryBot.define do
 
     trait :expired do
       start_at { 25.days.ago.to_datetime }
+      aasm_state { :published }
 
       after(:build) do |offer|
         offer.end_at = Faker::Date.backward(days: 23).to_datetime
