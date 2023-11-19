@@ -11,3 +11,6 @@ production:
   :concurrency: 25
 
 :schedule:
+  end_expired_offers:
+    cron: "0 */1 * * *" # every hour
+    class: EndExpiredOffersCronJob

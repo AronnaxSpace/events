@@ -27,5 +27,14 @@ FactoryBot.define do
     trait :ended do
       aasm_state { :ended }
     end
+
+    trait :expired do
+      start_at { 25.days.ago.to_datetime }
+
+      after(:build) do |offer|
+        offer.end_at = Faker::Date.backward(days: 23).to_datetime
+        offer.save(validate: false)
+      end
+    end
   end
 end
