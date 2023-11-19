@@ -44,9 +44,13 @@ class OffersController < ApplicationController
   end
 
   def publish
-    offer.publish!
+    offer.publish
 
-    redirect_to offer, notice: t('.success')
+    if offer.save
+      redirect_to offer, notice: t('.success')
+    else
+      redirect_to edit_offer_path, alert: offer.errors.full_messages.join(', ')
+    end
   end
 
   private
@@ -62,7 +66,7 @@ class OffersController < ApplicationController
   end
 
   def authorize_offer
-    authorize offer, :manage?
+    authorize offer
   end
 
   def offer_invitation

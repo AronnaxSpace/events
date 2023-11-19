@@ -20,5 +20,9 @@ FactoryBot.define do
     trait :declined do
       aasm_state { :declined }
     end
+
+    trait :expired do
+      aasm_state { :expired }
+    end
   end
 end
