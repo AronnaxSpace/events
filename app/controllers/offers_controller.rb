@@ -44,9 +44,8 @@ class OffersController < ApplicationController
   end
 
   def publish
-    offer.publish
-
-    if offer.save
+    if offer.valid?
+      offer.publish!
       redirect_to offer, notice: t('.success')
     else
       redirect_to edit_offer_path, alert: offer.errors.full_messages.join(', ')
