@@ -37,6 +37,10 @@ describe 'OfferInvitations', type: :request do
       it 'redirects to the offer' do
         expect(response).to redirect_to(offer_path(offer))
       end
+
+      it 'makes the offer state users_invited' do
+        expect(offer.reload.users_invited?).to be true
+      end
     end
 
     context 'when bulk create is not successful' do

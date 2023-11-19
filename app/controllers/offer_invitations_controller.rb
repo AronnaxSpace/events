@@ -4,7 +4,7 @@ class OfferInvitationsController < ApplicationController
   before_action :authorize_offer, only: %i[bulk_add bulk_create]
   before_action :check_offer_state, only: %i[bulk_add bulk_create]
 
-  helper_method :users
+  helper_method :users, :offer_invitations
 
   def bulk_add; end
 
@@ -12,9 +12,11 @@ class OfferInvitationsController < ApplicationController
     result = OfferInvitationsManager.new(offer, params[:user_ids]).call
 
     if result.success?
+      offer.invite_users! if offer.details_specified?
+
       redirect_to offer_path(offer)
     else
-      @error = result.error.message
+      flash.now[:alert] = result.error.message
       render :bulk_add, status: :unprocessable_entity
     end
   end
@@ -43,6 +45,10 @@ class OfferInvitationsController < ApplicationController
 
   def users
     @users ||= User.without(current_user).with_profile
+  end
+
+  def offer_invitations
+    @offer_invitations ||= offer.offer_invitations
   end
 
   def offer_invitation

@@ -60,6 +60,11 @@
                         edit_offer_path(offer),
                         class: "btn btn-secondary" %>
           <% end %>
+          <% if !offer.published_or_ended? && policy(offer).manage? %>
+            <%= button_to t(".publish"),
+                          publish_offer_path,
+                          class: "btn btn-primary" %>
+          <% end %>
           <% if offer_invitation&.pending? %>
             <%= button_to t(".decline"),
                           decline_offer_invitation_path(offer),

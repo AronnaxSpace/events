@@ -1,24 +1,28 @@
 class OfferInvitationsManager
-  def initialize(offer, user_ids)
+  def initialize(offer, user_ids = [])
     @offer = offer
     @user_ids = user_ids
   end
 
   def call
-    raise(StandardError.new, I18n.t('offer_invitations.bulk_create.no_users_selected')) if users.empty?
+    return success if @offer.offer_invitations.pluck(:user_id) == @user_ids
+
+    @offer.offer_invitations.where.not(user_id: @user_ids).destroy_all
 
     users.each do |user|
-      OfferInvitation.create(offer: @offer, user: user)
+      @offer.offer_invitations.find_or_create_by(user: user)
     end
 
-    @offer.invite_users! if @offer.details_specified?
-
-    OpenStruct.new(success?: true)
+    success
   rescue StandardError => e
     OpenStruct.new(success?: false, error: e)
   end
 
   private
+
+  def success
+    OpenStruct.new(success?: true)
+  end
 
   def users
     @users ||= User.where(id: @user_ids)
