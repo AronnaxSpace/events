@@ -1,0 +1,13 @@
+:verbose: false
+:concurrency: 10
+:timeout: 25
+
+:queues:
+  - default
+
+staging:
+  :concurrency: 15
+production:
+  :concurrency: 25
+
+:schedule:
