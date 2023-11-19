@@ -12,31 +12,26 @@ describe Offer, type: :model do
     it { should validate_presence_of(:end_at) }
 
     describe 'end_at_must_be_in_the_future' do
-      subject { build(:offer, start_at: 2.days.ago, end_at: end_at) }
+      subject { build(:offer, :published, start_at: 2.days.ago, end_at: end_at) }
 
-      context 'when changes contain end_at' do
-        context 'when end_at is in the past' do
-          let(:end_at) { 1.day.ago }
+      context 'when end_at is in the future' do
+        let(:end_at) { 1.day.from_now }
 
+        it { should be_valid }
+      end
+
+      context 'when end_at is in the past' do
+        let(:end_at) { 1.day.ago }
+
+        context 'when the offer is not ended' do
           it { should_not be_valid }
         end
 
-        context 'when end_at is in the future' do
-          let(:end_at) { 1.day.from_now }
+        context 'when the offer is ended' do
+          subject { build(:offer, :ended, start_at: 2.days.ago, end_at: end_at) }
 
           it { should be_valid }
         end
-      end
-
-      context 'when changes does not contain end_at' do
-        let(:end_at) { 1.day.ago }
-
-        before do
-          subject.save(validate: false)
-          subject.what = 'new what'
-        end
-
-        it { should be_valid }
       end
     end
 

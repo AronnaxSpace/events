@@ -4,8 +4,8 @@ FactoryBot.define do
 
     what { Faker::Hipster.sentence }
     where { Faker::Address.full_address }
-    start_at { Faker::Date.forward(days: 23).to_datetime }
-    end_at { Faker::Date.between(from: start_at + 1.day, to: start_at + 1.month).to_datetime }
+    start_at { Faker::Date.forward(days: 10).to_datetime }
+    end_at { Faker::Date.between(from: 11.days.from_now, to: 30.days.from_now).to_datetime }
     aasm_state { :published }
 
     trait :with_conditions do
@@ -26,16 +26,6 @@ FactoryBot.define do
 
     trait :ended do
       aasm_state { :ended }
-    end
-
-    trait :expired do
-      start_at { 25.days.ago.to_datetime }
-      aasm_state { :published }
-
-      after(:build) do |offer|
-        offer.end_at = Faker::Date.backward(days: 23).to_datetime
-        offer.save(validate: false)
-      end
     end
   end
 end
