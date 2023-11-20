@@ -9,5 +9,15 @@
     <%= form.text_field :nickname, class: "form-control" %>
   </div>
 
+  <div class="form-group">
+    <%= form.label :time_zone, class: "form-label" %>
+    <%= form.time_zone_select :time_zone, ActiveSupport::TimeZone.all, {}, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :interface_language, class: "form-label" %>
+    <%= form.select :interface_language, available_interface_languages_for_select, {}, class: "form-control" %>
+  </div>
+
   <%= form.submit nil, class: "btn btn-primary" %>
 <% end %>

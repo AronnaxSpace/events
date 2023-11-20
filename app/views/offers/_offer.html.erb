@@ -3,7 +3,7 @@
     <div class="space-y-3">
       <% if offers_page? || (offer_page? && !offer.published_or_ended?) %>
         <div class="flex justify-between gap-x-2">
-          <h4 class="text-xl font-light line-clamp-2">
+          <h4 class="text-xl font-light line-clamp-2" title="<%= offer.what %>">
             <%= offer.what %>
           </h4>
           <% unless offer.published_or_ended? %>
@@ -27,7 +27,7 @@
           <small class="form-label">
             <%= Offer.human_attribute_name(:where) %>
           </small>
-          <p class="text-sm font-light line-clamp-2">
+          <p class="text-sm font-light line-clamp-2" title="<%= offer.where %>">
             <%= offer.where %>
           </p>
         </div>
@@ -36,7 +36,13 @@
             <%= Offer.human_attribute_name(:when) %>
           </small>
           <p class="text-sm font-light">
-            <%= offer_time_for(offer) %>
+            <span>
+              <%= t(".from") %>: <span class="text-indigo-600"><%= offer.start_at.to_formatted_s(:short) %></span>
+            <span>
+            <br>
+            <span>
+              <%= t(".to") %>: <span class="text-indigo-600"><%= offer.end_at.to_formatted_s(:short) %></span>
+            </span>
           </p>
         </div>
       </div>
@@ -85,7 +91,8 @@
     <% if offers_page? %>
       <div class="text-center">
         <%= link_to t(".go_to_offer"),
-                    offer_path(offer) %>
+                    offer_path(offer),
+                    class: "btn btn-sm btn-primary" %>
       </div>
     <% end %>
   </div>

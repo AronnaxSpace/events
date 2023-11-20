@@ -39,7 +39,7 @@ class ProfilesController < ApplicationController
 
   def profile_params
     params.require(:profile).permit(
-      :name, :nickname
+      :name, :nickname, :time_zone, :interface_language
     )
   end
 end

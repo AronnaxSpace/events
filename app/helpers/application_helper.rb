@@ -1,4 +1,11 @@
 module ApplicationHelper
+  def available_interface_languages_for_select
+    [
+      %w[English en],
+      %w[Українська uk]
+    ]
+  end
+
   def offer_page?
     controller_name == 'offers' && action_name == 'show'
   end
