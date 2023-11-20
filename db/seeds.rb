@@ -6,7 +6,8 @@
 
   user = User.create(
     email: email,
-    password: 'aRo44@X'
+    password: 'aRo44@X',
+    confirmed_at: Time.current
   )
 
   FactoryBot.create(:profile, user: user)
