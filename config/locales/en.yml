@@ -46,6 +46,8 @@ en:
 
   offers:
     offer:
+      from: "from"
+      to: "to"
       go_to_offer: "Go to offer"
       edit: "Edit"
       delete: "Delete"
