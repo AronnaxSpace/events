@@ -9,10 +9,7 @@ Rails.application.routes.draw do
 
   devise_for :users
 
-  root to: 'welcome#index'
-  get :about, to: 'welcome#about'
-
-  authenticate :user do
+  authenticated :user do
     root to: 'offers#index', as: :authenticated_root
 
     if defined?(Sidekiq)
@@ -21,6 +18,9 @@ Rails.application.routes.draw do
       mount Sidekiq::Web => '/sidekiq'
     end
   end
+
+  root to: 'welcome#index'
+  get :about, to: 'welcome#about'
 
   resource :profile, except: %i[index show destroy]
   resources :offers do

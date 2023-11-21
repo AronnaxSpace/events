@@ -22,8 +22,15 @@
     <%= render "layouts/partials/animated_background" unless user_signed_in? %>
 
     <div class="container px-3 m-auto pt-4 pb-[73px]">
-      <%= render "shared/flashes" %>
-      <%= yield %>
+      <% if user_signed_in? %>
+        <%= render "shared/flashes" %>
+        <%= yield %>
+      <% else %>
+        <div class="card py-4 bg-white relative z-10 lg:w-2/3 m-auto">
+          <%= render "shared/flashes" %>
+          <%= yield %>
+        </div>
+      <% end %>
     </div>
     <% if show_bottom_navbar? %>
       <%= render "layouts/partials/bottom_navbar" %>
