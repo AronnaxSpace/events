@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Offers</title>
+    <title>Aronnax Offers</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -19,9 +19,18 @@
   </head>
 
   <body>
+    <%= render "layouts/partials/animated_background" unless user_signed_in? %>
+
     <div class="container px-3 m-auto pt-4 pb-[73px]">
-      <%= render "shared/flashes" %>
-      <%= yield %>
+      <% if user_signed_in? %>
+        <%= render "shared/flashes" %>
+        <%= yield %>
+      <% else %>
+        <div class="card py-4 bg-white relative z-10 lg:w-2/3 m-auto">
+          <%= render "shared/flashes" %>
+          <%= yield %>
+        </div>
+      <% end %>
     </div>
     <% if show_bottom_navbar? %>
       <%= render "layouts/partials/bottom_navbar" %>

@@ -6,6 +6,10 @@ module ApplicationHelper
     ]
   end
 
+  def about_page?
+    controller_name == 'welcome' && action_name == 'about'
+  end
+
   def offer_page?
     controller_name == 'offers' && action_name == 'show'
   end
