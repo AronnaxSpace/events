@@ -23,5 +23,5 @@
 }
 
 .btn.btn-secondary {
-  @apply text-inherit bg-transparent outline outline-1 -outline-offset-1 outline-indigo-600 hover:outline-indigo-700;
+  @apply text-inherit bg-transparent outline outline-1 -outline-offset-1 outline-indigo-600 hover:outline-none hover:bg-indigo-700 hover:text-white;
 }

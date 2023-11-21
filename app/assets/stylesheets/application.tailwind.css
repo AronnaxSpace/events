@@ -1,5 +1,6 @@
 @import "actiontext";
 
+@import "components/animated-background";
 @import "components/buttons";
 @import "components/cards";
 @import "components/forms";
