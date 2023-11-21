@@ -3,11 +3,62 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <style>
-      /* Email styles need to be inline */
+      .card {
+        background-color: #e0e7ff;
+        border: 1px solid #ccc;
+        border-radius: 1rem;
+        margin: 0 auto;
+        max-width: 600px;
+        overflow: hidden;
+        box-shadow: .2rem .2rem .7rem rgba(0, 0, 0, 0.2);
+      }
+
+      .card-top {
+        background-color: #4f46e5;
+        color: #fff;
+      }
+
+      .card-top h2 {
+        margin: 0;
+        padding: 1rem;
+      }
+
+      .card-body {
+        padding: 1rem;
+      }
+
+      .btn {
+        background-color: #ccc;
+        border: none;
+        border-radius: 0.5rem;
+        color: #fff;
+        display: inline-block;
+        font-size: 1rem;
+        font-weight: 700;
+        padding: 0.75rem 1.5rem;
+        text-decoration: none;
+      }
+
+      .btn.btn-primary {
+        background-color: #4f46e5;
+      }
+
+      .btn.btn-primary:hover {
+        background-color: #3730a3;
+      }
     </style>
   </head>
 
   <body>
-    <%= yield %>
+
+    <div class="card">
+      <div class="card-top">
+        <h2>Aronnax Offers</h2>
+      </div>
+      <div class="card-body">
+        <%= yield %>
+      </div>
+    </div>
+
   </body>
 </html>

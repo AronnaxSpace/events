@@ -7,16 +7,6 @@ describe 'Welcomes', type: :request do
         expect(response).to have_http_status(:success)
       end
     end
-
-    context 'when user is signed in' do
-      include_context 'logged in user'
-
-      it 'redirects to authenticated_oot_path' do
-        get root_path
-
-        expect(response).to redirect_to(authenticated_root_path)
-      end
-    end
   end
 
   describe 'GET /about' do

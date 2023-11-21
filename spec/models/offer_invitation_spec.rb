@@ -68,4 +68,36 @@ describe OfferInvitation, type: :model do
       end
     end
   end
+
+  describe 'aasm_state transitions' do
+    describe '#send_invitation' do
+      let(:offer_invitation) { create(:offer_invitation, :draft, offer: offer) }
+
+      subject { offer_invitation.send_invitation! }
+
+      context 'when offer is not published' do
+        let(:offer) { create(:offer, :users_invited) }
+
+        it 'raises an error' do
+          expect { subject }.to raise_error(AASM::InvalidTransition)
+        end
+      end
+
+      context 'when offer is published' do
+        let(:offer) { create(:offer, :published) }
+
+        before { offer_invitation.update(aasm_state: :draft) }
+
+        it 'sends invitation' do
+          expect { subject }.to change { offer_invitation.reload.aasm_state }
+                            .from('draft').to('pending')
+        end
+
+        it 'sends invitation email' do
+          expect(OfferMailer).to receive_message_chain(:with, :new_offer, :deliver_later)
+          subject
+        end
+      end
+    end
+  end
 end

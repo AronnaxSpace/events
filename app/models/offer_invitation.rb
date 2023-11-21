@@ -23,8 +23,8 @@ class OfferInvitation < ApplicationRecord
     state :declined
     state :expired
 
-    event :send_invitation do
-      transitions from: :draft, to: :pending
+    event :send_invitation, after_commit: :send_invitation_email do
+      transitions from: :draft, to: :pending, guard: :offer_published?
     end
 
     event :accept do
@@ -47,5 +47,13 @@ class OfferInvitation < ApplicationRecord
     return unless offer.offerer == user
 
     errors.add(:user, :cannot_be_offerer)
+  end
+
+  def send_invitation_email
+    OfferMailer.with(offer_invitation: self).new_offer.deliver_later
+  end
+
+  def offer_published?
+    offer.published?
   end
 end
