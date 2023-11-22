@@ -4,6 +4,7 @@
 
 :queues:
   - default
+  - mailers
 
 staging:
   :concurrency: 15
