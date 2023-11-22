@@ -1,0 +1,5 @@
+Hello, <%= @user.name %>!
+You have a new offer from <%= @offer.offerer.name %>.
+You can view the offer details by following the link below:
+
+<%= offer_url(@offer) %>
