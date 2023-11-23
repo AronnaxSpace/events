@@ -15,7 +15,7 @@ describe OfferPolicy do
   end
 
   permissions :edit?, :update? do
-    context 'when the offer is not ended' do
+    context 'when the offer is not archived' do
       let(:offer) { build(:offer, :published, offerer: offerer) }
 
       it 'denies access if user is not an offerer' do
@@ -27,8 +27,8 @@ describe OfferPolicy do
       end
     end
 
-    context 'when the offer is ended' do
-      let(:offer) { build(:offer, :ended, offerer: offerer) }
+    context 'when the offer is archived' do
+      let(:offer) { build(:offer, :archived, offerer: offerer) }
 
       it 'denies access' do
         expect(subject).not_to permit(create(:user), offer)

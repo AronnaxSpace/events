@@ -9,6 +9,6 @@ describe EndExpiredOffersCronJob do
   end
 
   it 'ends expired offers' do
-    expect { job }.to change(Offer.ended, :count).from(0).to(1)
+    expect { job }.to change(Offer.archived, :count).from(0).to(1)
   end
 end

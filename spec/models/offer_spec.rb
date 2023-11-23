@@ -23,12 +23,12 @@ describe Offer, type: :model do
       context 'when end_at is in the past' do
         let(:end_at) { 1.day.ago }
 
-        context 'when the offer is not ended' do
+        context 'when the offer is not archived' do
           it { should_not be_valid }
         end
 
-        context 'when the offer is ended' do
-          subject { build(:offer, :ended, start_at: 2.days.ago, end_at: end_at) }
+        context 'when the offer is archived' do
+          subject { build(:offer, :archived, start_at: 2.days.ago, end_at: end_at) }
 
           it { should be_valid }
         end
@@ -86,7 +86,7 @@ describe Offer, type: :model do
       subject { described_class.expired }
 
       let(:expired_offer) { build(:offer, :published, start_at: 2.days.ago, end_at: 1.day.ago) }
-      let(:ended_offer) { build(:offer, :ended, start_at: 2.days.ago, end_at: 1.day.ago) }
+      let(:archived_offer) { build(:offer, :archived, start_at: 2.days.ago, end_at: 1.day.ago) }
       let(:users_invited_offer) { build(:offer, :users_invited, start_at: 2.days.ago, end_at: 1.day.ago) }
       let!(:active_offer) { build(:offer, start_at: 1.day.from_now, end_at: 2.days.from_now) }
 
@@ -98,7 +98,7 @@ describe Offer, type: :model do
 
       it 'returns published offers with end_at in the past' do
         expect(subject).to include(expired_offer)
-        expect(subject).not_to include(ended_offer, users_invited_offer, active_offer)
+        expect(subject).not_to include(archived_offer, users_invited_offer, active_offer)
       end
     end
   end
@@ -132,16 +132,16 @@ describe Offer, type: :model do
       end
     end
 
-    describe '#end' do
-      subject { offer.end! }
+    describe '#archive' do
+      subject { offer.archive! }
 
       let(:offer) { create(:offer, :published) }
 
       before { create_list(:offer_invitation, 3, :pending, offer: offer) }
 
-      it 'transitions to ended' do
+      it 'transitions to archived' do
         expect { subject }.to change { offer.reload.aasm_state }
-                          .from('published').to('ended')
+                          .from('published').to('archived')
       end
 
       it 'expires pending invitations' do
@@ -151,8 +151,8 @@ describe Offer, type: :model do
     end
   end
 
-  describe '#publised_or_ended?' do
-    subject { offer.published_or_ended? }
+  describe '#publised_or_archived?' do
+    subject { offer.published_or_archived? }
 
     context 'when offer is published' do
       let(:offer) { build(:offer, :published) }
@@ -160,13 +160,13 @@ describe Offer, type: :model do
       it { should be_truthy }
     end
 
-    context 'when offer is ended' do
-      let(:offer) { build(:offer, :ended) }
+    context 'when offer is archived' do
+      let(:offer) { build(:offer, :archived) }
 
       it { should be_truthy }
     end
 
-    context 'when offer is not published nor ended' do
+    context 'when offer is not published nor archived' do
       let(:offer) { build(:offer, :details_specified) }
 
       it { should be_falsey }

@@ -10,7 +10,7 @@ class OfferPolicy < ApplicationPolicy
   end
 
   def update?
-    manage? && !record.ended?
+    manage? && !record.archived?
   end
 
   def destroy?

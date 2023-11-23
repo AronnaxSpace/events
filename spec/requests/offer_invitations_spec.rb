@@ -5,7 +5,7 @@ describe 'OfferInvitations', type: :request do
     context 'when user is authorized to manage the offer' do
       before { get offer_bulk_add_invitations_path(offer) }
 
-      context 'when offer is not ended' do
+      context 'when offer is not archived' do
         let(:offer) { create(:offer, :details_specified, offerer: user) }
 
         it 'gets HTTP status 200' do
@@ -13,8 +13,8 @@ describe 'OfferInvitations', type: :request do
         end
       end
 
-      context 'when offer is ended' do
-        let(:offer) { create(:offer, :ended, offerer: user) }
+      context 'when offer is archived' do
+        let(:offer) { create(:offer, :archived, offerer: user) }
 
         it 'redirects to the offer' do
           expect(response).to redirect_to(offer_path(offer))

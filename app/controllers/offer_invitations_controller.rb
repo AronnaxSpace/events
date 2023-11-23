@@ -2,7 +2,7 @@ class OfferInvitationsController < ApplicationController
   include OfferScoped
 
   before_action :authorize_offer, only: %i[bulk_add bulk_create]
-  before_action :check_if_offer_ended, only: %i[bulk_add bulk_create]
+  before_action :check_if_offer_archived, only: %i[bulk_add bulk_create]
 
   helper_method :users, :offer_invitations
 
@@ -39,8 +39,8 @@ class OfferInvitationsController < ApplicationController
     authorize offer, :manage?
   end
 
-  def check_if_offer_ended
-    redirect_to offer_path(offer) if offer.ended?
+  def check_if_offer_archived
+    redirect_to offer_path(offer) if offer.archived?
   end
 
   def users

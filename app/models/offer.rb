@@ -33,7 +33,7 @@ class Offer < ApplicationRecord
     state :details_specified, initial: true
     state :users_invited
     state :published
-    state :ended
+    state :archived
 
     event :invite_users do
       transitions from: :details_specified, to: :users_invited
@@ -43,8 +43,8 @@ class Offer < ApplicationRecord
       transitions from: :users_invited, to: :published
     end
 
-    event :end, after_commit: :expire_invitations do
-      transitions from: :published, to: :ended
+    event :archive, after_commit: :expire_invitations do
+      transitions from: :published, to: :archived
     end
   end
 
@@ -52,8 +52,8 @@ class Offer < ApplicationRecord
     uuid
   end
 
-  def published_or_ended?
-    published? || ended?
+  def published_or_archived?
+    published? || archived?
   end
 
   private
@@ -61,7 +61,7 @@ class Offer < ApplicationRecord
   def end_at_must_be_in_the_future
     return if end_at.blank?
     return if end_at > Time.current
-    return if ended?
+    return if archived?
 
     errors.add(:end_at, :must_be_in_the_future)
   end
