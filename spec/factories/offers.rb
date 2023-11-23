@@ -24,8 +24,8 @@ FactoryBot.define do
       aasm_state { :published }
     end
 
-    trait :ended do
-      aasm_state { :ended }
+    trait :archived do
+      aasm_state { :archived }
     end
   end
 end
