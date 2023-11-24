@@ -141,3 +141,9 @@ en:
             user:
               cannot_be_offerer: "can't be the same as offer offerer"
               already_invited: "has already been invited"
+        friendship:
+          attributes:
+            base:
+              already_exists: "Friendship request already exists"
+            friend:
+              cannot_be_self: "can't be yourself"
