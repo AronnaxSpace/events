@@ -99,6 +99,18 @@ en:
     update:
       success: "Profile was successfully updated"
 
+  friends:
+    index:
+      no_friends_yet: "You have no friends yet."
+    create:
+      success: "Friendship request was successfully sent"
+    destroy:
+      success: "Friendship request was successfully deleted"
+    accept:
+      success: "Friendship request was successfully accepted"
+    reject:
+      success: "Friendship request was successfully rejected"
+
   helpers:
     label:
       offer:

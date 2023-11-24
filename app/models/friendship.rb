@@ -7,7 +7,7 @@ class Friendship < ApplicationRecord
 
   # validations
   validate :friend_cannot_be_self
-  validate :friendship_uniqueness
+  validate :friendship_uniqueness, on: :create
 
   # scopes
   scope :accepted_for, ->(user) { accepted.where('user_id = ? OR friend_id = ?', user.id, user.id) }

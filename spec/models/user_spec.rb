@@ -6,6 +6,8 @@ describe User, type: :model do
     it { should have_one(:profile) }
     it { should have_many(:outgoing_friendships).class_name('Friendship').with_foreign_key(:user_id) }
     it { should have_many(:incoming_friendships).class_name('Friendship').with_foreign_key(:friend_id) }
+    it { should have_many(:outgoing_friends).through(:outgoing_friendships).source(:friend) }
+    it { should have_many(:incoming_friends).through(:incoming_friendships).source(:user) }
 
     describe '.friends' do
       let(:user) { create(:user) }
