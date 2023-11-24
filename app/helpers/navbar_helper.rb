@@ -1,4 +1,8 @@
-module BottomNavbarHelper
+module NavbarHelper
+  def show_top_navbar?
+    friends_page? || incoming_friend_requests_page? || people_page?
+  end
+
   def show_bottom_navbar?
     user_signed_in? && current_user.profile&.persisted?
   end

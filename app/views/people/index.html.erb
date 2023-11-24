@@ -1,0 +1,11 @@
+<div class="lg:w-1/2">
+  <% if @people.any? %>
+    <div class="space-y-4">
+      <% @people.each do |person| %>
+        <%= render "people/person", person: person %>
+      <% end %>
+    </div>
+  <% else %>
+    <p class=""><%= t(".no_users") %></p>
+  <% end %>
+</div>

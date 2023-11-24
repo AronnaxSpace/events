@@ -1,12 +1,11 @@
-<% if @friends.any? %>
-  <div class="space-y-4">
-    <% @friends.each do |friend| %>
-      <div class="card flex justify-between items-center gap-x-2">
-        <%= render "shared/profile",
-                   profile: friend.profile %>
-      </div>
-    <% end %>
-  </div>
-<% else %>
-  <p class=""><%= t(".no_friends_yet") %></p>
-<% end %>
+<div class="lg:w-1/2">
+  <% if @friends.any? %>
+    <div class="space-y-4">
+      <% @friends.each do |friend| %>
+        <%= render "people/person", person: friend %>
+      <% end %>
+    </div>
+  <% else %>
+    <p class=""><%= t(".no_friends_yet") %></p>
+  <% end %>
+</div>

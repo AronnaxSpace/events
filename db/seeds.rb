@@ -11,6 +11,17 @@
   )
 
   FactoryBot.create(:profile, user: user)
+
+  next if i < 5
+
+  User.without(user).find_each do |friend|
+    FactoryBot.create(
+      :friendship,
+      :accepted,
+      user: user,
+      friend: friend
+    )
+  end
 end
 
 User.find_each do |user|

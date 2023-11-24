@@ -1,3 +1,10 @@
-<h1><%= t(".title") %></h1>
+<div class="lg:w-1/2">
+  <h1><%= t(".title") %></h1>
 
-<%= render "form" %>
+  <%= render "form" %>
+
+  <br>
+
+  <%= link_to t(".edit_user_data"),
+              edit_user_registration_path %>
+</div>

@@ -28,10 +28,15 @@
 #       enabled: "ON"
 
 en:
+  are_you_sure: "Are you sure?"
   not_authorized: "You are not authorized to perform this action."
 
   layouts:
     partials:
+      top_navbar:
+        friends: "Friends"
+        friend_requests: "Friend requests"
+        people: "People"
       bottom_navbar:
         home: "Home"
         new_offer: "New offer"
@@ -94,6 +99,7 @@ en:
       title: "Please, finish your registration by creating a profile"
     edit:
       title: "Edit profile"
+      edit_user_data: "Edit user data"
     create:
       success: "Profile was successfully created."
     update:
@@ -110,6 +116,18 @@ en:
       success: "Friendship request was successfully accepted"
     reject:
       success: "Friendship request was successfully rejected"
+
+  people:
+    index:
+      no_users: "There are no registered users yet."
+    person:
+      add_friend: "Add friend"
+      remove: "Remove"
+      accept: "Accept"
+      reject: "Reject"
+      friends_since: "friends since"
+      pending: "pending..."
+      cancel: "Cancel"
 
   helpers:
     label:
