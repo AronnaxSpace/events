@@ -99,6 +99,18 @@ en:
     update:
       success: "Profile was successfully updated"
 
+  friends:
+    index:
+      no_friends_yet: "You have no friends yet."
+    create:
+      success: "Friendship request was successfully sent"
+    destroy:
+      success: "Friendship request was successfully deleted"
+    accept:
+      success: "Friendship request was successfully accepted"
+    reject:
+      success: "Friendship request was successfully rejected"
+
   helpers:
     label:
       offer:
@@ -141,3 +153,9 @@ en:
             user:
               cannot_be_offerer: "can't be the same as offer offerer"
               already_invited: "has already been invited"
+        friendship:
+          attributes:
+            base:
+              already_exists: "Friendship request already exists"
+            friend:
+              cannot_be_self: "can't be yourself"

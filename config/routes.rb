@@ -36,4 +36,10 @@ Rails.application.routes.draw do
       end
     end
   end
+  resources :friends, only: %i[index create destroy] do
+    member do
+      patch :accept
+      patch :reject
+    end
+  end
 end
