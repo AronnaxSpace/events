@@ -21,7 +21,8 @@
   <body>
     <%= render "layouts/partials/animated_background" unless user_signed_in? %>
 
-    <div class="container px-3 m-auto pt-4 pb-[73px]">
+    <%= render "layouts/partials/top_navbar" if show_top_navbar? %>
+    <div class="container px-3 m-auto pt-4 pb-[73px] <%= "pt-[73px]" if show_top_navbar? %>">
       <% if user_signed_in? %>
         <%= render "shared/flashes" %>
         <%= yield %>
@@ -32,8 +33,6 @@
         </div>
       <% end %>
     </div>
-    <% if show_bottom_navbar? %>
-      <%= render "layouts/partials/bottom_navbar" %>
-    <% end %>
+    <%= render "layouts/partials/bottom_navbar" if show_bottom_navbar? %>
   </body>
 </html>

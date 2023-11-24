@@ -42,4 +42,5 @@ Rails.application.routes.draw do
       patch :reject
     end
   end
+  resources :people, only: %i[index]
 end

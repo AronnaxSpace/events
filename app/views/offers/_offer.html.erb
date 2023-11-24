@@ -6,7 +6,7 @@
           <h4 class="text-xl font-light line-clamp-2" title="<%= offer.what %>">
             <%= offer.what %>
           </h4>
-          <span class="tag tag-sm <%= offer_state_tag_classes_for(offer) %>">
+          <span class="tag <%= offer_state_tag_classes_for(offer) %>">
             <%= offer.published_or_archived? ? offer.aasm_state : :draft  %>
           </span>
         </div>

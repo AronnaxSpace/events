@@ -4,7 +4,7 @@ class OfferInvitationsController < ApplicationController
   before_action :authorize_offer, only: %i[bulk_add bulk_create]
   before_action :check_if_offer_archived, only: %i[bulk_add bulk_create]
 
-  helper_method :users, :offer_invitations
+  helper_method :offer_invitations
 
   def bulk_add; end
 
@@ -41,10 +41,6 @@ class OfferInvitationsController < ApplicationController
 
   def check_if_offer_archived
     redirect_to offer_path(offer) if offer.archived?
-  end
-
-  def users
-    @users ||= User.without(current_user).with_profile
   end
 
   def offer_invitations

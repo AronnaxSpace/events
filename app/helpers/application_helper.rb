@@ -29,4 +29,16 @@ module ApplicationHelper
   def offer_bulk_add_invitations_page?
     controller_name == 'offer_invitations' && %i[bulk_add bulk_create].include?(action_name.to_sym)
   end
+
+  def friends_page?
+    controller_name == 'friends' && action_name == 'index' && !%i[incoming outgoing].include?(params[:scope]&.to_sym)
+  end
+
+  def incoming_friend_requests_page?
+    controller_name == 'friends' && action_name == 'index' && params[:scope] == 'incoming'
+  end
+
+  def people_page?
+    controller_name == 'people' && action_name == 'index'
+  end
 end

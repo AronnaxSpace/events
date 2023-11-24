@@ -1,9 +1,13 @@
 .tag {
-  @apply bg-indigo-100 text-indigo-800 text-xs font-medium px-2.5 py-0.5 rounded-full;
+  @apply bg-indigo-100 text-indigo-800 text-xs font-medium px-2.5 py-0.5 rounded-full whitespace-nowrap;
 }
 
 .tag.tag-sm {
-  @apply text-[10px] px-[6px] py-[1px];
+  @apply text-sm;
+}
+
+.tag.tag-primary {
+  @apply bg-indigo-100 text-indigo-800;
 }
 
 .tag.tag-success {

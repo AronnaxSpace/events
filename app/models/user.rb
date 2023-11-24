@@ -15,8 +15,6 @@ class User < ApplicationRecord
   has_one :profile, dependent: :destroy
   has_many :outgoing_friendships, class_name: 'Friendship', foreign_key: :user_id, dependent: :destroy
   has_many :incoming_friendships, class_name: 'Friendship', foreign_key: :friend_id, dependent: :destroy
-  has_many :outgoing_friends, through: :outgoing_friendships, source: :friend
-  has_many :incoming_friends, through: :incoming_friendships, source: :user
 
   # scopes
   scope :with_profile, -> { joins(:profile).where.not(profile: { id: nil }) }

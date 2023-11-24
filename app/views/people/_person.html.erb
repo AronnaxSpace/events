@@ -1,0 +1,42 @@
+<% friendship = friendship_for(current_user, person) %>
+
+<div class="card flex justify-between items-center gap-x-2">
+  <%= render "shared/profile",
+             profile: person.profile %>
+
+  <div class="flex flex-col items-end gap-2">
+    <% if friendship.present? %>
+      <% if friendship.accepted? %>
+        <%= button_to t(".remove"),
+                      friend_path(friendship),
+                      class: "btn btn-sm btn-danger",
+                      method: :delete,
+                      data: { turbo_confirm: t("are_you_sure") } %>
+      <% elsif friendship.pending? && friendship.user == current_user %>
+        <span class="tag tag-warning">
+          <%= t(".pending") %>
+        </span>
+        <%= button_to t(".cancel"),
+                      friend_path(friendship),
+                      class: "btn btn-sm btn-danger",
+                      method: :delete,
+                      data: { turbo_confirm: t("are_you_sure") } %>
+      <% elsif friendship.pending? && friendship.friend == current_user %>
+        <%= button_to t(".accept"),
+                      accept_friend_path(friendship),
+                      class: "btn btn-sm btn-primary",
+                      method: :patch %>
+        <%= button_to t(".reject"),
+                      friend_path(friendship),
+                      class: "btn btn-sm btn-danger",
+                      method: :delete,
+                      data: { turbo_confirm: t("are_you_sure") } %>
+      <% end %>
+    <% else %>
+      <%= button_to t(".add_friend"),
+                    friends_path(friend_id: person.id),
+                    class: "btn btn-sm btn-primary",
+                    method: :post %>
+    <% end %>
+  </div>
+</div>

@@ -6,9 +6,13 @@ class FriendsController < ApplicationController
   def index
     @friends = case params[:scope]
                when 'incoming'
-                 current_user.incoming_friends
+                 User.with_profile
+                     .joins(:outgoing_friendships)
+                     .where(friendships: { aasm_state: 'pending', friend: current_user })
                when 'outgoing'
-                 current_user.outgoing_friends
+                 User.with_profile
+                     .joins(:incoming_friendships)
+                     .where(friendships: { aasm_state: 'pending', user: current_user })
                else
                  current_user.friends
                end
@@ -18,28 +22,28 @@ class FriendsController < ApplicationController
     result = FriendshipCreator.new(current_user, User.find(params[:friend_id])).call
 
     if result.success?
-      redirect_to friends_path, notice: t('.success')
+      redirect_back fallback_location: friends_path, notice: t('.success')
     else
-      redirect_to friends_path, alert: result.error
+      redirect_back fallback_location: friends_path, alert: result.error
     end
   end
 
   def destroy
     friendship.destroy
 
-    redirect_to friends_path, notice: t('.success')
+    redirect_back fallback_location: friends_path, notice: t('.success')
   end
 
   def accept
     friendship.accept!
 
-    redirect_to friends_path, notice: t('.success')
+    redirect_back fallback_location: friends_path, notice: t('.success')
   end
 
   def reject
     friendship.reject!
 
-    redirect_to friends_path, notice: t('.success')
+    redirect_back fallback_location: friends_path, notice: t('.success')
   end
 
   private
