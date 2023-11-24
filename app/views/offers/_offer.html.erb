@@ -2,15 +2,13 @@
   <div class="h-full flex flex-col justify-between gap-y-3">
     <div class="space-y-3">
       <% if offers_page? || (offer_page? && !offer.published_or_archived?) %>
-        <div class="flex justify-between gap-x-2">
+        <div class="flex justify-between items-start gap-x-2">
           <h4 class="text-xl font-light line-clamp-2" title="<%= offer.what %>">
             <%= offer.what %>
           </h4>
-          <% unless offer.published_or_archived? %>
-            <span class="shrink-0">
-              <i class="fa-solid fa-gear text-gray-400" title="<%= t(".not_completed") %>"></i>
-            </span>
-          <% end %>
+          <span class="tag tag-sm <%= offer_state_tag_classes_for(offer) %>">
+            <%= offer.published_or_archived? ? offer.aasm_state : :draft  %>
+          </span>
         </div>
       <% end %>
       <div class="text-center">
@@ -90,7 +88,7 @@
     </div>
     <% if offers_page? %>
       <div class="text-center">
-        <%= link_to t(".go_to_offer"),
+        <%= link_to t(".view_offer"),
                     offer_path(offer),
                     class: "btn btn-sm btn-primary" %>
       </div>

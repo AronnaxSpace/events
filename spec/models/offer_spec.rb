@@ -151,6 +151,28 @@ describe Offer, type: :model do
     end
   end
 
+  describe '#draft?' do
+    subject { offer.draft? }
+
+    context 'when offer is in details_specified state' do
+      let(:offer) { build(:offer, :details_specified) }
+
+      it { should be_truthy }
+    end
+
+    context 'when offer is in users_invited state' do
+      let(:offer) { build(:offer, :users_invited) }
+
+      it { should be_truthy }
+    end
+
+    context 'when offer is not in details_specified or users_invited state' do
+      let(:offer) { build(:offer, :published) }
+
+      it { should be_falsey }
+    end
+  end
+
   describe '#publised_or_archived?' do
     subject { offer.published_or_archived? }
 
@@ -168,6 +190,44 @@ describe Offer, type: :model do
 
     context 'when offer is not published nor archived' do
       let(:offer) { build(:offer, :details_specified) }
+
+      it { should be_falsey }
+    end
+  end
+
+  describe '#expired?' do
+    subject { offer.expired? }
+
+    context 'when end_at is in the past for a published offer' do
+      let(:offer) { build(:offer, :published, end_at: 1.day.ago) }
+
+      it { should be_truthy }
+    end
+
+    context 'when end_at is in the future for a published offer' do
+      let(:offer) { build(:offer, :published, end_at: 1.day.from_now) }
+
+      it { should be_falsey }
+    end
+  end
+
+  describe '#expired_or_archived?' do
+    subject { offer.expired_or_archived? }
+
+    context 'when offer is expired' do
+      let(:offer) { build(:offer, :published, end_at: 1.day.ago) }
+
+      it { should be_truthy }
+    end
+
+    context 'when offer is archived' do
+      let(:offer) { build(:offer, :archived) }
+
+      it { should be_truthy }
+    end
+
+    context 'when offer is not expired nor archived' do
+      let(:offer) { build(:offer, :published, end_at: 1.day.from_now) }
 
       it { should be_falsey }
     end
