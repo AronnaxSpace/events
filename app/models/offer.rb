@@ -52,8 +52,20 @@ class Offer < ApplicationRecord
     uuid
   end
 
+  def draft?
+    details_specified? || users_invited?
+  end
+
   def published_or_archived?
     published? || archived?
+  end
+
+  def expired?
+    end_at <= Time.current
+  end
+
+  def expired_or_archived?
+    expired? || archived?
   end
 
   private

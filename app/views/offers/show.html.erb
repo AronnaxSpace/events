@@ -1,5 +1,11 @@
 <% if offer.published_or_archived? %>
   <h1><%= offer.what %></h1>
+  <% if offer.archived? %>
+    <p class="text-gray-500 mb-4">
+      <i class="fa-solid fa-box-archive mr-1"></i>
+      <%= t(".offer_archived") %>
+    </p>
+  <% end %>
 <% else %>
   <%= render "shared/create_offer_stepper", offer: offer %>
 <% end %>

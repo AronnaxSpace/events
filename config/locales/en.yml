@@ -48,7 +48,7 @@ en:
     offer:
       from: "from"
       to: "to"
-      go_to_offer: "Go to offer"
+      view_offer: "View offer"
       edit: "Edit"
       delete: "Delete"
       publish: "Publish"
@@ -62,6 +62,7 @@ en:
       title: "My offers"
       no_offers_yet: "You have no offers yet. Go ahead and <a href='%{url}'>create one</a>!"
     show:
+      offer_archived: "this offer is archived"
       back_to_offers: "Back to offers"
     edit:
       title: "Edit offer"
