@@ -9,8 +9,8 @@ class Offer < ApplicationRecord
   has_many :users, through: :offer_invitations
 
   # validations
-  validates :what, presence: true
-  validates :where, presence: true
+  validates :title, presence: true
+  validates :place, presence: true
   validates :start_at, presence: true
   validates :end_at, presence: true
   validate :end_at_must_be_in_the_future

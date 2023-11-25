@@ -1,14 +1,14 @@
 describe 'Offers', type: :request do
   include_context 'logged in user'
 
-  let!(:offer) { create(:offer, what: 'offered by user', offerer: user) }
+  let!(:offer) { create(:offer, title: 'offered by user', offerer: user) }
 
   describe 'GET /index' do
     let(:another_offerer) { create(:user, :with_profile) }
-    let(:offer_without_invitation_for_user) { create(:offer, what: 'user not invited', offerer: another_offerer) }
-    let(:offer_with_pending_invitation_for_user) { create(:offer, what: 'pending for user', offerer: another_offerer) }
-    let(:offer_with_accepted_invitation_for_user) { create(:offer, what: 'accepted by user', offerer: another_offerer) }
-    let(:offer_with_declined_invitation_for_user) { create(:offer, what: 'declined by user', offerer: another_offerer) }
+    let(:offer_without_invitation_for_user) { create(:offer, title: 'user not invited', offerer: another_offerer) }
+    let(:offer_with_pending_invitation_for_user) { create(:offer, title: 'pending for user', offerer: another_offerer) }
+    let(:offer_with_accepted_invitation_for_user) { create(:offer, title: 'accepted by user', offerer: another_offerer) }
+    let(:offer_with_declined_invitation_for_user) { create(:offer, title: 'declined by user', offerer: another_offerer) }
 
     before do
       offer_without_invitation_for_user
@@ -25,14 +25,14 @@ describe 'Offers', type: :request do
 
     it "receives offers' data" do
       expect(response.body).to include(
-        offer.what,
-        offer_with_pending_invitation_for_user.what,
-        offer_with_accepted_invitation_for_user.what
+        offer.title,
+        offer_with_pending_invitation_for_user.title,
+        offer_with_accepted_invitation_for_user.title
       )
 
       expect(response.body).not_to include(
-        offer_without_invitation_for_user.what,
-        offer_with_declined_invitation_for_user.what
+        offer_without_invitation_for_user.title,
+        offer_with_declined_invitation_for_user.title
       )
     end
   end
@@ -45,7 +45,7 @@ describe 'Offers', type: :request do
     end
 
     it "receives offer's data" do
-      expect(response.body).to include(offer.what)
+      expect(response.body).to include(offer.title)
     end
   end
 
@@ -86,7 +86,7 @@ describe 'Offers', type: :request do
     it 'updates the offer' do
       offer.reload
 
-      %i[what where start_at end_at].each do |attribute|
+      %i[title place start_at end_at].each do |attribute|
         expect(offer.public_send(attribute)).to eq params[:offer][attribute]
       end
       expect(offer.conditions.to_plain_text).to eq params[:offer][:conditions]
@@ -127,7 +127,7 @@ describe 'Offers', type: :request do
     end
 
     context 'when the offer is not valid' do
-      before { offer.update_attribute(:what, nil) }
+      before { offer.update_attribute(:title, nil) }
 
       it 'does not publish the offer' do
         expect { subject }.not_to(change { offer.reload.published? })
