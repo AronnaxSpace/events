@@ -6,8 +6,8 @@ describe Offer, type: :model do
   end
 
   describe 'validations' do
-    it { should validate_presence_of(:what) }
-    it { should validate_presence_of(:where) }
+    it { should validate_presence_of(:title) }
+    it { should validate_presence_of(:place) }
     it { should validate_presence_of(:start_at) }
     it { should validate_presence_of(:end_at) }
 

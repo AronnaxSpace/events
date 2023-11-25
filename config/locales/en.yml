@@ -132,8 +132,8 @@ en:
   helpers:
     label:
       offer:
-        what: "What?"
-        where: "Where?"
+        title: "What?"
+        place: "Where?"
         start_at: "When start?"
         end_at: "When end?"
     submit:
@@ -144,9 +144,8 @@ en:
   activerecord:
     attributes:
       offer:
-        what: "What?"
-        where: "Where?"
-        when: "When?"
+        title: "Title"
+        place: "Place"
         start_at: "When start?"
         end_at: "When end?"
         conditions: "Conditions"

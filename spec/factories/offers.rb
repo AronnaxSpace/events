@@ -2,8 +2,8 @@ FactoryBot.define do
   factory :offer do
     association :offerer, factory: :user
 
-    what { Faker::Hipster.sentence }
-    where { Faker::Address.full_address }
+    title { Faker::Hipster.sentence }
+    place { Faker::Address.full_address }
     start_at { Faker::Date.forward(days: 10).to_datetime }
     end_at { Faker::Date.between(from: 11.days.from_now, to: 30.days.from_now).to_datetime }
     aasm_state { :published }
