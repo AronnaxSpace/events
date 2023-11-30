@@ -146,9 +146,14 @@ en:
       models:
         offer:
           attributes:
+            start_on:
+              cannot_be_in_the_past: "can't be in the past"
+            start_at:
+              cannot_be_in_the_past: "can't be in the past"
+            end_on:
+              cannot_be_earlier_than_start: "can't be earlier than start time"
             end_at:
-              must_be_in_the_future: "must be in the future"
-              must_be_after_start_at: "must be after start"
+              cannot_be_earlier_than_start: "can't be earlier than start time"
         offer_invitation:
           attributes:
             user:

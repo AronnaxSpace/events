@@ -7,6 +7,7 @@ FactoryBot.define do
     start_at { Faker::Date.forward(days: 10).to_datetime }
     end_at { Faker::Date.between(from: 11.days.from_now, to: 30.days.from_now).to_datetime }
     aasm_state { :published }
+    time_format { :date_and_time_range }
 
     trait :with_conditions do
       conditions { Faker::Hipster.paragraph }
