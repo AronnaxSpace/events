@@ -1,6 +1,13 @@
 class Offer < ApplicationRecord
   include AASM
 
+  enum time_format: {
+    date: 'date',
+    date_and_time: 'date_and_time',
+    date_range: 'date_range',
+    date_and_time_range: 'date_and_time_range'
+  }
+
   has_rich_text :conditions
 
   # associations
@@ -11,10 +18,16 @@ class Offer < ApplicationRecord
   # validations
   validates :title, presence: true
   validates :place, presence: true
-  validates :start_at, presence: true
-  validates :end_at, presence: true
-  validate :end_at_must_be_in_the_future
-  validate :end_at_must_be_after_start_at
+  validates :time_format, presence: true
+  validates :start_on, presence: true, if: -> { date? || date_range? }
+  validates :end_on, presence: true, if: -> { date_range? }
+  validates :start_at, presence: true, if: -> { date_and_time? || date_and_time_range? }
+  validates :end_at, presence: true, if: -> { date_and_time_range? }
+  validate :start_cannot_be_in_the_past, if: :start_changed?
+  validate :end_cannot_be_earlier_than_start, if: :start_or_end_changed?
+
+  # callbacks
+  # before_validation :time_fields_cleanup, if: :time_format_changed?
 
   # scopes
   scope :for, lambda { |user|
@@ -70,19 +83,40 @@ class Offer < ApplicationRecord
 
   private
 
-  def end_at_must_be_in_the_future
-    return if end_at.blank?
-    return if end_at > Time.current
-    return if archived?
+  def start_cannot_be_in_the_past
+    if date? || date_range?
+      return if start_on.blank?
+      return if start_on >= Date.current
 
-    errors.add(:end_at, :must_be_in_the_future)
+      errors.add(:start_on, :cannot_be_in_the_past)
+    elsif date_and_time? || date_and_time_range?
+      return if start_at.blank?
+      return if start_at >= Time.current
+
+      errors.add(:start_at, :cannot_be_in_the_past)
+    end
   end
 
-  def end_at_must_be_after_start_at
-    return unless end_at.present? && start_at.present?
-    return if end_at > start_at
+  def end_cannot_be_earlier_than_start
+    if date_range?
+      return if start_on.blank? || end_on.blank?
+      return if end_on >= start_on
 
-    errors.add(:end_at, :must_be_after_start_at)
+      errors.add(:end_on, :cannot_be_earlier_than_start)
+    elsif date_and_time_range?
+      return if start_at.blank? || end_at.blank?
+      return if end_at > start_at
+
+      errors.add(:end_at, :cannot_be_earlier_than_start)
+    end
+  end
+
+  def start_changed?
+    start_on_changed? || start_at_changed?
+  end
+
+  def start_or_end_changed?
+    start_changed? || end_on_changed? || end_at_changed?
   end
 
   def send_invitations
