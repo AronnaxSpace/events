@@ -3,13 +3,13 @@
     <nav class="h-[57px] px-4 py-2 flex items-center gap-x-3 bg-gray-50 border-b border-r border-l border-gray-300 rounded-br-2xl rounded-bl-2xl overflow-x-auto">
       <%= link_to t(".friends"),
                   friends_path,
-                  class: "tag tag-sm #{ friends_page? ? 'tag-primary' : 'tag-secondary' }" %>
+                  class: "tag #{ friends_page? ? 'tag-primary' : 'tag-secondary' }" %>
       <%= link_to t(".friend_requests"),
                   friends_path(scope: :incoming),
-                  class: "tag tag-sm #{ incoming_friend_requests_page? ? 'tag-primary' : 'tag-secondary' }" %>
+                  class: "tag #{ incoming_friend_requests_page? ? 'tag-primary' : 'tag-secondary' }" %>
       <%= link_to t(".people"),
                   people_path,
-                  class: "tag tag-sm #{ people_page? ? 'tag-primary' : 'tag-secondary' }" %>
+                  class: "tag #{ people_page? ? 'tag-primary' : 'tag-secondary' }" %>
     </nav>
   </div>
 </div>

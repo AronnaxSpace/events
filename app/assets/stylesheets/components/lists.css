@@ -1,0 +1,11 @@
+.description-list {
+  @apply max-w-md text-gray-900 space-y-3;
+}
+
+.description-list dt {
+  @apply mb-1 font-semibold;
+}
+
+.description-list dd {
+  @apply font-light;
+}

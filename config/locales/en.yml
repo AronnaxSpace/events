@@ -51,8 +51,11 @@ en:
 
   offers:
     offer:
-      from: "from"
-      to: "to"
+      who: "Who?"
+      where: "Where?"
+      when: "When?"
+      conditions: "What's needed?"
+      you: "You"
       view_offer: "View offer"
       edit: "Edit"
       delete: "Delete"
@@ -60,9 +63,6 @@ en:
       manage_invitations: "Manage invitations"
       accept: "Accept"
       decline: "Decline"
-      you_are_offering: "<b>You</b> are offering"
-      is_offering: "<b>%{nickname}</b> is offering"
-      not_completed: "Offer is not completed"
     index:
       title: "My offers"
       no_offers_yet: "You have no offers yet. Go ahead and <a href='%{url}'>create one</a>!"
@@ -142,13 +142,6 @@ en:
         update: "Update"
 
   activerecord:
-    attributes:
-      offer:
-        title: "Title"
-        place: "Place"
-        start_at: "When start?"
-        end_at: "When end?"
-        conditions: "Conditions"
     errors:
       models:
         offer:
