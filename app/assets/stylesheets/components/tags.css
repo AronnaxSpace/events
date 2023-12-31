@@ -1,9 +1,5 @@
 .tag {
-  @apply bg-indigo-100 text-indigo-800 text-xs font-medium px-2.5 py-0.5 rounded-full whitespace-nowrap;
-}
-
-.tag.tag-sm {
-  @apply text-sm;
+  @apply bg-indigo-100 text-indigo-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full;
 }
 
 .tag.tag-primary {

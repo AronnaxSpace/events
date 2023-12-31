@@ -1,56 +1,46 @@
 <div class="card">
   <div class="h-full flex flex-col justify-between gap-y-3">
     <div class="space-y-3">
-      <% if offers_page? || (offer_page? && !offer.published_or_archived?) %>
-        <div class="flex justify-between items-start gap-x-2">
-          <h4 class="text-xl font-light line-clamp-2" title="<%= offer.title %>">
-            <%= offer.title %>
-          </h4>
-          <span class="tag <%= offer_state_tag_classes_for(offer) %>">
-            <%= offer.published_or_archived? ? offer.aasm_state : :draft  %>
-          </span>
-        </div>
+      <% if offers_page? %>
+        <%= link_to offer_path(offer),
+                    class: "text-xl font-light line-clamp-2",
+                    title: offer.title do %>
+          <%= offer.title %>
+        <% end %>
+      <% else %>
+        <h4 class="text-xl font-light line-clamp-2">
+          <%= offer.title %>
+        </h4>
       <% end %>
-      <div class="text-center">
-        <span class="tag">
-          <% if offer.offerer == current_user %>
-            <%= t(".you_are_offering").html_safe %>
-          <% else %>
-            <%= t(".is_offering", nickname: offer.offerer.nickname).html_safe %>
-          <% end %>
-        </span>
-      </div>
-      <div class="flex gap-x-2">
-        <div class="flex-1">
-          <small class="form-label">
-            <%= Offer.human_attribute_name(:place) %>
-          </small>
-          <p class="text-sm font-light line-clamp-2" title="<%= offer.place %>">
-            <%= offer.place %>
-          </p>
-        </div>
-        <div class="flex-1 text-right">
-          <small class="form-label">
-            <%= Offer.human_attribute_name(:when) %>
-          </small>
-          <p class="text-sm font-light">
-            <span>
-              <%= t(".from") %>: <span class="text-indigo-600"><%= offer.start_at.to_formatted_s(:short) %></span>
-            <span>
-            <br>
-            <span>
-              <%= t(".to") %>: <span class="text-indigo-600"><%= offer.end_at.to_formatted_s(:short) %></span>
-            </span>
-          </p>
-        </div>
-      </div>
-      <% if offer_page? %>
+      <dl class="description-list">
         <div class="">
-          <small class="form-label">
-            <%= Offer.human_attribute_name(:conditions) %>
-          </small>
-          <%= offer.conditions %>
+          <dt><%= t(".who") %></dt>
+          <dd>
+            <% if offer.offerer == current_user %>
+              <%= t(".you") %>
+            <% else %>
+              <%= offer.offerer.nickname %> (<%= offer.offerer.name %>)
+            <% end %>
+          </dd>
         </div>
+        <div class="">
+          <dt><%= t(".when") %></dt>
+          <dd>
+            <%= offer.start_at.to_formatted_s(:short) %> - <%= offer.end_at.to_formatted_s(:short) %>
+          </dd>
+        </div>
+        <div class="">
+          <dt><%= t(".where") %></dt>
+          <dd><%= offer.place %></dd>
+        </div>
+        <% if offer_page? && offer.conditions.present? %>
+          <div class="">
+            <dt><%= t(".conditions") %></dt>
+            <dd><%= offer.conditions %></dd>
+          </div>
+        <% end %>
+      </dl>
+      <% if offer_page? %>
         <div class="flex flex-wrap gap-3">
           <% if policy(offer).destroy? %>
             <%= button_to t(".delete"),
@@ -87,10 +77,12 @@
       <% end %>
     </div>
     <% if offers_page? %>
-      <div class="text-center">
-        <%= link_to t(".view_offer"),
-                    offer_path(offer),
-                    class: "btn btn-sm btn-primary" %>
+      <div class="">
+        <%= link_to offer_path(offer),
+                    class: "btn btn-primary btn-with-icon" do %>
+          <%= t(".view_offer") %>
+          <i class="fa-solid fa-arrow-right icon"></i>
+        <% end %>
       </div>
     <% end %>
   </div>

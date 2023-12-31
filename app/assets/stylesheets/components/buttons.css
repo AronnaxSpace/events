@@ -1,9 +1,17 @@
 .btn {
-  @apply text-center text-white hover:text-white inline-block px-4 py-2 rounded-full cursor-pointer;
+  @apply inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-indigo-300;
 }
 
 .btn.btn-sm {
   @apply text-sm px-3 py-1;
+}
+
+.btn.btn-with-icon {
+  @apply inline-flex items-center gap-2;
+}
+
+.btn.btn-with-icon .icon {
+  @apply text-lg;
 }
 
 .btn.btn-transparent {
@@ -11,15 +19,15 @@
 }
 
 .btn.btn-primary {
-  @apply bg-indigo-600 hover:bg-indigo-700;
+  @apply bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-300;
 }
 
 .btn.btn-success {
-  @apply bg-green-600 hover:bg-green-700;
+  @apply bg-green-600 hover:bg-green-700 focus:ring-green-300;
 }
 
 .btn.btn-danger {
-  @apply bg-red-600 hover:bg-red-700;
+  @apply bg-red-600 hover:bg-red-700 focus:ring-red-300;
 }
 
 .btn.btn-secondary {
