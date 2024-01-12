@@ -138,8 +138,6 @@ en:
         place: "Where?"
         start_at: "When start?"
         end_at: "When end?"
-        start_on: "When start?"
-        end_on: "When end?"
     submit:
       offer:
         create: "Create"
@@ -150,14 +148,10 @@ en:
       models:
         offer:
           attributes:
-            start_on:
-              cannot_be_in_the_past: "can't be in the past"
             start_at:
               cannot_be_in_the_past: "can't be in the past"
-            end_on:
-              cannot_be_earlier_than_start: "can't be earlier than start time"
             end_at:
-              cannot_be_earlier_than_start: "can't be earlier than start time"
+              must_be_later_than_start: "must be later than the start time"
         offer_invitation:
           attributes:
             user:
