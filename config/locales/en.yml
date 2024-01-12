@@ -69,6 +69,8 @@ en:
     show:
       offer_archived: "this offer is archived"
       back_to_offers: "Back to offers"
+    form:
+      when: "When?"
     edit:
       title: "Edit offer"
     create:
@@ -136,6 +138,8 @@ en:
         place: "Where?"
         start_at: "When start?"
         end_at: "When end?"
+        start_on: "When start?"
+        end_on: "When end?"
     submit:
       offer:
         create: "Create"
