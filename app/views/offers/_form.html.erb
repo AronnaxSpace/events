@@ -1,4 +1,8 @@
-<%= form_with(model: offer) do |form| %>
+<%= form_with model: offer,
+              data: {
+                controller: "offer-time-format",
+                offer_time_format_current_format: offer.time_format
+              } do |form| %>
   <div class="form-group">
     <%= form.label :title, class: "form-label" %>
     <%= form.text_field :title, class: "form-control" %>
@@ -11,7 +15,10 @@
 
   <% Offer.time_formats.keys.each do |time_format| %>
     <div class="relative">
-      <%= form.radio_button :time_format, time_format, class: "", data: { action: "" } %>
+      <%= form.radio_button :time_format,
+                            time_format,
+                            class: "",
+                            data: { action: "offer-time-format#adjustFormGroups" } %>
       <%= form.label "time_format_#{time_format}", class: "" do %>
         <span class="text-sm"><%= time_format %></span>
       <% end %>
@@ -19,26 +26,48 @@
   <% end %>
 
   <div class="flex flex-col lg:flex-row gap-x-3">
-    <div class="form-group flex-1">
-      <%= form.label :start_at, class: "form-label" %>
-      <%= form.datetime_field :start_at, class: "form-control" %>
-    </div>
-
-    <div class="form-group flex-1">
-      <%= form.label :end_at, class: "form-label" %>
-      <%= form.datetime_field :end_at, class: "form-control" %>
-    </div>
-  </div>
-
-  <div class="flex flex-col lg:flex-row gap-x-3">
-    <div class="form-group flex-1">
-      <%= form.label :start_on, class: "form-label" %>
+    <div class="form-group flex-1"
+         data-offer-time-format-target="startDateFormGroup">
+      <%= form.label :start_on,
+                     class: "hidden form-label",
+                     data: {
+                      offer_time_format_target: "startDateLabel",
+                     } %>
+      <%= form.label :start_on,
+                     t(".when"),
+                     class: "form-label",
+                     data: {
+                      offer_time_format_target: "startDateWhenLabel",
+                     } %>
       <%= form.date_field :start_on, class: "form-control" %>
     </div>
 
-    <div class="form-group flex-1">
+    <div class="form-group flex-1 hidden"
+         data-offer-time-format-target="startDateTimeFormGroup">
+      <%= form.label :start_at,
+                     class: "hidden form-label",
+                     data: {
+                      offer_time_format_target: "startDateTimeLabel",
+                     } %>
+      <%= form.label :start_at,
+                     t(".when"),
+                     class: "form-label",
+                     data: {
+                      offer_time_format_target: "startDateTimeWhenLabel",
+                     } %>
+      <%= form.datetime_field :start_at, class: "form-control" %>
+    </div>
+
+    <div class="form-group flex-1 hidden"
+         data-offer-time-format-target="endDateFormGroup">
       <%= form.label :end_on, class: "form-label" %>
       <%= form.date_field :end_on, class: "form-control" %>
+    </div>
+
+    <div class="form-group flex-1 hidden"
+         data-offer-time-format-target="endDateTimeFormGroup">
+      <%= form.label :end_at, class: "form-label" %>
+      <%= form.datetime_field :end_at, class: "form-control" %>
     </div>
   </div>
 
