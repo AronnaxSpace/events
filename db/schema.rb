@@ -88,8 +88,6 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_30_171421) do
     t.string "place"
     t.uuid "uuid", default: -> { "uuid_generate_v4()" }, null: false
     t.string "aasm_state"
-    t.date "start_on"
-    t.date "end_on"
     t.string "time_format", default: "date", null: false
     t.index ["offerer_id"], name: "index_offers_on_offerer_id"
     t.index ["uuid"], name: "index_offers_on_uuid", unique: true

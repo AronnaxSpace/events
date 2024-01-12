@@ -1,28 +1,14 @@
-shared_examples 'offer start validation' do |offer_start|
-  context "when #{offer_start} is in the past" do
-    let(offer_start) { 1.day.ago }
+shared_examples 'offer end_at validation' do
+  context 'when end_at is before start' do
+    let(:start_at) { 2.days.from_now }
+    let(:end_at) { 1.day.from_now }
 
     it { should be_invalid }
   end
 
-  context "when #{offer_start} is in the future" do
-    let(offer_start) { 1.day.from_now }
-
-    it { should be_valid }
-  end
-end
-
-shared_examples 'offer end validation' do |offer_start, offer_end|
-  context "when #{offer_end} is before start" do
-    let(offer_start) { 2.days.from_now }
-    let(offer_end) { 1.day.from_now }
-
-    it { should be_invalid }
-  end
-
-  context "when #{offer_start} is after start" do
-    let(offer_start) { 2.days.from_now }
-    let(offer_end) { 3.days.from_now }
+  context 'when end_at is after start' do
+    let(:start_at) { 2.days.from_now }
+    let(:end_at) { 3.days.from_now }
 
     it { should be_valid }
   end
@@ -46,9 +32,7 @@ describe Offer, type: :model do
       context 'when time_format is date' do
         before { subject.time_format = :date }
 
-        it { should validate_presence_of(:start_on) }
-        it { should_not validate_presence_of(:end_on) }
-        it { should_not validate_presence_of(:start_at) }
+        it { should validate_presence_of(:start_at) }
         it { should_not validate_presence_of(:end_at) }
       end
 
@@ -57,17 +41,13 @@ describe Offer, type: :model do
 
         it { should validate_presence_of(:start_at) }
         it { should_not validate_presence_of(:end_at) }
-        it { should_not validate_presence_of(:start_on) }
-        it { should_not validate_presence_of(:end_on) }
       end
 
       context 'when time_format is date_range' do
         before { subject.time_format = :date_range }
 
-        it { should validate_presence_of(:start_on) }
-        it { should validate_presence_of(:end_on) }
-        it { should_not validate_presence_of(:start_at) }
-        it { should_not validate_presence_of(:end_at) }
+        it { should validate_presence_of(:start_at) }
+        it { should validate_presence_of(:end_at) }
       end
 
       context 'when time_format is date_and_time_range' do
@@ -75,73 +55,75 @@ describe Offer, type: :model do
 
         it { should validate_presence_of(:start_at) }
         it { should validate_presence_of(:end_at) }
-        it { should_not validate_presence_of(:start_on) }
-        it { should_not validate_presence_of(:end_on) }
       end
     end
 
     describe '#start_cannot_be_in_the_past' do
-      subject { build(:offer, :details_specified, start_at: start_at, start_on: start_on) }
-
-      let(:start_at) { nil }
-      let(:start_on) { nil }
+      subject { build(:offer, :details_specified, start_at: start_at) }
 
       context 'when time_format is date' do
         before { subject.time_format = :date }
 
-        include_examples 'offer start validation', :start_on
+        context 'when start_at is in the past' do
+          let(:start_at) { 1.day.ago }
+
+          it { should be_invalid }
+        end
+
+        context 'when start_at is today' do
+          let(:start_at) { Time.current.beginning_of_day }
+
+          it { should be_valid }
+        end
+
+        context 'when start_at is in the future' do
+          let(:start_at) { 1.day.from_now }
+
+          it { should be_valid }
+        end
       end
 
       context 'when time_format is date_and_time' do
         before { subject.time_format = :date_and_time }
 
-        include_examples 'offer start validation', :start_at
-      end
+        context 'when start_at is in the past' do
+          let(:start_at) { 1.day.ago }
 
-      context 'when time_format is date_range' do
-        before do
-          subject.time_format = :date_range
-          subject.end_on = 2.days.from_now
+          it { should be_invalid }
         end
 
-        include_examples 'offer start validation', :start_on
-      end
+        context 'when start_at is today' do
+          let(:start_at) { Time.current.beginning_of_day }
 
-      context 'when time_format is date_and_time_range' do
-        before do
-          subject.time_format = :date_and_time_range
-          subject.end_at = 2.days.from_now
+          it { should be_invalid }
         end
 
-        include_examples 'offer start validation', :start_at
+        context 'when start_at is in the future' do
+          let(:start_at) { 1.day.from_now }
+
+          it { should be_valid }
+        end
       end
     end
 
-    describe '#end_cannot_be_earlier_than_start' do
+    describe '#end_must_be_later_than_start' do
       subject do
         build(
           :offer,
           :details_specified,
-          start_on: start_on,
-          end_on: end_on,
           start_at: start_at,
           end_at: end_at
         )
       end
 
-      let(:start_on) { nil }
-      let(:end_on) { nil }
-      let(:start_at) { nil }
-      let(:end_at) { nil }
-
       context 'when time_format is date_range' do
         before { subject.time_format = :date_range }
 
-        include_examples 'offer end validation', :start_on, :end_on
+        include_examples 'offer end_at validation'
 
-        context 'when end_on is the same as start_on' do
-          let(:start_on) { 2.days.from_now }
-          let(:end_on) { start_on }
+        context 'when end_at is the same as start_at' do
+          let(:start_at) { 2.days.from_now }
+          let(:end_at) { start_at }
 
           it { should be_valid }
         end
@@ -150,7 +132,7 @@ describe Offer, type: :model do
       context 'when time_format is date_and_time_range' do
         before { subject.time_format = :date_and_time_range }
 
-        include_examples 'offer end validation', :start_at, :end_at
+        include_examples 'offer end_at validation'
 
         context 'when end_at is the same as start_at' do
           let(:start_at) { 2.days.from_now }
