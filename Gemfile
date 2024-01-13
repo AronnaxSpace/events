@@ -73,6 +73,7 @@ end
 group :test do
   gem "database_cleaner", "~> 2.0"
   gem "simplecov", "~> 0.22.0", require: false
+  gem "timecop", "~> 0.9.8"
 end
 
 gem "devise", "~> 4.9"
