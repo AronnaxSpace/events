@@ -71,14 +71,14 @@ en:
       back_to_offers: "Back to offers"
     form:
       time_formats:
-        date: "date"
-        date_description: "e.g. 2020-12-31"
-        date_and_time: "date + time"
-        date_and_time_description: "e.g. 2020-12-31 23:59"
-        date_range: "from ... to (dates)"
-        date_range_description: "e.g. 2020-12-31 - 2021-01-01"
-        date_and_time_range: "from ... to (datetimes)"
-        date_and_time_range_description: "e.g. 2020-12-31 23:59 - 2021-01-01 00:01"
+        date_format: "date"
+        date_format_description: "e.g. 2020-12-31"
+        datetime_format: "date + time"
+        datetime_format_description: "e.g. 2020-12-31 23:59"
+        date_range_format: "from ... to (dates)"
+        date_range_format_description: "e.g. 2020-12-31 - 2021-01-01"
+        datetime_range_format: "from ... to (datetimes)"
+        datetime_range_format_description: "e.g. 2020-12-31 23:59 - 2021-01-01 00:01"
       when: "When?"
     edit:
       title: "Edit offer"
@@ -161,7 +161,7 @@ en:
             start_at:
               cannot_be_in_the_past: "can't be in the past"
             end_at:
-              must_be_later_than_start: "must be later than the start time"
+              must_be_after_start: "must be after start"
         offer_invitation:
           attributes:
             user:

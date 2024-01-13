@@ -15,7 +15,7 @@ export default class extends Controller {
     const offerTimeFormat = event.target.value;
 
     switch (offerTimeFormat) {
-      case "date":
+      case "date_format":
         this.startDateFormGroupTarget.classList.remove("hidden");
         this.startDateInputTarget.disabled = false;
         this.startDateTimeFormGroupTarget.classList.add("hidden");
@@ -29,7 +29,7 @@ export default class extends Controller {
         this.startDateWhenLabelTarget.classList.remove("hidden");
 
         break;
-      case "date_and_time":
+      case "datetime_format":
         this.startDateFormGroupTarget.classList.add("hidden");
         this.startDateInputTarget.disabled = true;
         this.startDateTimeFormGroupTarget.classList.remove("hidden");
@@ -43,7 +43,7 @@ export default class extends Controller {
         this.startDateTimeWhenLabelTarget.classList.remove("hidden");
 
         break;
-      case "date_range":
+      case "date_range_format":
         this.startDateFormGroupTarget.classList.remove("hidden");
         this.startDateInputTarget.disabled = false
         this.startDateTimeFormGroupTarget.classList.add("hidden");
@@ -57,7 +57,7 @@ export default class extends Controller {
         this.startDateWhenLabelTarget.classList.add("hidden");
 
         break;
-      case "date_and_time_range":
+      case "datetime_range_format":
         this.startDateFormGroupTarget.classList.add("hidden");
         this.startDateInputTarget.disabled = true;
         this.startDateTimeFormGroupTarget.classList.remove("hidden");
