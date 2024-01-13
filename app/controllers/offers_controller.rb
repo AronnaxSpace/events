@@ -60,7 +60,7 @@ class OffersController < ApplicationController
 
   def offer_params
     params.require(:offer).permit(
-      :title, :place, :start_at, :end_at, :conditions
+      :title, :place, :start_at, :end_at, :conditions, :time_format
     )
   end
 

@@ -4,5 +4,5 @@
 
 import { application } from "./application"
 
-import HelloController from "./hello_controller"
-application.register("hello", HelloController)
+import OfferTimeFormatController from "./offer_time_format_controller"
+application.register("offer-time-format", OfferTimeFormatController)
