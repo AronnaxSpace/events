@@ -1,3 +1,19 @@
+shared_examples 'offer end_at validation' do
+  context 'when end_at is before start' do
+    let(:start_at) { 2.days.from_now }
+    let(:end_at) { 1.day.from_now }
+
+    it { should be_invalid }
+  end
+
+  context 'when end_at is after start' do
+    let(:start_at) { 2.days.from_now }
+    let(:end_at) { 3.days.from_now }
+
+    it { should be_valid }
+  end
+end
+
 describe Offer, type: :model do
   describe 'associations' do
     it { should belong_to(:offerer) }
@@ -8,48 +24,170 @@ describe Offer, type: :model do
   describe 'validations' do
     it { should validate_presence_of(:title) }
     it { should validate_presence_of(:place) }
-    it { should validate_presence_of(:start_at) }
-    it { should validate_presence_of(:end_at) }
+    it { should validate_presence_of(:time_format) }
 
-    describe 'end_at_must_be_in_the_future' do
-      subject { build(:offer, :published, start_at: 2.days.ago, end_at: end_at) }
+    describe 'time presence' do
+      subject { build(:offer) }
 
-      context 'when end_at is in the future' do
-        let(:end_at) { 1.day.from_now }
+      context 'when time_format is date' do
+        before { subject.time_format = :date_format }
 
-        it { should be_valid }
+        it { should validate_presence_of(:start_at) }
+        it { should_not validate_presence_of(:end_at) }
       end
 
-      context 'when end_at is in the past' do
-        let(:end_at) { 1.day.ago }
+      context 'when time_format is datetime' do
+        before { subject.time_format = :datetime_format }
 
-        context 'when the offer is not archived' do
-          it { should_not be_valid }
+        it { should validate_presence_of(:start_at) }
+        it { should_not validate_presence_of(:end_at) }
+      end
+
+      context 'when time_format is date_range' do
+        before { subject.time_format = :date_range_format }
+
+        it { should validate_presence_of(:start_at) }
+        it { should validate_presence_of(:end_at) }
+      end
+
+      context 'when time_format is datetime_range' do
+        before { subject.time_format = :datetime_range_format }
+
+        it { should validate_presence_of(:start_at) }
+        it { should validate_presence_of(:end_at) }
+      end
+    end
+
+    describe '#start_cannot_be_in_the_past' do
+      subject { build(:offer, :details_specified, start_at: start_at) }
+
+      context 'when time_format is date' do
+        before { subject.time_format = :date_format }
+
+        context 'when start_at is in the past' do
+          let(:start_at) { 1.day.ago }
+
+          it { should be_invalid }
         end
 
-        context 'when the offer is archived' do
-          subject { build(:offer, :archived, start_at: 2.days.ago, end_at: end_at) }
+        context 'when start_at is today' do
+          let(:start_at) { Time.current.beginning_of_day }
+
+          it { should be_valid }
+        end
+
+        context 'when start_at is in the future' do
+          let(:start_at) { 1.day.from_now }
+
+          it { should be_valid }
+        end
+      end
+
+      context 'when time_format is datetime' do
+        before { subject.time_format = :datetime_format }
+
+        context 'when start_at is in the past' do
+          let(:start_at) { 1.day.ago }
+
+          it { should be_invalid }
+        end
+
+        context 'when start_at is today' do
+          let(:start_at) { Time.current.beginning_of_day }
+
+          it { should be_invalid }
+        end
+
+        context 'when start_at is in the future' do
+          let(:start_at) { 1.day.from_now }
 
           it { should be_valid }
         end
       end
     end
 
-    describe 'end_at_must_be_after_start_at' do
-      subject { build(:offer, start_at: start_at, end_at: end_at) }
-
-      context 'when end_at is before start_at' do
-        let(:start_at) { 2.days.from_now }
-        let(:end_at) { 1.day.from_now }
-
-        it { should_not be_valid }
+    describe '#end_must_be_after_start' do
+      subject do
+        build(
+          :offer,
+          :details_specified,
+          start_at: start_at,
+          end_at: end_at
+        )
       end
 
-      context 'when end_at is after start_at' do
-        let(:start_at) { 1.day.from_now }
-        let(:end_at) { 2.days.from_now }
+      context 'when time_format is date_range' do
+        before { subject.time_format = :date_range_format }
 
-        it { should be_valid }
+        include_examples 'offer end_at validation'
+
+        context 'when end_at is the same as start_at' do
+          let(:start_at) { 2.days.from_now }
+          let(:end_at) { start_at }
+
+          it { should be_valid }
+        end
+      end
+
+      context 'when time_format is datetime_range' do
+        before { subject.time_format = :datetime_range_format }
+
+        include_examples 'offer end_at validation'
+
+        context 'when end_at is the same as start_at' do
+          let(:start_at) { 2.days.from_now }
+          let(:end_at) { start_at }
+
+          it { should be_invalid }
+        end
+      end
+    end
+  end
+
+  describe 'callbacks' do
+    describe '#adjust_end_at' do
+      subject { offer.end_at.change(usec: 0) }
+
+      let(:offer) { build(:offer, start_at: start_at, end_at: end_at, time_format: time_format) }
+
+      let(:start_at) { 2.days.from_now }
+      let(:end_at) { 3.days.from_now }
+
+      before do
+        Timecop.freeze(Time.current)
+        offer.save
+      end
+
+      after { Timecop.return }
+
+      context 'when time_format is date_format' do
+        let(:time_format) { :date_format }
+
+        it { should eq(start_at.end_of_day.change(usec: 0)) }
+      end
+
+      context 'when time_format is datetime_format' do
+        let(:time_format) { :datetime_format }
+
+        it { should eq(start_at.end_of_day.change(usec: 0)) }
+
+        context 'when end_at is the same as start_at' do
+          let(:start_at) { 2.days.from_now.end_of_day }
+
+          it { should eq((start_at + 1.minute).change(usec: 0)) }
+        end
+      end
+
+      context 'when time_format is date_range_format' do
+        let(:time_format) { :date_range_format }
+
+        it { should eq(end_at.end_of_day.change(usec: 0)) }
+      end
+
+      context 'when time_format is datetime_range_format' do
+        let(:time_format) { :datetime_range_format }
+
+        it { should eq(end_at.change(usec: 0)) }
       end
     end
   end

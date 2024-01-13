@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_11_25_113959) do
+ActiveRecord::Schema[7.1].define(version: 2023_11_30_171421) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "uuid-ossp"
@@ -88,6 +88,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_25_113959) do
     t.string "place"
     t.uuid "uuid", default: -> { "uuid_generate_v4()" }, null: false
     t.string "aasm_state"
+    t.string "time_format", default: "date", null: false
     t.index ["offerer_id"], name: "index_offers_on_offerer_id"
     t.index ["uuid"], name: "index_offers_on_uuid", unique: true
   end

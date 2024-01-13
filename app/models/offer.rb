@@ -1,6 +1,13 @@
 class Offer < ApplicationRecord
   include AASM
 
+  enum time_format: {
+    date_format: 'date',
+    datetime_format: 'datetime',
+    date_range_format: 'date_range',
+    datetime_range_format: 'datetime_range'
+  }
+
   has_rich_text :conditions
 
   # associations
@@ -11,10 +18,14 @@ class Offer < ApplicationRecord
   # validations
   validates :title, presence: true
   validates :place, presence: true
+  validates :time_format, presence: true
   validates :start_at, presence: true
-  validates :end_at, presence: true
-  validate :end_at_must_be_in_the_future
-  validate :end_at_must_be_after_start_at
+  validates :end_at, presence: true, if: -> { date_range_format? || datetime_range_format? }
+  validate :start_cannot_be_in_the_past, if: :start_at_changed?
+  validate :end_must_be_after_start
+
+  # callbacks
+  before_save :adjust_end_at, if: :start_at_changed?
 
   # scopes
   scope :for, lambda { |user|
@@ -70,19 +81,33 @@ class Offer < ApplicationRecord
 
   private
 
-  def end_at_must_be_in_the_future
-    return if end_at.blank?
-    return if end_at > Time.current
-    return if archived?
+  def start_cannot_be_in_the_past
+    return if start_at.blank?
+    return if (date_format? || date_range_format?) && start_at.to_date >= Date.current
+    return if (datetime_format? || datetime_range_format?) && start_at >= Time.current
 
-    errors.add(:end_at, :must_be_in_the_future)
+    errors.add(:start_at, :cannot_be_in_the_past)
   end
 
-  def end_at_must_be_after_start_at
-    return unless end_at.present? && start_at.present?
-    return if end_at > start_at
+  def end_must_be_after_start
+    return unless date_range_format? || datetime_range_format?
+    return if start_at.blank? || end_at.blank?
+    return if date_range_format? && end_at.to_date >= start_at.to_date
+    return if datetime_range_format? && end_at > start_at
 
-    errors.add(:end_at, :must_be_after_start_at)
+    errors.add(:end_at, :must_be_after_start)
+  end
+
+  def adjust_end_at
+    return if datetime_range_format?
+
+    self.end_at = if date_range_format?
+                    end_at.end_of_day
+                  else
+                    start_at.end_of_day
+                  end
+
+    self.end_at = start_at + 1.minute if end_at == start_at
   end
 
   def send_invitations
