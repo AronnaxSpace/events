@@ -22,7 +22,10 @@ class Offer < ApplicationRecord
   validates :start_at, presence: true
   validates :end_at, presence: true, if: -> { date_range_format? || datetime_range_format? }
   validate :start_cannot_be_in_the_past, if: :start_at_changed?
-  validate :end_must_be_after_start, if: :time_changed?
+  validate :end_must_be_after_start
+
+  # callbacks
+  before_save :adjust_end_at, if: :start_at_changed?
 
   # scopes
   scope :for, lambda { |user|
@@ -95,8 +98,16 @@ class Offer < ApplicationRecord
     errors.add(:end_at, :must_be_after_start)
   end
 
-  def time_changed?
-    start_at_changed? || end_at_changed?
+  def adjust_end_at
+    return if datetime_range_format?
+
+    self.end_at = if date_range_format?
+                    end_at.end_of_day
+                  else
+                    start_at.end_of_day
+                  end
+
+    self.end_at = start_at + 1.minute if end_at == start_at
   end
 
   def send_invitations

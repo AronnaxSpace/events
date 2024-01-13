@@ -144,6 +144,54 @@ describe Offer, type: :model do
     end
   end
 
+  describe 'callbacks' do
+    describe '#adjust_end_at' do
+      subject { offer.end_at.change(usec: 0) }
+
+      let(:offer) { build(:offer, start_at: start_at, end_at: end_at, time_format: time_format) }
+
+      let(:start_at) { 2.days.from_now }
+      let(:end_at) { 3.days.from_now }
+
+      before do
+        Timecop.freeze(Time.current)
+        offer.save
+      end
+
+      after { Timecop.return }
+
+      context 'when time_format is date_format' do
+        let(:time_format) { :date_format }
+
+        it { should eq(start_at.end_of_day.change(usec: 0)) }
+      end
+
+      context 'when time_format is datetime_format' do
+        let(:time_format) { :datetime_format }
+
+        it { should eq(start_at.end_of_day.change(usec: 0)) }
+
+        context 'when end_at is the same as start_at' do
+          let(:start_at) { 2.days.from_now.end_of_day }
+
+          it { should eq((start_at + 1.minute).change(usec: 0)) }
+        end
+      end
+
+      context 'when time_format is date_range_format' do
+        let(:time_format) { :date_range_format }
+
+        it { should eq(end_at.end_of_day.change(usec: 0)) }
+      end
+
+      context 'when time_format is datetime_range_format' do
+        let(:time_format) { :datetime_range_format }
+
+        it { should eq(end_at.change(usec: 0)) }
+      end
+    end
+  end
+
   describe 'scopes' do
     describe '.for' do
       subject { described_class.for(user) }
