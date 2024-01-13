@@ -30,28 +30,28 @@ describe Offer, type: :model do
       subject { build(:offer) }
 
       context 'when time_format is date' do
-        before { subject.time_format = :date }
+        before { subject.time_format = :date_format }
 
         it { should validate_presence_of(:start_at) }
         it { should_not validate_presence_of(:end_at) }
       end
 
-      context 'when time_format is date_and_time' do
-        before { subject.time_format = :date_and_time }
+      context 'when time_format is datetime' do
+        before { subject.time_format = :datetime_format }
 
         it { should validate_presence_of(:start_at) }
         it { should_not validate_presence_of(:end_at) }
       end
 
       context 'when time_format is date_range' do
-        before { subject.time_format = :date_range }
+        before { subject.time_format = :date_range_format }
 
         it { should validate_presence_of(:start_at) }
         it { should validate_presence_of(:end_at) }
       end
 
-      context 'when time_format is date_and_time_range' do
-        before { subject.time_format = :date_and_time_range }
+      context 'when time_format is datetime_range' do
+        before { subject.time_format = :datetime_range_format }
 
         it { should validate_presence_of(:start_at) }
         it { should validate_presence_of(:end_at) }
@@ -62,7 +62,7 @@ describe Offer, type: :model do
       subject { build(:offer, :details_specified, start_at: start_at) }
 
       context 'when time_format is date' do
-        before { subject.time_format = :date }
+        before { subject.time_format = :date_format }
 
         context 'when start_at is in the past' do
           let(:start_at) { 1.day.ago }
@@ -83,8 +83,8 @@ describe Offer, type: :model do
         end
       end
 
-      context 'when time_format is date_and_time' do
-        before { subject.time_format = :date_and_time }
+      context 'when time_format is datetime' do
+        before { subject.time_format = :datetime_format }
 
         context 'when start_at is in the past' do
           let(:start_at) { 1.day.ago }
@@ -106,7 +106,7 @@ describe Offer, type: :model do
       end
     end
 
-    describe '#end_must_be_later_than_start' do
+    describe '#end_must_be_after_start' do
       subject do
         build(
           :offer,
@@ -117,7 +117,7 @@ describe Offer, type: :model do
       end
 
       context 'when time_format is date_range' do
-        before { subject.time_format = :date_range }
+        before { subject.time_format = :date_range_format }
 
         include_examples 'offer end_at validation'
 
@@ -129,8 +129,8 @@ describe Offer, type: :model do
         end
       end
 
-      context 'when time_format is date_and_time_range' do
-        before { subject.time_format = :date_and_time_range }
+      context 'when time_format is datetime_range' do
+        before { subject.time_format = :datetime_range_format }
 
         include_examples 'offer end_at validation'
 

@@ -2,10 +2,10 @@ class Offer < ApplicationRecord
   include AASM
 
   enum time_format: {
-    date: 'date',
-    date_and_time: 'date_and_time',
-    date_range: 'date_range',
-    date_and_time_range: 'date_and_time_range'
+    date_format: 'date',
+    datetime_format: 'datetime',
+    date_range_format: 'date_range',
+    datetime_range_format: 'datetime_range'
   }
 
   has_rich_text :conditions
@@ -20,9 +20,9 @@ class Offer < ApplicationRecord
   validates :place, presence: true
   validates :time_format, presence: true
   validates :start_at, presence: true
-  validates :end_at, presence: true, if: -> { date_range? || date_and_time_range? }
+  validates :end_at, presence: true, if: -> { date_range_format? || datetime_range_format? }
   validate :start_cannot_be_in_the_past, if: :start_at_changed?
-  validate :end_must_be_later_than_start, if: :time_changed?
+  validate :end_must_be_after_start, if: :time_changed?
 
   # scopes
   scope :for, lambda { |user|
@@ -80,19 +80,19 @@ class Offer < ApplicationRecord
 
   def start_cannot_be_in_the_past
     return if start_at.blank?
-    return if (date? || date_range?) && start_at.to_date >= Date.current
-    return if (date_and_time? || date_and_time_range?) && start_at >= Time.current
+    return if (date_format? || date_range_format?) && start_at.to_date >= Date.current
+    return if (datetime_format? || datetime_range_format?) && start_at >= Time.current
 
     errors.add(:start_at, :cannot_be_in_the_past)
   end
 
-  def end_must_be_later_than_start
-    return unless date_range? || date_and_time_range?
+  def end_must_be_after_start
+    return unless date_range_format? || datetime_range_format?
     return if start_at.blank? || end_at.blank?
-    return if date_range? && end_at.to_date >= start_at.to_date
-    return if date_and_time_range? && end_at > start_at
+    return if date_range_format? && end_at.to_date >= start_at.to_date
+    return if datetime_range_format? && end_at > start_at
 
-    errors.add(:end_at, :must_be_later_than_start)
+    errors.add(:end_at, :must_be_after_start)
   end
 
   def time_changed?
