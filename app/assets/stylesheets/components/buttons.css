@@ -1,5 +1,5 @@
 .btn {
-  @apply inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-indigo-300;
+  @apply inline-flex items-center px-3 py-2 font-medium text-center text-white bg-indigo-600 rounded-lg cursor-pointer hover:bg-indigo-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-indigo-300;
 }
 
 .btn.btn-sm {
@@ -20,6 +20,10 @@
 
 .btn.btn-primary {
   @apply bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-300;
+}
+
+.btn.btn-alternative {
+  @apply bg-white text-gray-900 border border-gray-300 hover:bg-gray-100 hover:text-indigo-700;
 }
 
 .btn.btn-success {

@@ -13,17 +13,29 @@
     <%= form.text_field :place, class: "form-control" %>
   </div>
 
-  <% Offer.time_formats.keys.each do |time_format| %>
-    <div class="relative">
-      <%= form.radio_button :time_format,
-                            time_format,
-                            class: "",
-                            data: { action: "offer-time-format#adjustFormGroups" } %>
-      <%= form.label "time_format_#{time_format}", class: "" do %>
-        <span class="text-sm"><%= time_format %></span>
+  <div class="form-group">
+    <%= form.label :time_format, class: "form-label" %>
+    <div class="grid grid-cols-2 gap-[1px] bg-gray-300 border border-gray-300 rounded-lg overflow-hidden">
+      <% last_time_format_index = Offer.time_formats.keys.size - 1 %>
+      <% Offer.time_formats.keys.each_with_index do |time_format, index| %>
+        <div class="relative col-span-1">
+          <%= form.radio_button :time_format,
+                                time_format,
+                                class: "absolute t-0 l-0 opacity-0 peer",
+                                data: { action: "offer-time-format#adjustFormGroups" } %>
+          <%= form.label "time_format_#{time_format}",
+                        class: "btn btn-alternative block h-full relative z-10 !rounded-none !border-0 peer-checked:bg-gray-100 peer-checked:text-indigo-600" do %>
+            <div class="">
+              <%= t(".time_formats.#{time_format}") %>
+            </div>
+            <span class="text-xs font-light">
+              <%= t(".time_formats.#{time_format}_description") %>
+            </span>
+          <% end %>
+        </div>
       <% end %>
     </div>
-  <% end %>
+  </div>
 
   <div class="flex flex-col lg:flex-row gap-x-3">
     <div class="form-group flex-1"
