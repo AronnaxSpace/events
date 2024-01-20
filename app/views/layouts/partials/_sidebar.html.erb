@@ -1,0 +1,46 @@
+<aside id="main-sidebar" class="main-sidebar" aria-label="Sidebar">
+  <label for="sidebar_toggle" class="main-sidebar-background"></label>
+  <div class="main-sidebar-inner">
+    <ul class="space-y-2 font-medium">
+      <li>
+        <%= link_to root_path, class: "main-sidebar-link group" do %>
+          <i class="fa-solid fa-house main-sidebar-icon"></i>
+          <span class="main-sidebar-text"><%= t(".home") %></span>
+        <% end %>
+      </li>
+      <li>
+        <%= link_to people_path, class: "main-sidebar-link group" do %>
+          <i class="fa-solid fa-users main-sidebar-icon"></i>
+          <span class="main-sidebar-text"><%= t(".people") %></span>
+        <% end %>
+        <ul id="dropdown-example" class="py-2 space-y-2">
+          <li>
+            <%= link_to friends_path, class: "main-sidebar-link pl-11 group" do %>
+              <span class="main-sidebar-text ms-0"><%= t(".friends") %></span>
+            <% end %>
+          </li>
+          <li>
+            <%= link_to friends_path(scope: :incoming), class: "main-sidebar-link pl-11 group" do %>
+              <span class="main-sidebar-text ms-0"><%= t(".friend_requests") %></span>
+              <span class="main-sidebar-counter">3</span>
+            <% end %>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <%= link_to edit_profile_path, class: "main-sidebar-link group" do %>
+          <i class="fa-regular fa-id-card main-sidebar-icon"></i>
+          <span class="main-sidebar-text"><%= t(".my_profile") %></span>
+        <% end %>
+      </li>
+      <li>
+        <%= button_to destroy_user_session_path,
+                      method: :delete,
+                      class: "main-sidebar-link main-sidebar-link_red group" do %>
+          <i class="fa-solid fa-power-off main-sidebar-icon group-hover:text-white"></i>
+          <span class="main-sidebar-text text-left"><%= t(".sign_out") %></span>
+        <% end %>
+      </li>
+    </ul>
+  </div>
+</aside>

@@ -33,13 +33,12 @@ en:
 
   layouts:
     partials:
-      top_navbar:
+      sidebar:
+        home: "Home"
+        people: "People "
         friends: "Friends"
         friend_requests: "Friend requests"
-        people: "People"
-      bottom_navbar:
-        home: "Home"
-        new_offer: "New offer"
+        my_profile: "My profile"
         sign_out: "Sign out"
 
   shared:
