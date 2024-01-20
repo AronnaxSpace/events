@@ -5,7 +5,10 @@
 @import "components/cards";
 @import "components/forms";
 @import "components/lists";
+@import "components/sidebar";
 @import "components/tags";
+
+@import "components/media-queries";
 
 @tailwind base;
 @tailwind components;
@@ -14,7 +17,7 @@
 /* geranal */
 
 body {
-  @apply bg-gray-100 text-gray-900;
+  @apply text-gray-900;
 }
 
 /* headings */
