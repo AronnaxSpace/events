@@ -36,8 +36,8 @@
       <li>
         <%= button_to destroy_user_session_path,
                       method: :delete,
-                      class: "main-sidebar-link group" do %>
-          <i class="fa-solid fa-power-off main-sidebar-icon"></i>
+                      class: "main-sidebar-link main-sidebar-link_red group" do %>
+          <i class="fa-solid fa-power-off main-sidebar-icon group-hover:text-white"></i>
           <span class="main-sidebar-text text-left"><%= t(".sign_out") %></span>
         <% end %>
       </li>
