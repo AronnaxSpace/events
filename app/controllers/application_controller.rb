@@ -7,6 +7,8 @@ class ApplicationController < ActionController::Base
 
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
+  layout :layout_by_resource
+
   private
 
   def check_profile
@@ -27,5 +29,11 @@ class ApplicationController < ActionController::Base
   def user_not_authorized
     flash[:alert] = t('not_authorized')
     redirect_back(fallback_location: root_path)
+  end
+
+  def layout_by_resource
+    return 'public' if devise_controller? || controller_name == 'welcome'
+
+    'application'
   end
 end
