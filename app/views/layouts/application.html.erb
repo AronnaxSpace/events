@@ -19,11 +19,16 @@
   </head>
 
   <body>
-    <%= render "layouts/partials/top_navbar" if show_top_navbar? %>
-    <div class="container px-3 m-auto pt-4 pb-[73px] <%= "pt-[73px]" if show_top_navbar? %>">
-      <%= render "shared/flashes" %>
-      <%= yield %>
+    <div class="container m-auto px-3 py-4 grid lg:grid-cols-4 xl:grid-cols-5 gap-4">
+      <div class="lg:col-span-1">
+        <%= render "layouts/partials/sidebar_toggle" %>
+        <%= render "layouts/partials/sidebar" %>
+      </div>
+      <div class="lg:col-span-3 xl:col-span-4">
+        <%= render "shared/flashes" %>
+        <%= yield %>
+      </div>
     </div>
-    <%= render "layouts/partials/bottom_navbar" if show_bottom_navbar? %>
+    <%= render "layouts/partials/sidebar_toggle_button" %>
   </body>
 </html>
