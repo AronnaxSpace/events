@@ -19,11 +19,13 @@
   </head>
 
   <body>
-    <%= render "layouts/partials/top_navbar" if show_top_navbar? %>
-    <div class="container px-3 m-auto pt-4 pb-[73px] <%= "pt-[73px]" if show_top_navbar? %>">
-      <%= render "shared/flashes" %>
-      <%= yield %>
+    <%= render "layouts/partials/animated_background" %>
+
+    <div class="container px-3 py-4 m-auto">
+      <div class="card py-4 bg-white relative z-10 lg:w-2/3 m-auto">
+        <%= render "shared/flashes" %>
+        <%= yield %>
+      </div>
     </div>
-    <%= render "layouts/partials/bottom_navbar" if show_bottom_navbar? %>
   </body>
 </html>

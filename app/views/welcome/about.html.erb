@@ -51,4 +51,10 @@
 
 <p class="mb-4">🌟 <span class="text-indigo-600 font-semibold">Offers</span> - Making Memories, One Plan at a Time!</p>
 
-<%= render "links" unless user_signed_in? %>
+<% if user_signed_in? %>
+  <%= link_to "Back to app",
+              root_path,
+              class: "btn btn-primary w-full sm:w-auto" %>
+<% else %>
+  <%= render "links" %>
+<% end %>
