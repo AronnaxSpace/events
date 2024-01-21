@@ -1,0 +1,40 @@
+require: rubocop-rails
+
+# Define the Ruby version you are using
+AllCops:
+  TargetRubyVersion: 3.3
+  NewCops: enable
+  Exclude:
+    - 'db/schema.rb'
+    - 'bin/*'
+    - 'node_modules/**/*'
+    - 'vendor/**/*'
+    - 'config/environments/*.rb'
+
+# Metrics
+Metrics/BlockLength:
+  Exclude:
+    - 'config/routes.rb'
+    - 'spec/**/*.rb'
+Metrics/MethodLength:
+  Max: 15
+Metrics/AbcSize:
+  Max: 20
+Metrics/ClassLength:
+  Max: 200
+
+# Linting
+Lint/UselessAssignment:
+  Enabled: true
+
+# Style
+Style/StringLiterals:
+  EnforcedStyle: single_quotes
+Style/FrozenStringLiteralComment:
+  Enabled: true
+Style/Documentation:
+  Enabled: false
+Style/ConditionalAssignment:
+  Enabled: true
+Style/HashSyntax:
+  Enabled: false
