@@ -4,5 +4,8 @@
 
 import { application } from "./application"
 
+import DrawerController from "./drawer_controller"
+application.register("drawer", DrawerController)
+
 import OfferTimeFormatController from "./offer_time_format_controller"
 application.register("offer-time-format", OfferTimeFormatController)

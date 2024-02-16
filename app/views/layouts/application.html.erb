@@ -18,17 +18,24 @@
     <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
   </head>
 
-  <body>
-    <div class="container m-auto px-3 py-4 grid lg:grid-cols-4 xl:grid-cols-5 gap-4">
-      <div class="lg:col-span-1">
-        <%= render "layouts/partials/sidebar_toggle" %>
-        <%= render "layouts/partials/sidebar" %>
+  <body class="h-screen overflow-hidden" data-controller="drawer">
+    <%= render "layouts/partials/drawer/toggle" %>
+
+    <div class="h-full overflow-y-auto">
+      <div class="container m-auto px-3 py-4 grid lg:grid-cols-4 xl:grid-cols-5 gap-4">
+        <div class="lg:col-span-1">
+          <%= render "layouts/partials/sidebar_toggle" %>
+          <%= render "layouts/partials/sidebar" %>
+        </div>
+        <div class="lg:col-span-3 xl:col-span-4">
+          <%= render "shared/flashes" %>
+          <%= yield %>
+        </div>
       </div>
-      <div class="lg:col-span-3 xl:col-span-4">
-        <%= render "shared/flashes" %>
-        <%= yield %>
-      </div>
+      <%= render "layouts/partials/sidebar_toggle_button" %>
     </div>
-    <%= render "layouts/partials/sidebar_toggle_button" %>
+
+    <%= render "layouts/partials/drawer/modal" %>
+    <%= render "layouts/partials/drawer/backdrop" %>
   </body>
 </html>

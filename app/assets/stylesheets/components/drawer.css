@@ -1,0 +1,7 @@
+#drawer-toggle:checked~#drawer-backdrop {
+  @apply pointer-events-auto inset-0 bg-gray-900/50 dark:bg-gray-900/80;
+}
+
+#drawer-toggle:checked~#drawer-modal {
+  @apply transform-none;
+}
