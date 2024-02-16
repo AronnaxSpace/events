@@ -1,0 +1,9 @@
+<% checked ||= false %>
+<%= check_box_tag "drawer-toggle",
+                  "1",
+                  checked,
+                  id: "drawer-toggle",
+                  class: "hidden",
+                  data: {
+                    drawer_target: "checkbox"
+                  } %>
