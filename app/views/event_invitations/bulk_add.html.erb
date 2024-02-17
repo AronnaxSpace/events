@@ -1,0 +1,14 @@
+<% if event.published? %>
+  <h1><%= event.title %></h1>
+
+  <div class="mb-4">
+    <%= link_to t(".back_to_event"),
+                event_path(event) %>
+  </div>
+<% else %>
+  <%= render "shared/create_event_stepper", event: event %>
+<% end %>
+
+<div class="lg:w-1/2">
+  <%= render "bulk_create_form" %>
+</div>

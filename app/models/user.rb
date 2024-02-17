@@ -5,13 +5,13 @@ class User < ApplicationRecord
          :rememberable, :validatable, :confirmable
 
   # associations
-  has_many :offered_offers,
-           class_name: 'Offer',
-           foreign_key: :offerer_id,
-           inverse_of: :offerer,
+  has_many :owned_events,
+           class_name: 'Event',
+           foreign_key: :owner_id,
+           inverse_of: :owner,
            dependent: :destroy
-  has_many :offer_invitations, dependent: :destroy
-  has_many :offers, through: :offer_invitations
+  has_many :event_invitations, dependent: :destroy
+  has_many :events, through: :event_invitations
   has_one :profile, dependent: :destroy
   has_many :outgoing_friendships, class_name: 'Friendship', foreign_key: :user_id, dependent: :destroy
   has_many :incoming_friendships, class_name: 'Friendship', foreign_key: :friend_id, dependent: :destroy

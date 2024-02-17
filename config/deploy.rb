@@ -1,8 +1,8 @@
 # config valid for current version and patch releases of Capistrano
 lock "~> 3.18.0"
 
-set :application, "offers"
-set :repo_url, "git@github.com:ihortok/offers.git"
+set :application, "events"
+set :repo_url, "git@github.com:AronnaxSpace/events.git"
 
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp

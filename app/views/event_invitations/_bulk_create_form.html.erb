@@ -1,0 +1,15 @@
+<% event_invitations_user_ids = event_invitations.pluck(:user_id) %>
+
+<%= form_with url: event_bulk_create_invitations_path(event) do |form| %>
+  <%= form.collection_check_boxes(:user_ids, current_user.friends.map{|user|[user, user.id]}, :last, :first) do |b| %>
+    <div class="form-group">
+      <%= b.label class: "checkbox-label" do %>
+        <%= b.check_box checked: event_invitations_user_ids.include?(b.value) %>
+        <%= render "shared/profile",
+                   profile: b.object.first.profile %>
+      <% end %>
+    </div>
+  <% end %>
+
+  <%= form.submit event.published? ? t(".save") : t(".save_and_continue"), class: "btn btn-primary" %>
+<% end %>
