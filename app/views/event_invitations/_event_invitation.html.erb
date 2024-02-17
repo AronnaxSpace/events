@@ -1,0 +1,7 @@
+<div class="card flex justify-between items-center gap-x-2">
+  <%= render "shared/profile",
+             profile: event_invitation.user.profile %>
+  <span class="shrink-0 text-sm italic">
+    <%= render "event_invitations/state", event_invitation: event_invitation %>
+  </span>
+</div>

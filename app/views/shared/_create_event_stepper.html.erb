@@ -1,0 +1,40 @@
+<ol class="card py-3 mb-3 flex gap-y-2 overflow-y-auto">
+  <li class="flex items-center <%= "text-blue-600" if (new_event_page? || edit_event_page?) %>">
+    <span class="flex items-center justify-center w-5 h-5 me-2 text-xs border rounded-full shrink-0 <%= (new_event_page? || edit_event_page?) ? "border-blue-600" : "border-gray-500" %>">
+      1
+    </span>
+    <% if local_assigns[:event] %>
+      <%= link_to t(".edit_event"),
+                  edit_event_path(event),
+                  class: "text-inherit" %>
+    <% else %>
+      <%= t(".create_event") %>
+    <% end %>
+    <i class="fa-solid fa-angles-right mx-2"></i>
+  </li>
+  <li class="flex items-center <%= "text-blue-600" if event_bulk_add_invitations_page? %>">
+    <span class="flex items-center justify-center w-5 h-5 me-2 text-xs border rounded-full shrink-0 <%= event_bulk_add_invitations_page? ? "border-blue-600" : "border-gray-500" %>">
+      2
+    </span>
+    <% if local_assigns[:event] %>
+      <%= link_to t(".invite"),
+                  event_bulk_add_invitations_path(event),
+                  class: "text-inherit" %>
+    <% else %>
+      <%= t(".invite") %>
+    <% end %>
+    <i class="fa-solid fa-angles-right mx-2"></i>
+  </li>
+  <li class="flex items-center <%= "text-blue-600" if event_page? %>">
+    <span class="flex items-center justify-center w-5 h-5 me-2 text-xs border rounded-full shrink-0 <%= event_page? ? "border-blue-600" : "border-gray-500" %>">
+      3
+    </span>
+    <% if local_assigns[:event] && event.users_invited? %>
+      <%= link_to t(".publish"),
+                  event_path(event),
+                  class: "text-inherit" %>
+    <% else %>
+      <%= t(".publish") %>
+    <% end %>
+  </li>
+</ol>

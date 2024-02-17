@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   devise_for :users
 
   authenticated :user do
-    root to: 'offers#index', as: :authenticated_root
+    root to: 'events#index', as: :authenticated_root
     get :sidebar, to: 'sidebar#show'
 
     if defined?(Sidekiq)
@@ -24,13 +24,13 @@ Rails.application.routes.draw do
   get :about, to: 'welcome#about'
 
   resource :profile, except: %i[index show destroy]
-  resources :offers do
+  resources :events do
     member do
       post :publish
     end
-    get :bulk_add_invitations, to: 'offer_invitations#bulk_add'
-    post :bulk_create_invitations, to: 'offer_invitations#bulk_create'
-    resource :offer_invitation, as: :invitation, only: [] do
+    get :bulk_add_invitations, to: 'event_invitations#bulk_add'
+    post :bulk_create_invitations, to: 'event_invitations#bulk_create'
+    resource :event_invitation, as: :invitation, only: [] do
       member do
         post :accept
         post :decline

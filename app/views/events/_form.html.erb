@@ -1,0 +1,108 @@
+<%= form_with model: event,
+              data: {
+                controller: "event-time-format",
+                event_time_format_current_format: event.time_format
+              } do |form| %>
+  <div class="form-group">
+    <%= form.label :title, class: "form-label" %>
+    <%= form.text_field :title, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :place, class: "form-label" %>
+    <%= form.text_field :place, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :time_format, class: "form-label" %>
+    <div class="grid grid-cols-2 gap-[1px] bg-gray-300 border border-gray-300 rounded-lg overflow-hidden">
+      <% last_time_format_index = Event.time_formats.keys.size - 1 %>
+      <% Event.time_formats.keys.each_with_index do |time_format, index| %>
+        <div class="relative col-span-1">
+          <%= form.radio_button :time_format,
+                                time_format,
+                                class: "absolute t-0 l-0 opacity-0 peer",
+                                data: { action: "event-time-format#adjustFormGroups" } %>
+          <%= form.label "time_format_#{time_format}",
+                        class: "btn btn-alternative block h-full relative z-10 !rounded-none !border-0 peer-checked:bg-gray-100 peer-checked:text-indigo-600" do %>
+            <div class="">
+              <%= t(".time_formats.#{time_format}") %>
+            </div>
+            <span class="text-xs font-light">
+              <%= t(".time_formats.#{time_format}_description") %>
+            </span>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="flex flex-col lg:flex-row gap-x-3">
+    <div class="form-group flex-1"
+         data-event-time-format-target="startDateFormGroup">
+      <%= form.label :start_at,
+                     class: "hidden form-label",
+                     data: {
+                       event_time_format_target: "startDateLabel",
+                     } %>
+      <%= form.label :start_at,
+                     t(".when"),
+                     class: "form-label",
+                     data: {
+                       event_time_format_target: "startDateWhenLabel",
+                     } %>
+      <%= form.date_field :start_at,
+                          class: "form-control",
+                          data: {
+                            event_time_format_target: "startDateInput"
+                          } %>
+    </div>
+
+    <div class="form-group flex-1 hidden"
+         data-event-time-format-target="startDateTimeFormGroup">
+      <%= form.label :start_at,
+                     class: "hidden form-label",
+                     data: {
+                       event_time_format_target: "startDateTimeLabel",
+                     } %>
+      <%= form.label :start_at,
+                     t(".when"),
+                     class: "form-label",
+                     data: {
+                       event_time_format_target: "startDateTimeWhenLabel",
+                     } %>
+      <%= form.datetime_field :start_at,
+                              class: "form-control",
+                              data: {
+                                event_time_format_target: "startDateTimeInput"
+                              } %>
+    </div>
+
+    <div class="form-group flex-1 hidden"
+         data-event-time-format-target="endDateFormGroup">
+      <%= form.label :end_at, class: "form-label" %>
+      <%= form.date_field :end_at,
+                          class: "form-control",
+                          data: {
+                            event_time_format_target: "endDateInput"
+                          } %>
+    </div>
+
+    <div class="form-group flex-1 hidden"
+         data-event-time-format-target="endDateTimeFormGroup">
+      <%= form.label :end_at, class: "form-label" %>
+      <%= form.datetime_field :end_at,
+                              class: "form-control",
+                              data: {
+                                event_time_format_target: "endDateTimeInput"
+                              } %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :conditions, class: "form-label" %>
+    <%= form.rich_text_area :conditions %>
+  </div>
+
+  <%= form.submit nil, class: "btn btn-primary" %>
+<% end %>

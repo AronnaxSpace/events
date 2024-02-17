@@ -32,9 +32,9 @@ en:
   not_authorized: "You are not authorized to perform this action."
 
   shared:
-    create_offer_stepper:
-      create_offer: "Create"
-      edit_offer: "Edit"
+    create_event_stepper:
+      create_event: "Create"
+      edit_event: "Edit"
       invite: "Invite"
       publish: "Publish"
 
@@ -46,14 +46,14 @@ en:
       friend_requests: "Friend requests"
       my_profile: "My profile"
       sign_out: "Sign out"
-  offers:
-    offer:
+  events:
+    event:
       who: "Who?"
       where: "Where?"
       when: "When?"
       conditions: "What's needed?"
       you: "You"
-      view_offer: "View offer"
+      view_event: "View event"
       edit: "Edit"
       delete: "Delete"
       publish: "Publish"
@@ -61,11 +61,11 @@ en:
       accept: "Accept"
       decline: "Decline"
     index:
-      title: "My offers"
-      no_offers_yet: "You have no offers yet. Go ahead and <a href='%{url}'>create one</a>!"
+      title: "My events"
+      no_events_yet: "You have no events yet. Go ahead and <a href='%{url}'>create one</a>!"
     show:
-      offer_archived: "this offer is archived"
-      back_to_offers: "Back to offers"
+      event_archived: "this event is archived"
+      back_to_events: "Back to events"
     form:
       time_formats:
         date_format: "date"
@@ -78,19 +78,19 @@ en:
         datetime_range_format_description: "e.g. 2020-12-31 23:59 - 2021-01-01 00:01"
       when: "When?"
     edit:
-      title: "Edit offer"
+      title: "Edit event"
     create:
-      success: "Offer was successfully created."
+      success: "Event was successfully created."
     update:
-      success: "Offer was successfully updated"
+      success: "Event was successfully updated"
     destroy:
-      success: "Offer was successfully deleted"
+      success: "Event was successfully deleted"
     publish:
-      success: "Offer was successfully published"
+      success: "Event was successfully published"
 
-  offer_invitations:
+  event_invitations:
     bulk_add:
-      back_to_offer: "Back to offer"
+      back_to_event: "Back to event"
     bulk_create:
       success: "Invitations were successfully sent"
       no_users_selected: "No users selected"
@@ -139,31 +139,31 @@ en:
 
   helpers:
     label:
-      offer:
+      event:
         title: "What?"
         place: "Where?"
         time_format: "Preferred time format"
         start_at: "When start?"
         end_at: "When end?"
     submit:
-      offer:
+      event:
         create: "Create"
         update: "Update"
 
   activerecord:
     errors:
       models:
-        offer:
+        event:
           attributes:
             start_at:
               cannot_be_in_the_past: "can't be in the past"
             end_at:
               must_be_after_start: "must be after start"
-        offer_invitation:
+        event_invitation:
           attributes:
             user:
               already_invited: "has already been invited"
-              cannot_be_offerer: "can't be the same as offerer"
+              cannot_be_owner: "can't be the same as owner"
         profile:
           attributes:
             nickname:
@@ -171,7 +171,7 @@ en:
         user:
           attributes:
             user:
-              cannot_be_offerer: "can't be the same as offer offerer"
+              cannot_be_owner: "can't be the same as event owner"
               already_invited: "has already been invited"
         friendship:
           attributes:
