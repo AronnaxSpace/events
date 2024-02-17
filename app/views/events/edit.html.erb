@@ -1,0 +1,9 @@
+<% if event.published_or_archived? %>
+  <h1><%= t(".title") %></h1>
+<% else %>
+  <%= render "shared/create_event_stepper", event: event %>
+<% end %>
+
+<div class="lg:w-1/2">
+  <%= render "form" %>
+</div>

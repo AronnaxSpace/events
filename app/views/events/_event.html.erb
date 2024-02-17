@@ -1,0 +1,89 @@
+<div class="card">
+  <div class="h-full flex flex-col justify-between gap-y-3">
+    <div class="space-y-3">
+      <% if events_page? %>
+        <%= link_to event_path(event),
+                    class: "text-xl font-light line-clamp-2",
+                    title: event.title do %>
+          <%= event.title %>
+        <% end %>
+      <% else %>
+        <h4 class="text-xl font-light line-clamp-2">
+          <%= event.title %>
+        </h4>
+      <% end %>
+      <dl class="description-list">
+        <div class="">
+          <dt><%= t(".who") %></dt>
+          <dd>
+            <% if event.owner == current_user %>
+              <%= t(".you") %>
+            <% else %>
+              <%= event.owner.nickname %> (<%= event.owner.name %>)
+            <% end %>
+          </dd>
+        </div>
+        <div class="">
+          <dt><%= t(".when") %></dt>
+          <dd>
+            <%= event.start_at.to_formatted_s(:short) %> - <%= event.end_at.to_formatted_s(:short) %>
+          </dd>
+        </div>
+        <div class="">
+          <dt><%= t(".where") %></dt>
+          <dd><%= event.place %></dd>
+        </div>
+        <% if event_page? && event.conditions.present? %>
+          <div class="">
+            <dt><%= t(".conditions") %></dt>
+            <dd><%= event.conditions %></dd>
+          </div>
+        <% end %>
+      </dl>
+      <% if event_page? %>
+        <div class="flex flex-wrap gap-3">
+          <% if policy(event).destroy? %>
+            <%= button_to t(".delete"),
+                          event_path(event),
+                          method: :delete,
+                          class: "btn btn-danger",
+                          data: { turbo_confirm: "Are you sure?" } %>
+          <% end %>
+          <% if event.published_or_archived? && policy(event).edit? %>
+            <%= link_to t(".edit"),
+                        edit_event_path(event),
+                        class: "btn btn-secondary" %>
+          <% end %>
+          <% if !event.published_or_archived? && policy(event).manage? %>
+            <%= button_to t(".publish"),
+                          publish_event_path,
+                          class: "btn btn-primary" %>
+          <% end %>
+          <% if event.published? && policy(event).manage? %>
+            <%= link_to t(".manage_invitations"),
+                        event_bulk_add_invitations_path(event),
+                        class: "btn btn-primary" %>
+          <% end %>
+          <% if event_invitation&.pending? %>
+            <%= button_to t(".decline"),
+                          decline_event_invitation_path(event),
+                          class: "btn btn-danger",
+                          data: { turbo_confirm: "Are you sure?" } %>
+            <%= button_to t(".accept"),
+                          accept_event_invitation_path(event),
+                          class: "btn btn-primary" %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+    <% if events_page? %>
+      <div class="">
+        <%= link_to event_path(event),
+                    class: "btn btn-primary btn-with-icon" do %>
+          <%= t(".view_event") %>
+          <i class="fa-solid fa-arrow-right icon"></i>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>

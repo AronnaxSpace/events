@@ -26,19 +26,19 @@ end
 
 User.find_each do |user|
   5.times do
-    offer = FactoryBot.create(
-      :offer,
+    event = FactoryBot.create(
+      :event,
       :with_conditions,
-      offerer: user
+      owner: user
     )
 
     User.without(user).find_each do |invitee|
       invitation_state = %i[pending accepted declined].sample
 
       FactoryBot.create(
-        :offer_invitation,
+        :event_invitation,
         invitation_state,
-        offer: offer,
+        event: event,
         user: invitee
       )
     end

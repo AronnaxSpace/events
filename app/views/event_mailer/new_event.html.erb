@@ -1,0 +1,5 @@
+<h3 style="margin-top: 0">Hello, <%= @user.name %>!</h3>
+<p>You have a new event from <b><%= @event.owner.name %></b>.</p>
+<p>You can view the event details by following the link below:</p>
+
+<p style="margin-bottom: 0"><%= link_to event_url(@event), event_url(@event) %></p>

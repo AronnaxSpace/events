@@ -1,0 +1,5 @@
+Hello, <%= @user.name %>!
+You have a new event from <%= @event.owner.name %>.
+You can view the event details by following the link below:
+
+<%= event_url(@event) %>
