@@ -1,8 +1,15 @@
-<div class="bottom-nav fixed grid grid-cols-3 z-30 w-full h-16 max-w-md bg-indigo-100 border border-indigo-200 rounded-full bottom-4 dark:bg-gray-700 dark:border-indigo-600">
+<div class="bottom-nav fixed grid grid-cols-5 z-30 w-full h-16 max-w-md bg-indigo-100 border border-indigo-200 rounded-full bottom-4 dark:bg-indigo-800 dark:border-indigo-900">
   <%= link_to root_path,
               class: "inline-flex flex-col items-center justify-center px-5 rounded-s-full hover:bg-gray-50 dark:hover:bg-gray-800 group" do %>
-    <i class="fa-solid fa-house w-5 h-5 text-gray-500 dark:text-gray-400 group-hover:text-indigo-600 dark:group-hover:text-indigo-500"></i>
+    <i class="fa-solid fa-house w-5 h-5 text-gray-500 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-white"></i>
   <% end %>
+  <%= button_to dark_mode_toggle_path,
+                class: "w-full h-full inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group",
+                data: {
+                  turbo: false
+                } do %>
+    <i class="<%= dark_mode_on? ? 'fa-solid fa-sun' : 'fa-solid fa-moon' %> w-5 h-5 text-gray-500 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-white"></i>
+  <% end %> 
   <div class="flex items-center justify-center">
     <%= link_to new_event_path,
                 class: "inline-flex items-center justify-center w-10 h-10 font-medium bg-indigo-600 rounded-full hover:bg-indigo-700 group focus:ring-4 focus:ring-indigo-300 focus:outline-none dark:focus:ring-indigo-800 #{ 'pointer-events-none' if new_event_page? }" do %>
@@ -11,6 +18,10 @@
       </svg>
     <% end %>
   </div>
+  <%= link_to edit_profile_path,
+              class: "inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group" do %>
+    <i class="fa-solid fa-user w-5 h-5 text-gray-500 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-white"></i>
+  <% end %>
   <%= link_to sidebar_path,
               class: "inline-flex flex-col items-center justify-center px-5 rounded-e-full hover:bg-gray-50 dark:hover:bg-gray-800 group",
               data: {
@@ -18,6 +29,6 @@
                 action: "drawer#open",
                 drawer_size_param: "xs"
               } do %>
-    <i class="fa-solid fa-bars w-5 h-5 text-gray-500 dark:text-gray-400 group-hover:text-indigo-600 dark:group-hover:text-indigo-500"></i>
+    <i class="fa-solid fa-bars w-5 h-5 text-gray-500 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-white"></i>
   <% end %>
 </div>
