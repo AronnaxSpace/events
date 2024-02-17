@@ -18,7 +18,7 @@
     <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
   </head>
 
-  <body class="h-screen overflow-hidden" data-controller="drawer">
+  <body class="h-screen overflow-hidden" data-controller="body-height drawer" data-action="resize@window->body-height#recalculate">
     <%= render "layouts/partials/drawer/toggle" %>
 
     <div class="h-full overflow-y-scroll">
