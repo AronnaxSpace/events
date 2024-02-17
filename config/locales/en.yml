@@ -31,16 +31,6 @@ en:
   are_you_sure: "Are you sure?"
   not_authorized: "You are not authorized to perform this action."
 
-  layouts:
-    partials:
-      sidebar:
-        home: "Home"
-        people: "People "
-        friends: "Friends"
-        friend_requests: "Friend requests"
-        my_profile: "My profile"
-        sign_out: "Sign out"
-
   shared:
     create_offer_stepper:
       create_offer: "Create"
@@ -48,6 +38,14 @@ en:
       invite: "Invite"
       publish: "Publish"
 
+  sidebar:
+    show:
+      home: "Home"
+      people: "People "
+      friends: "Friends"
+      friend_requests: "Friend requests"
+      my_profile: "My profile"
+      sign_out: "Sign out"
   offers:
     offer:
       who: "Who?"

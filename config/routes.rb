@@ -11,6 +11,7 @@ Rails.application.routes.draw do
 
   authenticated :user do
     root to: 'offers#index', as: :authenticated_root
+    get :sidebar, to: 'sidebar#show'
 
     if defined?(Sidekiq)
       require 'sidekiq/web'
