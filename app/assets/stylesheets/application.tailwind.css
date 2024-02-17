@@ -5,11 +5,9 @@
 @import "components/cards";
 @import "components/forms";
 @import "components/lists";
-@import "components/sidebar";
 @import "components/tags";
 @import "components/drawer";
-
-@import "components/media-queries";
+@import "components/scrollbar";
 
 @tailwind base;
 @tailwind components;
@@ -39,4 +37,12 @@ h3 {
 
 a {
   @apply text-blue-600 hover:text-blue-700;
+}
+
+/* bottom nav */
+
+.bottom-nav {
+  width: calc(100% - 34px);
+  left: calc(50% - 17px);
+  transform: translateX(calc(-50% + 12px));
 }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html class="">
   <head>
     <title>Aronnax Offers</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -21,20 +21,14 @@
   <body class="h-screen overflow-hidden" data-controller="drawer">
     <%= render "layouts/partials/drawer/toggle" %>
 
-    <div class="h-full overflow-y-auto">
-      <div class="container m-auto px-3 py-4 grid lg:grid-cols-4 xl:grid-cols-5 gap-4">
-        <div class="lg:col-span-1">
-          <%= render "layouts/partials/sidebar_toggle" %>
-          <%= render "layouts/partials/sidebar" %>
-        </div>
-        <div class="lg:col-span-3 xl:col-span-4">
-          <%= render "shared/flashes" %>
-          <%= yield %>
-        </div>
+    <div class="h-full overflow-y-scroll">
+      <div class="container m-auto px-3 pt-4 pb-24">
+        <%= render "shared/flashes" %>
+        <%= yield %>
       </div>
-      <%= render "layouts/partials/sidebar_toggle_button" %>
     </div>
 
+    <%= render "layouts/partials/bottom_nav" %>
     <%= render "layouts/partials/drawer/modal" %>
     <%= render "layouts/partials/drawer/backdrop" %>
   </body>
