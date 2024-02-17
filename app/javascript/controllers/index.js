@@ -4,6 +4,9 @@
 
 import { application } from "./application"
 
+import BodyHeightController from "./body_height_controller"
+application.register("body-height", BodyHeightController)
+
 import DrawerController from "./drawer_controller"
 application.register("drawer", DrawerController)
 
