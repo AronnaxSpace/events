@@ -6,6 +6,10 @@ module ApplicationHelper
     ]
   end
 
+  def dark_mode_on?
+    cookies[:dark_mode] == 'on'
+  end
+
   def about_page?
     controller_name == 'welcome' && action_name == 'about'
   end

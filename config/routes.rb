@@ -22,6 +22,7 @@ Rails.application.routes.draw do
 
   root to: 'welcome#index'
   get :about, to: 'welcome#about'
+  post :'dark_mode/toggle', to: 'dark_mode#toggle'
 
   resource :profile, except: %i[index show destroy]
   resources :events do
