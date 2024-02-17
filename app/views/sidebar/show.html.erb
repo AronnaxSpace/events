@@ -1,0 +1,32 @@
+<%= turbo_frame_tag "drawer-content" do %>
+  <aside>
+    <ul class="space-y-2 font-medium">
+      <li>
+        <%= link_to root_path, class: "flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group", data: { turbo: false } do %>
+          <i class="fa-solid fa-house w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
+          <span class="flex-1 ms-3 whitespace-nowrap group-hover:text-gray-900 dark:group-hover:text-white"><%= t(".home") %></span>
+        <% end %>
+      </li>
+      <li>
+        <%= link_to people_path, class: "flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group", data: { turbo: false } do %>
+          <i class="fa-solid fa-users w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
+          <span class="flex-1 ms-3 whitespace-nowrap group-hover:text-gray-900 dark:group-hover:text-white"><%= t(".people") %></span>
+        <% end %>
+      </li>
+      <li>
+        <%= link_to edit_profile_path, class: "flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group", data: { turbo: false } do %>
+          <i class="fa-regular fa-id-card w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
+          <span class="flex-1 ms-3 whitespace-nowrap group-hover:text-gray-900 dark:group-hover:text-white"><%= t(".my_profile") %></span>
+        <% end %>
+      </li>
+      <li>
+        <%= button_to destroy_user_session_path,
+                      method: :delete,
+                      class: "w-full flex items-center p-2 text-red-900 rounded-lg dark:text-white hover:bg-red-100 dark:hover:bg-red-700 group", data: { turbo: false } do %>
+          <i class="fa-solid fa-power-off w-5 h-5 text-red-600 transition duration-75 dark:text-red-400 group-hover:text-red-900 dark:group-hover:text-white"></i>
+          <span class="flex-1 ms-3 whitespace-nowrap group-hover:text-red-900 dark:text-red-400 dark:group-hover:text-white text-left"><%= t(".sign_out") %></span>
+        <% end %>
+      </li>
+    </ul>
+  </aside>
+<% end %>
