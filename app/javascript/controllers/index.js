@@ -10,5 +10,5 @@ application.register("body-height", BodyHeightController)
 import DrawerController from "./drawer_controller"
 application.register("drawer", DrawerController)
 
-import OfferTimeFormatController from "./offer_time_format_controller"
-application.register("offer-time-format", OfferTimeFormatController)
+import EventTimeFormatController from "./event_time_format_controller"
+application.register("event-time-format", EventTimeFormatController)

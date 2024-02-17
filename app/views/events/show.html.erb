@@ -1,0 +1,18 @@
+<% unless event.published_or_archived? %>
+  <%= render "shared/create_event_stepper", event: event %>
+<% end %>
+
+<div class="lg:w-1/2 space-y-4">
+  <%= render "event" %>
+
+  <% if event.published_or_archived? %>
+    <div class="">
+      <%= link_to t(".back_to_events"),
+                  root_path %>
+    </div>
+  <% end %>
+
+  <div class="space-y-4">
+    <%= render @event_invitations %>
+  </div>
+</div>

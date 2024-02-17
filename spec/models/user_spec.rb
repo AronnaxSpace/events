@@ -1,8 +1,8 @@
 describe User, type: :model do
   describe 'associations' do
-    it { should have_many(:offered_offers).class_name('Offer') }
-    it { should have_many(:offer_invitations) }
-    it { should have_many(:offers).through(:offer_invitations) }
+    it { should have_many(:owned_events).class_name('Event') }
+    it { should have_many(:event_invitations) }
+    it { should have_many(:events).through(:event_invitations) }
     it { should have_one(:profile) }
     it { should have_many(:outgoing_friendships).class_name('Friendship').with_foreign_key(:user_id) }
     it { should have_many(:incoming_friendships).class_name('Friendship').with_foreign_key(:friend_id) }

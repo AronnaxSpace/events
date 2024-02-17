@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_11_30_171421) do
+ActiveRecord::Schema[7.1].define(version: 2024_02_17_022638) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "uuid-ossp"
@@ -53,6 +53,34 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_30_171421) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "event_invitations", force: :cascade do |t|
+    t.bigint "event_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "aasm_state"
+    t.datetime "accepted_at"
+    t.datetime "declined_at"
+    t.datetime "expired_at"
+    t.index ["event_id"], name: "index_event_invitations_on_event_id"
+    t.index ["user_id"], name: "index_event_invitations_on_user_id"
+  end
+
+  create_table "events", force: :cascade do |t|
+    t.string "title"
+    t.datetime "start_at"
+    t.datetime "end_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "owner_id", null: false
+    t.string "place"
+    t.uuid "uuid", default: -> { "uuid_generate_v4()" }, null: false
+    t.string "aasm_state"
+    t.string "time_format", default: "date", null: false
+    t.index ["owner_id"], name: "index_events_on_owner_id"
+    t.index ["uuid"], name: "index_events_on_uuid", unique: true
+  end
+
   create_table "friendships", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "friend_id", null: false
@@ -63,34 +91,6 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_30_171421) do
     t.datetime "updated_at", null: false
     t.index ["friend_id"], name: "index_friendships_on_friend_id"
     t.index ["user_id"], name: "index_friendships_on_user_id"
-  end
-
-  create_table "offer_invitations", force: :cascade do |t|
-    t.bigint "offer_id", null: false
-    t.bigint "user_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "aasm_state"
-    t.datetime "accepted_at"
-    t.datetime "declined_at"
-    t.datetime "expired_at"
-    t.index ["offer_id"], name: "index_offer_invitations_on_offer_id"
-    t.index ["user_id"], name: "index_offer_invitations_on_user_id"
-  end
-
-  create_table "offers", force: :cascade do |t|
-    t.string "title"
-    t.datetime "start_at"
-    t.datetime "end_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.bigint "offerer_id", null: false
-    t.string "place"
-    t.uuid "uuid", default: -> { "uuid_generate_v4()" }, null: false
-    t.string "aasm_state"
-    t.string "time_format", default: "date", null: false
-    t.index ["offerer_id"], name: "index_offers_on_offerer_id"
-    t.index ["uuid"], name: "index_offers_on_uuid", unique: true
   end
 
   create_table "profiles", force: :cascade do |t|
@@ -123,10 +123,10 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_30_171421) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "event_invitations", "events"
+  add_foreign_key "event_invitations", "users"
+  add_foreign_key "events", "users", column: "owner_id"
   add_foreign_key "friendships", "users"
   add_foreign_key "friendships", "users", column: "friend_id"
-  add_foreign_key "offer_invitations", "offers"
-  add_foreign_key "offer_invitations", "users"
-  add_foreign_key "offers", "users", column: "offerer_id"
   add_foreign_key "profiles", "users"
 end

@@ -6,7 +6,7 @@ export default class extends Controller {
   connect() {
     this.loadingContent = this.drawerTarget.innerHTML
     this.sizes = {
-      "xs": ["w-full", "sm:w-1/2", "lg:w-1/3", "xl:w-1/4"],
+      "xs": ["w-10/12", "sm:w-1/2", "lg:w-1/3", "xl:w-1/4"],
       "sm": ["w-full", "sm:w-11/12", "md:w-8/12", "lg:w-1/2", "xl:w-1/3"],
       "md": ["w-full", "lg:w-2/3", "xl:w-1/2"],
       "lg": ["w-full", "xl:w-2/3"]
