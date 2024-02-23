@@ -20,7 +20,10 @@ class ProfilesController < ApplicationController
   end
 
   def update
-    if profile.update(profile_params)
+    update_profile_params = profile_params
+    update_profile_params.delete(:remove_avatar) if update_profile_params[:avatar].present?
+
+    if profile.update(update_profile_params)
       redirect_to root_path, notice: t('.success')
     else
       render :edit, status: :unprocessable_entity
@@ -39,7 +42,7 @@ class ProfilesController < ApplicationController
 
   def profile_params
     params.require(:profile).permit(
-      :name, :nickname, :time_zone, :interface_language
+      :avatar, :name, :nickname, :time_zone, :interface_language, :remove_avatar
     )
   end
 end

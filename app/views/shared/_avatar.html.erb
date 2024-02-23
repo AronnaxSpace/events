@@ -1,3 +1,12 @@
-<div class="avatar relative inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-gray-100 rounded-full font-medium text-gray-600">
-  <%= name[0].upcase %>
+<%
+  avatar_size = avatar_size_classes(local_assigns[:avatar_size])
+  avatar_css = "#{avatar_size} inline-flex items-center justify-center overflow-hidden bg-gray-100 text-gray-600 rounded-full font-medium dark:bg-gray-900 dark:text-gray-400"
+%>
+
+<div class="avatar <%= avatar_css %>">
+  <% if profile.avatar.attached? %>
+    <%= image_tag profile.avatar.variant(:thumb), alt: profile.nickname %>
+  <% else %>
+    <%= profile.nickname[0].upcase %>
+  <% end %>
 </div>

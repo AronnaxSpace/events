@@ -166,6 +166,9 @@ en:
               cannot_be_owner: "can't be the same as owner"
         profile:
           attributes:
+            avatar:
+              file_too_big: "size must be up to 10MB."
+              invalid_format: "must be an image."
             nickname:
               cannot_contain_spaces: "cannot contain spaces"
         user:
