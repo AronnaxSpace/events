@@ -1,4 +1,23 @@
 <%= form_with(model: profile, url: profile_path) do |form| %>
+  <% if profile.avatar.attached? && profile.avatar.attachment.blob.persisted? %>
+    <div class="form-group">
+      <div class="relative">
+        <%= form.check_box :remove_avatar, class: "hidden remove-profile-avatar-checkbox" %>
+        <%= image_tag profile.avatar.variant(:medium), id: "profile-avatar" %>
+        <% label_css = "absolute top-0 left-0 p-1 bg-red-600/[.7] hover:bg-red-700/[.7] cursor-pointer transition duration-75" %>
+
+        <%= form.label :remove_avatar, class: "remove-profile-avatar-label #{label_css}" do %>
+          <i class="fa-solid fa-xmark w-5 h-5"></i>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= form.label :avatar, class: "form-label" %>
+    <%= form.file_field :avatar, class: "form-control" %>
+  </div>
+
   <div class="form-group">
     <%= form.label :name, class: "form-label" %>
     <%= form.text_field :name, class: "form-control" %>
