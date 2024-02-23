@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_02_17_022638) do
+ActiveRecord::Schema[7.1].define(version: 2024_02_23_190743) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "uuid-ossp"
@@ -101,6 +101,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_17_022638) do
     t.datetime "updated_at", null: false
     t.string "time_zone", default: "UTC", null: false
     t.string "interface_language", default: "en", null: false
+    t.index ["nickname"], name: "index_profiles_on_nickname", unique: true
     t.index ["user_id"], name: "index_profiles_on_user_id"
   end
 

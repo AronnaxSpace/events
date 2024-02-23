@@ -1,0 +1,7 @@
+.remove-profile-avatar-checkbox:checked~#profile-avatar {
+  display: none;
+}
+
+.remove-profile-avatar-checkbox:checked~.remove-profile-avatar-label {
+  display: none;
+}
