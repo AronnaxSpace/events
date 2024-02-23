@@ -1,5 +1,5 @@
 .description-list {
-  @apply max-w-md text-gray-900 space-y-3;
+  @apply max-w-md space-y-3;
 }
 
 .description-list dt {
