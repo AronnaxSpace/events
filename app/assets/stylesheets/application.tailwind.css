@@ -16,7 +16,7 @@
 /* geranal */
 
 body {
-  @apply text-gray-900;
+  @apply bg-gray-100 text-gray-900 dark:bg-gray-900 dark:text-gray-100;
 }
 
 /* headings */
@@ -42,7 +42,7 @@ a {
 /* bottom nav */
 
 .bottom-nav {
-  width: calc(100% - 34px);
-  left: calc(50% - 17px);
+  width: calc(100% - 28px);
+  left: calc(50% - 14px);
   transform: translateX(calc(-50% + 12px));
 }
