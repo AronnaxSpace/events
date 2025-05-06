@@ -42,7 +42,7 @@ Rails.application.configure do
   config.action_mailer.perform_caching = false
 
   config.action_mailer.delivery_method = :letter_opener_web
-  config.action_mailer.default_url_options = { host: "localhost", port: 4003 }
+  config.action_mailer.default_url_options = { host: "localhost", port: 3052 }
   config.action_mailer.deliver_later_queue_name = :mailers
 
   # Print deprecation notices to the Rails logger.
