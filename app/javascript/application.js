@@ -2,8 +2,7 @@
 import "@hotwired/turbo-rails"
 import "./controllers"
 import "trix"
-import "@rails/actiontext"
-import "@fortawesome/fontawesome-free/js/all"
+import "aronnax-styles/dist/aronnax-styles.min.js";
 
 window.addEventListener("trix-file-accept", function(event) {
   event.preventDefault()

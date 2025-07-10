@@ -6,6 +6,7 @@
     "@hotwired/stimulus": "^3.2.2",
     "@hotwired/turbo-rails": "^8.0.12",
     "@rails/actiontext": "^8.0.100",
+    "aronnax-styles": "file:/Users/Ihor_Tokaryk/Workspace/aronnax/aronnax-styles",
     "autoprefixer": "^10.4.19",
     "esbuild": "^0.24.2",
     "postcss": "^8.4.39",
@@ -14,6 +15,6 @@
   },
   "scripts": {
     "build": "esbuild app/javascript/*.* --bundle --sourcemap --outdir=app/assets/builds --public-path=/assets",
-    "build:css": "tailwindcss -i ./app/assets/stylesheets/application.tailwind.css -o ./app/assets/builds/application.css --minify"
+    "build:css": "tailwindcss -i ./app/assets/stylesheets/application.css -o ./app/assets/builds/application.css --minify"
   }
 }
